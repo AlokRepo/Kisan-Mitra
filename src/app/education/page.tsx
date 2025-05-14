@@ -1,3 +1,4 @@
+
 "use client";
 
 import React from 'react';
@@ -7,6 +8,7 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/
 import { Button } from "@/components/ui/button";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { GraduationCap, BookOpen, Users, ExternalLink, Lightbulb } from 'lucide-react';
+import { APP_IMAGES } from '@/lib/image-config';
 
 interface InfoCardProps {
   title: string;
@@ -60,18 +62,16 @@ export default function EducationPage() {
       id: "guide1",
       titleKey: "sampleGuideTitle1",
       descriptionKey: "sampleGuideDesc1",
-      imageUrl: "https://placehold.co/600x400.png",
-      aiHint: "market chart",
-      linkUrl: "#", // Placeholder link
+      image: APP_IMAGES.GUIDE_PRICE_FLUCTUATIONS,
+      linkUrl: "#", 
       buttonTextKey: "viewGuideButton",
     },
     {
       id: "guide2",
       titleKey: "sampleGuideTitle2",
       descriptionKey: "sampleGuideDesc2",
-      imageUrl: "https://placehold.co/600x400.png",
-      aiHint: "app interface",
-      linkUrl: "#", // Placeholder link
+      image: APP_IMAGES.GUIDE_APP_USAGE,
+      linkUrl: "#", 
       buttonTextKey: "viewGuideButton",
     },
   ];
@@ -81,18 +81,16 @@ export default function EducationPage() {
       id: "scheme1",
       titleKey: "sampleSchemeTitle1",
       descriptionKey: "sampleSchemeDesc1",
-      imageUrl: "https://placehold.co/600x400.png",
-      aiHint: "government building",
-      linkUrl: "#", // Placeholder link
+      image: APP_IMAGES.SCHEME_PM_KISAN,
+      linkUrl: "#", 
       buttonTextKey: "learnMoreButton",
     },
     {
       id: "scheme2",
       titleKey: "sampleSchemeTitle2",
       descriptionKey: "sampleSchemeDesc2",
-      imageUrl: "https://placehold.co/600x400.png",
-      aiHint: "digital india",
-      linkUrl: "#", // Placeholder link
+      image: APP_IMAGES.SCHEME_E_NAM,
+      linkUrl: "#", 
       buttonTextKey: "learnMoreButton",
     },
   ];
@@ -126,8 +124,8 @@ export default function EducationPage() {
                 key={guide.id}
                 title={translate(guide.titleKey)}
                 description={translate(guide.descriptionKey)}
-                imageUrl={guide.imageUrl}
-                aiHint={guide.aiHint}
+                imageUrl={guide.image.src}
+                aiHint={guide.image.aiHint}
                 linkUrl={guide.linkUrl}
                 buttonTextKey={guide.buttonTextKey}
               />
@@ -140,7 +138,7 @@ export default function EducationPage() {
       <Card className="bg-card text-card-foreground shadow-xl">
         <CardHeader>
           <div className="flex items-center gap-3">
-            <Lightbulb className="h-7 w-7 text-primary" /> {/* Using Lightbulb for schemes */}
+            <Lightbulb className="h-7 w-7 text-primary" />
             <CardTitle className="text-2xl text-primary">{translate('schemesTitle')}</CardTitle>
           </div>
           <CardDescription>{translate('schemesDesc')}</CardDescription>
@@ -152,8 +150,8 @@ export default function EducationPage() {
                 key={scheme.id}
                 title={translate(scheme.titleKey)}
                 description={translate(scheme.descriptionKey)}
-                imageUrl={scheme.imageUrl}
-                aiHint={scheme.aiHint}
+                imageUrl={scheme.image.src}
+                aiHint={scheme.image.aiHint}
                 linkUrl={scheme.linkUrl}
                 buttonTextKey={scheme.buttonTextKey}
               />

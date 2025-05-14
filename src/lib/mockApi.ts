@@ -1,18 +1,9 @@
 import type { CropPriceInfo, MandiLocation, PriceDataPoint, StatePriceHistory, CropPriceTrend } from '@/types';
 import { CROPS, STATES } from '@/types';
+import { getCropImageDetails, APP_IMAGES } from './image-config';
 
 const randomPrice = (min: number, max: number) => Math.floor(Math.random() * (max - min + 1)) + min;
 const formatDate = (date: Date) => date.toISOString().split('T')[0];
-
-const cropImages: { [key: string]: { url: string, hint: string } } = {
-  "Wheat": { url: "https://placehold.co/300x200.png", hint: "wheat field" },
-  "Rice": { url: "https://placehold.co/300x200.png", hint: "rice paddy" },
-  "Maize": { url: "https://placehold.co/300x200.png", hint: "corn field" },
-  "Cotton": { url: "https://placehold.co/300x200.png", hint: "cotton plant" },
-  "Sugarcane": { url: "https://placehold.co/300x200.png", hint: "sugarcane field" },
-  "Soybean": { url: "https://placehold.co/300x200.png", hint: "soybean plant" },
-  "Pulses": { url: "https://placehold.co/300x200.png", hint: "lentils dal" },
-};
 
 export const getRealTimePrices = async (selectedCrop?: string): Promise<CropPriceInfo[]> => {
   await new Promise(resolve => setTimeout(resolve, 500)); // Simulate network delay
@@ -24,6 +15,7 @@ export const getRealTimePrices = async (selectedCrop?: string): Promise<CropPric
     for (let i = 0; i < 2; i++) { // 2 example markets per crop
       const state = STATES[Math.floor(Math.random() * STATES.length)];
       const modalPrice = randomPrice(1500, 5000);
+      const imageDetails = getCropImageDetails(cropName);
       prices.push({
         id: `${cropName.toLowerCase().replace(' ', '-')}-${i}-${Date.now()}`,
         cropName,
@@ -36,8 +28,8 @@ export const getRealTimePrices = async (selectedCrop?: string): Promise<CropPric
         modalPrice,
         unit: "Quintal",
         date: formatDate(new Date()),
-        imageUrl: cropImages[cropName]?.url || "https://placehold.co/300x200.png",
-        aiHint: cropImages[cropName]?.hint || "agriculture product",
+        imageUrl: imageDetails.src,
+        aiHint: imageDetails.aiHint,
       });
     }
   });
@@ -56,15 +48,14 @@ export const getMandiLocations = async (): Promise<MandiLocation[]> => {
         name: `${state.split(" ")[0]} Main Mandi ${i + 1}`,
         state,
         district: `${state.split(" ")[0]} District`,
-        // Mock coordinates (optional, for future map integration)
         latitude: 20 + Math.random() * 10, 
         longitude: 70 + Math.random() * 10,
         currentPrices: [
           { crop: crop1, price: randomPrice(1800, 4500), unit: "Quintal" },
           { crop: crop2, price: randomPrice(2000, 5000), unit: "Quintal" },
         ],
-        imageUrl: cropImages[crop1]?.url || "https://placehold.co/300x200.png",
-        aiHint: "market agriculture",
+        imageUrl: APP_IMAGES.DEFAULT_MANDI.src,
+        aiHint: APP_IMAGES.DEFAULT_MANDI.aiHint,
       });
     }
   });
