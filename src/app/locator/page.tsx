@@ -10,11 +10,12 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import dynamic from 'next/dynamic';
+import { useLanguage } from '@/contexts/LanguageContext';
 
 const DynamicGoogleMapComponent = dynamic(() =>
   import('@/components/locator/GoogleMapComponent').then((mod) => mod.GoogleMapComponent),
   {
-    ssr: false, // Google Maps typically relies on browser APIs
+    ssr: false, 
     loading: () => <Skeleton className="h-[400px] w-full rounded-md" /> 
   }
 );
@@ -22,6 +23,7 @@ const DynamicGoogleMapComponent = dynamic(() =>
 export default function LocatorPage() {
   const [mandiList, setMandiList] = useState<MandiLocation[]>([]);
   const [isPending, startTransition] = useTransition();
+  const { translate } = useLanguage();
   const apiKey = process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY;
 
   const fetchMandis = () => {
@@ -44,7 +46,7 @@ export default function LocatorPage() {
     if (firstMandiWithCoords) {
       return { lat: firstMandiWithCoords.latitude!, lng: firstMandiWithCoords.longitude! };
     }
-    return { lat: 20.5937, lng: 78.9629 }; // A central point in India
+    return { lat: 20.5937, lng: 78.9629 }; 
   }, [mandiList]);
 
   return (
@@ -52,11 +54,11 @@ export default function LocatorPage() {
       <div className="flex flex-col sm:flex-row justify-between items-center mb-8 gap-4">
         <div className="flex items-center gap-3">
           <MapPin className="h-8 w-8 text-primary" />
-          <h1 className="text-3xl font-bold text-foreground">Mandi Locator</h1>
+          <h1 className="text-3xl font-bold text-foreground">{translate('locatorTitle')}</h1>
         </div>
          <Button onClick={handleRefresh} disabled={isPending} variant="outline" className="bg-card text-card-foreground hover:bg-accent hover:text-accent-foreground">
             <RefreshCw className={`mr-2 h-4 w-4 ${isPending ? 'animate-spin' : ''}`} />
-            Refresh Mandis
+            {translate('refreshMandis')}
           </Button>
       </div>
 
@@ -64,7 +66,7 @@ export default function LocatorPage() {
         <DynamicGoogleMapComponent mandis={mandiList} defaultCenter={defaultMapCenter} apiKey={apiKey} />
       </div>
 
-      {isPending && mandiList.length === 0 && ( // Show skeleton only if initial fetch is pending
+      {isPending && mandiList.length === 0 && ( 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {[...Array(6)].map((_, i) => (
             <Card key={i} className="overflow-hidden">
@@ -77,7 +79,7 @@ export default function LocatorPage() {
                 <Skeleton className="h-4 w-full" />
                 <Skeleton className="h-4 w-3/4" />
               </CardContent>
-              <CardContent> {/* Using CardContent for CardFooter like spacing */}
+              <CardContent> 
                 <Skeleton className="h-10 w-full" />
               </CardContent>
             </Card>
@@ -87,8 +89,8 @@ export default function LocatorPage() {
 
       {!isPending && mandiList.length === 0 && (
          <Card className="text-center p-8">
-          <CardTitle>No Mandis Found</CardTitle>
-          <CardDescription>Could not fetch mandi locations. Please try refreshing.</CardDescription>
+          <CardTitle>{translate('noMandisFoundTitle')}</CardTitle>
+          <CardDescription>{translate('noMandisFoundDesc')}</CardDescription>
         </Card>
       )}
 

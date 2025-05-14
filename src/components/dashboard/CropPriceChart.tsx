@@ -1,6 +1,7 @@
+
 "use client"
 
-import type { CropPriceTrend, StatePriceHistory } from "@/types";
+import type { CropPriceTrend } from "@/types";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import {
   ChartContainer,
@@ -10,8 +11,9 @@ import {
   ChartLegendContent,
 } from "@/components/ui/chart";
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, ResponsiveContainer } from "recharts";
-import { useTheme } from "next-themes"; // Assuming next-themes is or can be used for theme detection
+import { useTheme } from "next-themes";
 import { useEffect, useState } from "react";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 
 interface CropPriceChartProps {
@@ -19,26 +21,21 @@ interface CropPriceChartProps {
   isLoading: boolean;
 }
 
-// Helper to get chart colors from CSS variables
-const getChartColor = (index: number, theme: string | undefined) => {
-  if (typeof window === "undefined") return `hsl(var(--chart-${index + 1}))`; // Fallback for SSR
-  
+const getChartColor = (index: number) => {
+  if (typeof window === "undefined") return `hsl(var(--chart-${index + 1}))`; 
   const style = getComputedStyle(document.documentElement);
-  // For dark theme, ShadCN chart component might automatically use dark theme variables if defined.
-  // However, explicitly checking theme can be more robust.
-  // For simplicity here, we assume CSS variables handle light/dark theming correctly.
   return style.getPropertyValue(`--chart-${index + 1}`).trim();
 };
 
 
 export function CropPriceChart({ data, isLoading }: CropPriceChartProps) {
-  const { theme } = useTheme(); // Get current theme
+  const { theme } = useTheme();
+  const { translate } = useLanguage();
   const [chartColors, setChartColors] = useState<string[]>([]);
 
   useEffect(() => {
-    // Update chart colors when theme changes or data is available
     if (data?.trends.length) {
-      const colors = data.trends.map((_, i) => getChartColor(i % 5, theme)); // Cycle through 5 chart colors
+      const colors = data.trends.map((_, i) => getChartColor(i % 5)); 
       setChartColors(colors);
     }
   }, [theme, data]);
@@ -48,8 +45,8 @@ export function CropPriceChart({ data, isLoading }: CropPriceChartProps) {
     return (
       <Card className="shadow-lg bg-card">
         <CardHeader>
-          <CardTitle>Loading Price Trends...</CardTitle>
-          <CardDescription>Fetching historical price data.</CardDescription>
+          <CardTitle>{translate('chartLoadingPriceTrends')}</CardTitle>
+          <CardDescription>{translate('chartFetchingHistoricalData')}</CardDescription>
         </CardHeader>
         <CardContent className="h-[400px]">
           <div className="h-full w-full bg-muted animate-pulse rounded-md" />
@@ -62,11 +59,13 @@ export function CropPriceChart({ data, isLoading }: CropPriceChartProps) {
     return (
       <Card className="shadow-lg bg-card">
         <CardHeader>
-          <CardTitle>No Price Data Available</CardTitle>
-          <CardDescription>Could not load price trends for {data?.cropName || "the selected crop"}.</CardDescription>
+          <CardTitle>{translate('chartNoPriceDataAvailable')}</CardTitle>
+          <CardDescription>
+            {translate('chartCouldNotLoadTrends', { cropName: data?.cropName || translate('selectPlaceholder') })}
+          </CardDescription>
         </CardHeader>
         <CardContent className="h-[400px] flex items-center justify-center">
-          <p className="text-muted-foreground">Please try selecting another crop or check back later.</p>
+          <p className="text-muted-foreground">{translate('chartTryAnotherCrop')}</p>
         </CardContent>
       </Card>
     );
@@ -75,13 +74,12 @@ export function CropPriceChart({ data, isLoading }: CropPriceChartProps) {
   const chartConfig = data.trends.reduce((config, trend, index) => {
     config[trend.state] = {
       label: trend.state,
-      color: chartColors[index] || getChartColor(index % 5, theme), // Fallback color
+      color: chartColors[index] || getChartColor(index % 5),
     };
     return config;
   }, {} as any);
 
 
-  // Flatten data for Recharts: [{date: 'Jan', Punjab: 2000, Haryana: 2100}, ...]
   const chartData = data.trends[0].data.map((_, i) => {
     const entry: { [key: string]: string | number } = { date: data.trends[0].data[i].date };
     data.trends.forEach(trend => {
@@ -94,8 +92,10 @@ export function CropPriceChart({ data, isLoading }: CropPriceChartProps) {
   return (
     <Card className="shadow-lg bg-card">
       <CardHeader>
-        <CardTitle className="text-2xl text-primary">Price Trends: {data.cropName}</CardTitle>
-        <CardDescription>Fluctuations across different states over the last 12 months.</CardDescription>
+        <CardTitle className="text-2xl text-primary">
+          {translate('chartPriceTrendsTitle', { cropName: data.cropName })}
+        </CardTitle>
+        <CardDescription>{translate('chartPriceFluctuationsDesc')}</CardDescription>
       </CardHeader>
       <CardContent>
         <ChartContainer config={chartConfig} className="h-[400px] w-full">
@@ -107,7 +107,7 @@ export function CropPriceChart({ data, isLoading }: CropPriceChartProps) {
                 tickLine={false}
                 axisLine={false}
                 tickMargin={8}
-                tickFormatter={(value) => value.slice(0, 3)} // Show first 3 letters of month for brevity
+                tickFormatter={(value) => value.slice(0, 3)} 
                 stroke="hsl(var(--foreground))"
               />
               <YAxis 

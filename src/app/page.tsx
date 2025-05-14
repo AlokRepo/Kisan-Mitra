@@ -1,3 +1,4 @@
+
 "use client";
 
 import type { CropPriceInfo } from '@/types';
@@ -10,11 +11,13 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import Image from 'next/image';
 import { Skeleton } from '@/components/ui/skeleton';
 import { TrendingUp, RefreshCw } from 'lucide-react';
+import { useLanguage } from '@/contexts/LanguageContext';
 
 export default function HomePage() {
   const [prices, setPrices] = useState<CropPriceInfo[]>([]);
   const [selectedCrop, setSelectedCrop] = useState<string | undefined>(undefined);
   const [isPending, startTransition] = useTransition();
+  const { translate } = useLanguage();
 
   const fetchPrices = (crop?: string) => {
     startTransition(async () => {
@@ -40,15 +43,15 @@ export default function HomePage() {
       <div className="flex flex-col sm:flex-row justify-between items-center mb-8 gap-4">
         <div className="flex items-center gap-3">
            <TrendingUp className="h-8 w-8 text-primary" />
-          <h1 className="text-3xl font-bold text-foreground">Real-Time Crop Prices</h1>
+          <h1 className="text-3xl font-bold text-foreground">{translate('homeTitle')}</h1>
         </div>
         <div className="flex gap-2 items-center w-full sm:w-auto">
           <Select onValueChange={handleCropChange} defaultValue="all">
             <SelectTrigger className="w-full sm:w-[180px] bg-card text-card-foreground">
-              <SelectValue placeholder="Select crop" />
+              <SelectValue placeholder={translate('selectCropPlaceholder')} />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="all">All Crops</SelectItem>
+              <SelectItem value="all">{translate('allCrops')}</SelectItem>
               {CROPS.map(crop => (
                 <SelectItem key={crop} value={crop}>{crop}</SelectItem>
               ))}
@@ -56,7 +59,7 @@ export default function HomePage() {
           </Select>
           <Button onClick={handleRefresh} disabled={isPending} variant="outline" size="icon" className="bg-card text-card-foreground hover:bg-accent hover:text-accent-foreground">
             <RefreshCw className={`h-4 w-4 ${isPending ? 'animate-spin' : ''}`} />
-            <span className="sr-only">Refresh</span>
+            <span className="sr-only">{translate('refreshPricesSr')}</span>
           </Button>
         </div>
       </div>
@@ -82,8 +85,8 @@ export default function HomePage() {
 
       {!isPending && prices.length === 0 && (
         <Card className="text-center p-8">
-          <CardTitle>No Prices Available</CardTitle>
-          <CardDescription>Could not fetch price data. Please try refreshing or select a different crop.</CardDescription>
+          <CardTitle>{translate('noPricesAvailableTitle')}</CardTitle>
+          <CardDescription>{translate('noPricesAvailableDesc')}</CardDescription>
         </Card>
       )}
       
@@ -96,8 +99,9 @@ export default function HomePage() {
                   <Image 
                     src={item.imageUrl} 
                     alt={item.cropName} 
-                    layout="fill" 
-                    objectFit="cover" 
+                    fill
+                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                    style={{objectFit: 'cover'}}
                     data-ai-hint={item.aiHint || item.cropName.toLowerCase()}
                   />
                 </div>
@@ -109,9 +113,9 @@ export default function HomePage() {
               <CardContent>
                 <p className="text-3xl font-semibold text-accent-foreground mb-2">₹{item.modalPrice} <span className="text-sm text-muted-foreground">/{item.unit}</span></p>
                 <div className="text-sm space-y-1">
-                  <p><span className="font-medium">Variety:</span> {item.variety}</p>
-                  <p><span className="font-medium">Date:</span> {item.date}</p>
-                  <p><span className="font-medium">Range:</span> ₹{item.minPrice} - ₹{item.maxPrice}</p>
+                  <p><span className="font-medium">{translate('varietyLabel')}</span> {item.variety}</p>
+                  <p><span className="font-medium">{translate('dateLabel')}</span> {item.date}</p>
+                  <p><span className="font-medium">{translate('rangeLabel')}</span> ₹{item.minPrice} - ₹{item.maxPrice}</p>
                 </div>
               </CardContent>
             </Card>

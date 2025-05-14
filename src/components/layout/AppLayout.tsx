@@ -1,5 +1,5 @@
 
-"use client"; // Add "use client" as AppLayout now uses useLanguage hook indirectly via SidebarNavigation & AppHeader
+"use client"; 
 import type { ReactNode } from 'react';
 import {
   SidebarProvider,
@@ -18,10 +18,10 @@ import { useLanguage } from '@/contexts/LanguageContext';
 
 type AppLayoutProps = {
   children: ReactNode;
-  pageTitle?: string; 
+  // pageTitle is now handled by AppHeader internally
 };
 
-export function AppLayout({ children, pageTitle }: AppLayoutProps) {
+export function AppLayout({ children }: AppLayoutProps) {
   const { translate } = useLanguage();
   
   return (
@@ -42,7 +42,7 @@ export function AppLayout({ children, pageTitle }: AppLayoutProps) {
          <SidebarRail />
       </Sidebar>
       <SidebarInset className="flex flex-col">
-        <AppHeader title={pageTitle} />
+        <AppHeader />
         <main className="flex-1 overflow-y-auto p-4 md:p-6">
           {children}
         </main>
