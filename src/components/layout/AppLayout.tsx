@@ -1,3 +1,5 @@
+
+"use client"; // Add "use client" as AppLayout now uses useLanguage hook indirectly via SidebarNavigation & AppHeader
 import type { ReactNode } from 'react';
 import {
   SidebarProvider,
@@ -12,6 +14,7 @@ import { AppHeader } from './AppHeader';
 import { SidebarNavigation } from './SidebarNavigation';
 import { Leaf } from 'lucide-react';
 import Link from 'next/link';
+import { useLanguage } from '@/contexts/LanguageContext';
 
 type AppLayoutProps = {
   children: ReactNode;
@@ -19,20 +22,22 @@ type AppLayoutProps = {
 };
 
 export function AppLayout({ children, pageTitle }: AppLayoutProps) {
+  const { translate } = useLanguage();
+  
   return (
     <SidebarProvider defaultOpen={true}>
       <Sidebar collapsible="icon" variant="sidebar" side="left" className="border-r border-sidebar-border">
         <SidebarHeader className="p-4">
           <Link href="/" className="flex items-center gap-2 text-lg font-semibold text-sidebar-foreground">
             <Leaf className="h-7 w-7 text-sidebar-primary" />
-            <span className="group-data-[collapsible=icon]:hidden">Kisan Mitra</span>
+            <span className="group-data-[collapsible=icon]:hidden">{translate('appName')}</span>
           </Link>
         </SidebarHeader>
         <SidebarContent>
           <SidebarNavigation />
         </SidebarContent>
         <SidebarFooter className="p-4 group-data-[collapsible=icon]:hidden">
-          <p className="text-xs text-sidebar-foreground/70">&copy; {new Date().getFullYear()} Kisan Mitra</p>
+          <p className="text-xs text-sidebar-foreground/70">{translate('copyright')}</p>
         </SidebarFooter>
          <SidebarRail />
       </Sidebar>
