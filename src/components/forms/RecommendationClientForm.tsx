@@ -1,3 +1,4 @@
+
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -18,7 +19,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { CROPS, STATES } from "@/types";
-import { useState, useTransition } from "react";
+import { useState, useTransition, useEffect } from "react";
 import { generateRecommendation, type GenerateRecommendationInput, type GenerateRecommendationOutput } from "@/ai/flows/generate-recommendation";
 import { useToast } from "@/hooks/use-toast";
 import { Loader2, ThumbsUp, MessageSquareWarning } from "lucide-react";
@@ -41,12 +42,33 @@ export function RecommendationClientForm() {
     resolver: zodResolver(formSchema),
     defaultValues: {
       crop: "",
-      quantity: 100, // Default to 100 kg or Quintals based on common usage
+      quantity: 100,
       location: "",
-      historicalProductionData: "Average yield for last 3 years was X quintals/acre. Last year was exceptionally good/bad due to Y.",
-      weatherData: "Current season rainfall is normal/deficient/excessive. Temperature trends are higher/lower than average.",
+      historicalProductionData: "Historical data will be auto-suggested based on crop and location. Please edit as needed.",
+      weatherData: "Weather information will be auto-suggested based on crop and location. Please edit as needed.",
     },
   });
+
+  const watchedCrop = form.watch("crop");
+  const watchedLocation = form.watch("location");
+
+  useEffect(() => {
+    if (watchedCrop && watchedLocation) {
+      const historicalTemplate = `Average yield for ${watchedCrop} in ${watchedLocation} for the last 3 years was [X quintals/acre]. Last year's yield was [e.g., good/bad due to specific reason like drought/pests]. Market price received was [Rs. Y/quintal]. Please update with your specific data.`;
+      const weatherTemplate = `Current weather in ${watchedLocation} for the upcoming ${watchedCrop} season: [e.g., Monsoon status - on time/delayed, rainfall - normal/deficient/excessive, temperature trends - normal/higher/lower]. Key forecast points: [e.g., predicts normal rain for next month, potential heatwaves during sowing/harvesting]. Please update with specific local conditions and official forecasts.`;
+      
+      form.setValue("historicalProductionData", historicalTemplate, { shouldValidate: true });
+      form.setValue("weatherData", weatherTemplate, { shouldValidate: true });
+    } else if (watchedCrop || watchedLocation) {
+        // If only one is selected, revert to a more generic placeholder or clear them if preferred
+        if (!form.formState.dirtyFields.historicalProductionData) {
+             form.setValue("historicalProductionData", "Please select both crop and location to get specific suggestions.", { shouldValidate: true });
+        }
+       if (!form.formState.dirtyFields.weatherData) {
+            form.setValue("weatherData", "Please select both crop and location to get specific suggestions.", { shouldValidate: true });
+       }
+    }
+  }, [watchedCrop, watchedLocation, form]);
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
     setRecommendationResult(null);
@@ -122,7 +144,7 @@ export function RecommendationClientForm() {
               name="location"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Your Location (District, State)</FormLabel>
+                  <FormLabel>Your Location (State)</FormLabel>
                    <Select onValueChange={field.onChange} defaultValue={field.value}>
                     <FormControl>
                       <SelectTrigger>
@@ -135,7 +157,7 @@ export function RecommendationClientForm() {
                       ))}
                     </SelectContent>
                   </Select>
-                  <FormDescription>This helps in finding nearby markets.</FormDescription>
+                  <FormDescription>This helps in generating relevant suggestions.</FormDescription>
                   <FormMessage />
                 </FormItem>
               )}
@@ -148,13 +170,13 @@ export function RecommendationClientForm() {
                   <FormLabel>Historical Production Data</FormLabel>
                   <FormControl>
                     <Textarea
-                      placeholder="Describe your farm's past yields, any significant events..."
+                      placeholder="Describe your farm's past yields, market prices, significant events..."
                       className="resize-none"
-                      rows={4}
+                      rows={5} // Increased rows for better visibility
                       {...field}
                     />
                   </FormControl>
-                  <FormDescription>e.g., "Last 3 years average yield for wheat was 20 quintals/acre. Last year, drought reduced yield by 30%."</FormDescription>
+                  <FormDescription>e.g., "Last 3 years average yield for wheat was 20 quintals/acre. Last year, drought reduced yield by 30%." Please edit with your details.</FormDescription>
                   <FormMessage />
                 </FormItem>
               )}
@@ -164,16 +186,16 @@ export function RecommendationClientForm() {
               name="weatherData"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Current Weather & Forecast</FormLabel>
+                  <FormLabel>Current Weather & Forecast Context</FormLabel>
                   <FormControl>
                     <Textarea
-                      placeholder="Describe current weather conditions and any forecasts..."
+                      placeholder="Describe current weather conditions, forecasts, and their impact on your crop..."
                       className="resize-none"
-                      rows={4}
+                      rows={5} // Increased rows for better visibility
                       {...field}
                     />
                   </FormControl>
-                   <FormDescription>e.g., "Monsoon arrived on time, good rainfall so far. Forecast predicts normal rain for next month."</FormDescription>
+                   <FormDescription>e.g., "Monsoon arrived on time, good rainfall so far. Forecast predicts normal rain for next month." Please edit with local specifics.</FormDescription>
                   <FormMessage />
                 </FormItem>
               )}
@@ -227,3 +249,4 @@ export function RecommendationClientForm() {
     </Card>
   );
 }
+
