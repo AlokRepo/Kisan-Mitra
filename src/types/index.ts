@@ -1,3 +1,4 @@
+
 export interface CropPriceInfo {
   id: string;
   cropName: string;
@@ -43,3 +44,11 @@ export interface CropPriceTrend {
 
 export const CROPS = ["Wheat", "Rice", "Maize", "Cotton", "Sugarcane", "Soybean", "Pulses"];
 export const STATES = ["Punjab", "Haryana", "Uttar Pradesh", "Madhya Pradesh", "Maharashtra", "Rajasthan", "Gujarat", "Andhra Pradesh", "Telangana", "Karnataka"];
+
+export const VEHICLE_TYPES = [
+  { id: 'tractor', nameKey: 'vehicleTractor', efficiency: 5, capacityQuintals: 30 }, // km/liter, quintals
+  { id: 'small_truck', nameKey: 'vehicleSmallTruck', efficiency: 8, capacityQuintals: 50 },
+  { id: 'large_truck', nameKey: 'vehicleLargeTruck', efficiency: 4, capacityQuintals: 150 },
+] as const;
+
+export type VehicleTypeId = typeof VEHICLE_TYPES[number]['id'];

@@ -1,3 +1,4 @@
+
 "use client";
 
 import type { ReactNode } from 'react';
@@ -39,6 +40,7 @@ const translations: Translations = {
   navDashboard: { en: 'Dashboard', hi: 'डैशबोर्ड' },
   navMandis: { en: 'Mandis', hi: 'मंडियां' },
   navEducation: { en: "Education & Resources", hi: "शिक्षा और संसाधन" },
+  navTransportEstimator: { en: "Transport Estimator", hi: "परिवहन अनुमानक" },
   Settings: { en: 'Settings', hi: 'सेटिंग्स'}, // For sidebar
   // Header
   appHeaderMobileTitle: { en: 'Kisan Mitra', hi: 'किसान मित्र' },
@@ -227,6 +229,37 @@ const translations: Translations = {
   forumDesc: { en: "Connect with other farmers, share tips, ask questions, and stay updated with the latest discussions.", hi: "अन्य किसानों से जुड़ें, सुझाव साझा करें, प्रश्न पूछें और नवीनतम चर्चाओं से अपडेट रहें।" },
   forumPlaceholderText: { en: "Engage with the community on our X (formerly Twitter) page or other social channels. (Integration coming soon)", hi: "हमारे एक्स (पूर्व में ट्विटर) पेज या अन्य सोशल चैनलों पर समुदाय के साथ जुड़ें। (एकीकरण जल्द ही आ रहा है)" },
   visitForumButton: { en: "Visit our X Page", hi: "हमारे एक्स पेज पर जाएं" },
+
+  // Transport Estimator Page
+  transportEstimatorTitle: { en: "Transport Cost Estimator", hi: "परिवहन लागत अनुमानक" },
+  estimatorFormTitle: { en: "Estimate Your Transport Costs", hi: "अपनी परिवहन लागत का अनुमान लगाएं" },
+  estimatorFormDescription: { en: "Calculate potential transport costs and net profit for selling your crop.", hi: "अपनी फसल बेचने के लिए संभावित परिवहन लागत और शुद्ध लाभ की गणना करें।" },
+  targetMandiLabel: { en: "Target Mandi", hi: "लक्ष्य मंडी" },
+  selectMandiPlaceholder: { en: "Select target mandi", hi: "लक्ष्य मंडी चुनें" },
+  vehicleTypeLabel: { en: "Vehicle Type", hi: "वाहन का प्रकार" },
+  selectVehiclePlaceholder: { en: "Select vehicle type", hi: "वाहन का प्रकार चुनें" },
+  calculateCostButton: { en: "Calculate Costs", hi: "लागत की गणना करें" },
+  calculatingButton: { en: "Calculating...", hi: "गणना हो रही है..." },
+  estimationResultsTitle: { en: "Estimation Results", hi: "अनुमान परिणाम" },
+  estimatedDistanceLabel: { en: "Estimated Round Trip Distance", hi: "अनुमानित गोल यात्रा दूरी" },
+  selectedVehicleLabel: { en: "Vehicle Selected", hi: "चयनित वाहन" },
+  estimatedFuelCostLabel: { en: "Estimated Fuel Cost", hi: "अनुमानित ईंधन लागत" },
+  estimatedOtherCostsLabel: { en: "Estimated Other Costs (Driver, Tolls etc.)", hi: "अनुमानित अन्य लागतें (ड्राइवर, टोल आदि)" },
+  totalTransportCostLabel: { en: "Total Estimated Transport Cost", hi: "कुल अनुमानित परिवहन लागत" },
+  estimatedMarketPriceLabel: { en: "Estimated Market Price for {cropName} (per Quintal)", hi: "{cropName} के लिए अनुमानित बाजार मूल्य (प्रति क्विंटल)" },
+  totalEstimatedSaleValueLabel: { en: "Total Estimated Sale Value for {quantity} Quintals", hi: "{quantity} क्विंटल के लिए कुल अनुमानित बिक्री मूल्य" },
+  estimatedNetProfitLabel: { en: "Estimated Net Profit", hi: "अनुमानित शुद्ध लाभ" },
+  disclaimerLabel: { en: "Disclaimer:", hi: "अस्वीकरण:" },
+  disclaimerText: { en: "This is a simplified estimation. Actual costs and prices may vary. Always verify with multiple sources.", hi: "यह एक सरलीकृत अनुमान है। वास्तविक लागत और कीमतें भिन्न हो सकती हैं। हमेशा कई स्रोतों से सत्यापित करें।" },
+  noMarketPriceFound: { en: "Could not fetch a market price for the selected crop. Net profit cannot be calculated.", hi: "चयनित फसल के लिए बाजार मूल्य प्राप्त नहीं किया जा सका। शुद्ध लाभ की गणना नहीं की जा सकती।" },
+  vehicleTractor: { en: "Tractor", hi: "ट्रैक्टर" },
+  vehicleSmallTruck: { en: "Small Truck", hi: "छोटा ट्रक" },
+  vehicleLargeTruck: { en: "Large Truck", hi: "बड़ा ट्रक" },
+  mandiNotSelectedError: { en: "Please select a target mandi.", hi: "कृपया एक लक्ष्य मंडी चुनें।" },
+  cropNotSelectedError: { en: "Please select a crop.", hi: "कृपया एक फसल चुनें।" },
+  quantityNotEnteredError: { en: "Please enter crop quantity.", hi: "कृपया फसल की मात्रा दर्ज करें।" },
+  locationNotSelectedError: { en: "Please select your location.", hi: "कृपया अपना स्थान चुनें।" },
+  vehicleNotSelectedError: { en: "Please select a vehicle type.", hi: "कृपया एक वाहन प्रकार चुनें।" },
 };
 
 const LanguageContext = createContext<LanguageContextType | undefined>(undefined);
