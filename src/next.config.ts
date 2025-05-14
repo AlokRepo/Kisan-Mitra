@@ -47,9 +47,10 @@ const nextConfig: NextConfig = {
     allowedDevOrigins: [
       'https://56567-firebase-studio-1747214151338.cluster-nzwlpk54dvagsxetkvxzbvslyi.cloudworkstations.dev',
       'https://9000-firebase-studio-1747214151338.cluster-nzwlpk54dvagsxetkvxzbvslyi.cloudworkstations.dev',
-      // You might also need to add the base URL without a specific port if you access it that way.
-      // e.g., 'https://firebase-studio-1747214151338.cluster-nzwlpk54dvagsxetkvxzbvslyi.cloudworkstations.dev'
     ],
+  },
+  devIndicators: { // Ensuring this existing configuration is maintained
+    autoPrerender: false,
   },
 };
 

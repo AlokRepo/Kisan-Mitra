@@ -1,5 +1,7 @@
+
 # To learn more about how to use Nix to configure your environment
 # see: https://firebase.google.com/docs/studio/customize-workspace
+
 {pkgs}: {
   # Which nixpkgs channel to use.
   channel = "stable-24.11"; # or "unstable"
@@ -34,8 +36,8 @@
       enable = true;
       previews = {
         web = {
-          command = ["npm" "run" "dev" "--" "--port" "56567" "--hostname" "0.0.0.0"];
-          manager = "web";
+ command = ["npm" "run" "dev" "--" "--port" "56567" "--hostname" "0.0.0.0"]; # This is the correct location
+ manager = "web";
         };
       };
     };
