@@ -1,9 +1,8 @@
-
 "use client";
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { Home, Lightbulb, BarChart3, MapPin, Settings, type LucideIcon } from 'lucide-react';
+import { Home, Lightbulb, BarChart3, MapPin, Settings, GraduationCap, type LucideIcon } from 'lucide-react';
 import {
   SidebarMenu,
   SidebarMenuItem,
@@ -14,7 +13,7 @@ import { useLanguage } from '@/contexts/LanguageContext';
 
 interface NavItem {
   href: string;
-  labelKey: string; // Changed from label to labelKey for translation
+  labelKey: string; 
   icon: LucideIcon;
 }
 
@@ -23,6 +22,7 @@ const navItemsConfig: NavItem[] = [
   { href: '/recommendations', labelKey: 'navAiAdvisor', icon: Lightbulb },
   { href: '/dashboard', labelKey: 'navDashboard', icon: BarChart3 },
   { href: '/locator', labelKey: 'navMandis', icon: MapPin },
+  { href: '/education', labelKey: 'navEducation', icon: GraduationCap },
   { href: '/settings', labelKey: 'Settings', icon: Settings },
 ];
 
