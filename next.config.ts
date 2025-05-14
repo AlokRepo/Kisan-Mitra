@@ -3,6 +3,7 @@ import type {NextConfig} from 'next';
 const nextConfig: NextConfig = {
   /* config options here */
   typescript: {
+    // !! WARN !!
     ignoreBuildErrors: true,
   },
   eslint: {
@@ -17,6 +18,10 @@ const nextConfig: NextConfig = {
         pathname: '/**',
       },
     ],
+  },
+  allowedDevOrigins: ['56567-firebase-studio-1747214151338.cluster-nzwlpk54dvagsxetkvxzbvslyi.cloudworkstations.dev'],
+  devIndicators: {
+    autoPrerender: false,
   },
 };
 
