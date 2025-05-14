@@ -1,3 +1,4 @@
+
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import './globals.css';
@@ -14,9 +15,7 @@ const inter = Inter({
 export const metadata: Metadata = {
   title: 'Kisan Mitra',
   description: 'Real-time crop prices, AI-powered selling recommendations, and market insights for Indian farmers.',
-  icons: {
-    icon: "/favicon.ico",
-  }
+  // Removed: icons: { icon: "/favicon.ico", } 
 };
 
 export default function RootLayout({
