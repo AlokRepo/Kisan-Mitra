@@ -94,7 +94,7 @@ const translations: Translations = {
 
   // GoogleMapComponent
   mapsApiErrorTitle: { en: "Google Maps API Error", hi: "गूगल मैप्स एपीआई त्रुटि" },
-  mapsApiKeyMissing: { en: "Google Maps API key is missing. Please set NEXT_PUBLIC_GOOGLE_MAPS_API_KEY in your .env file.", hi: "गूगल मैप्स एपीआई कुंजी गायब है। कृपया अपनी .env फ़ाइल में NEXT_PUBLIC_GOOGLE_MAPS_API_KEY सेट करें।" }, // Removed <code> for simplicity
+  mapsApiKeyMissing: { en: "Google Maps API key is missing. Please set NEXT_PUBLIC_GOOGLE_MAPS_API_KEY in your .env file.", hi: "गूगल मैप्स एपीआई कुंजी गायब है। कृपया अपनी .env फ़ाइल में NEXT_PUBLIC_GOOGLE_MAPS_API_KEY सेट करें।" },
   mapsApiKeyRestartNote: { en: "You may need to restart your development server after adding the key.", hi: "कुंजी जोड़ने के बाद आपको अपने डेवलपमेंट सर्वर को पुनरारंभ करने की आवश्यकता हो सकती है।" },
 
   // MandiInfoCard
@@ -115,18 +115,17 @@ const translations: Translations = {
   locationLabel: { en: "Your Location (State)", hi: "आपका स्थान (राज्य)" },
   selectStatePlaceholder: { en: "Select your state", hi: "अपना राज्य चुनें" },
   locationDescription: { en: "This helps in generating relevant suggestions.", hi: "यह प्रासंगिक सुझाव उत्पन्न करने में मदद करता है।" },
+  
   historicalDataLabel: { en: "Historical Production Data", hi: "ऐतिहासिक उत्पादन डेटा" },
   historicalDataPlaceholder: { en: "Describe your farm's past yields, market prices, significant events...", hi: "अपने खेत की पिछली पैदावार, बाजार मूल्य, महत्वपूर्ण घटनाओं का वर्णन करें..." },
-  histProdDataDefault: { en: "Historical data will be auto-suggested based on crop and location. Please edit as needed.", hi: "फसल और स्थान के आधार पर ऐतिहासिक डेटा स्वतः सुझाया जाएगा। कृपया आवश्यकतानुसार संपादित करें।" },
-  histProdDataPleaseSelect: { en: "Please select both crop and location to get specific suggestions.", hi: "विशिष्ट सुझाव प्राप्त करने के लिए कृपया फसल और स्थान दोनों का चयन करें।" },
-  historicalDataDescDynamic: { en: "Provide your farm's specific historical data for {crop} in {location}. Include yields, prices, and significant events. This helps the AI tailor advice.", hi: "{location} में {crop} के लिए अपने खेत का विशिष्ट ऐतिहासिक डेटा प्रदान करें। पैदावार, कीमतें और महत्वपूर्ण घटनाएं शामिल करें। यह एआई को सलाह को अनुकूलित करने में मदद करता है।" },
-  historicalDataDescStatic: { en: "Enter details about your farm's past production.", hi: "अपने खेत के पिछले उत्पादन के बारे में विवरण दर्ज करें।" },
+  histProdDataAutoText: { en: "For {crop} in {location}, describe past yields (e.g., X quintals/acre), prices fetched (e.g., Y INR/quintal), and any significant events (e.g., drought in 2021, pest attack).", hi: "{location} में {crop} के लिए, पिछली पैदावार (उदा., X क्विंटल/एकड़), प्राप्त कीमतें (उदा., Y रुपये/क्विंटल), और कोई महत्वपूर्ण घटनाएं (उदा., 2021 में सूखा, कीट हमला) का वर्णन करें।" },
+  historicalDataDescStatic: { en: "Enter details about your farm's past production, typical yields, prices received, and any major events like droughts or pest attacks.", hi: "अपने खेत के पिछले उत्पादन, सामान्य पैदावार, प्राप्त कीमतों और सूखे या कीट हमलों जैसी किसी भी बड़ी घटनाओं के बारे में विवरण दर्ज करें।" },
+
   weatherDataLabel: { en: "Current Weather & Forecast Context", hi: "वर्तमान मौसम और पूर्वानुमान संदर्भ" },
   weatherDataPlaceholder: { en: "Describe current weather conditions, forecasts, and their impact on your crop...", hi: "वर्तमान मौसम की स्थिति, पूर्वानुमान और आपकी फसल पर उनके प्रभाव का वर्णन करें..." },
-  weatherDataDefault: { en: "Weather information will be auto-suggested based on crop and location. Please edit as needed.", hi: "फसल और स्थान के आधार पर मौसम की जानकारी स्वतः सुझाई जाएगी। कृपया आवश्यकतानुसार संपादित करें।" },
-  weatherDataPleaseSelect: { en: "Please select both crop and location to get specific suggestions.", hi: "विशिष्ट सुझाव प्राप्त करने के लिए कृपया फसल और स्थान दोनों का चयन करें।" },
-  weatherDataDescDynamic: { en: "Detail the current weather and upcoming forecast for {crop} in {location}. Accurate local information improves recommendation quality.", hi: "{location} में {crop} के लिए वर्तमान मौसम और आगामी पूर्वानुमान का विवरण दें। सटीक स्थानीय जानकारी सिफारिश की गुणवत्ता में सुधार करती है।" },
-  weatherDataDescStatic: { en: "Enter current weather conditions and forecasts.", hi: "वर्तमान मौसम की स्थिति और पूर्वानुमान दर्ज करें।" },
+  weatherDataAutoText: { en: "For {crop} in {location}, what are the current weather conditions (e.g., temperature, rainfall in last week) and upcoming forecasts (e.g., monsoon expected by X date, heatwave predicted)?", hi: "{location} में {crop} के लिए, वर्तमान मौसम की स्थिति (उदा., तापमान, पिछले सप्ताह में वर्षा) और आगामी पूर्वानुमान (उदा., X तारीख तक मानसून की उम्मीद, लू की भविष्यवाणी) क्या हैं?" },
+  weatherDataDescStatic: { en: "Describe current local weather, recent rainfall, temperature trends, and any official forecasts relevant to your crops.", hi: "वर्तमान स्थानीय मौसम, हाल की वर्षा, तापमान के रुझान और अपनी फसलों से संबंधित किसी भी आधिकारिक पूर्वानुमान का वर्णन करें।" },
+  
   getRecommendationButton: { en: "Get Recommendation", hi: "सिफारिश प्राप्त करें" },
   generatingButton: { en: "Generating...", hi: "उत्पन्न हो रहा है..." },
   toastRecGeneratedTitle: { en: "Recommendation Generated!", hi: "सिफारिश उत्पन्न हुई!" },
