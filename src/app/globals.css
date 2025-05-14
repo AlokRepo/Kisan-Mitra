@@ -1,3 +1,4 @@
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -52,7 +53,7 @@
     --sidebar-ring: 45 100% 51%; /* Golden yellow for focus rings in sidebar */
   }
 
-  .dark {
+  [data-theme="dark"] {
     --background: 17 21% 15%; /* Dark Muted brown */
     --foreground: 60 56% 94%; /* Light beige */
 
@@ -202,3 +203,5 @@
     @apply bg-background text-foreground;
   }
 }
+
+    
