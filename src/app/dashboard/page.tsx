@@ -13,25 +13,27 @@ import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/com
 import { Skeleton } from "@/components/ui/skeleton";
 import { useLanguage } from '@/contexts/LanguageContext';
 
+// New component for the loading state of the chart
+const ChartLoadingSkeleton = () => {
+  const { translate } = useLanguage();
+  return (
+    <Card className="shadow-lg bg-card">
+      <CardHeader>
+        <CardTitle>{translate('loadingPriceTrends')}</CardTitle>
+        <CardDescription>{translate('fetchingHistoricalData')}</CardDescription>
+      </CardHeader>
+      <CardContent className="h-[400px]">
+        <Skeleton className="h-full w-full bg-muted rounded-md" />
+      </CardContent>
+    </Card>
+  );
+};
+
 const DynamicCropPriceChart = dynamic(() =>
   import('@/components/dashboard/CropPriceChart').then((mod) => mod.CropPriceChart),
   {
-    loading: () => {
-      // eslint-disable-next-line react-hooks/rules-of-hooks
-      const { translate } = useLanguage();
-      return (
-        <Card className="shadow-lg bg-card">
-          <CardHeader>
-            <CardTitle>{translate('loadingPriceTrends')}</CardTitle>
-            <CardDescription>{translate('fetchingHistoricalData')}</CardDescription>
-          </CardHeader>
-          <CardContent className="h-[400px]">
-            <Skeleton className="h-full w-full bg-muted rounded-md" />
-          </CardContent>
-        </Card>
-      );
-    },
-    ssr: false 
+    loading: () => <ChartLoadingSkeleton />, // Use the new component here
+    ssr: false
   }
 );
 
@@ -53,7 +55,7 @@ export default function DashboardPage() {
       fetchTrends(selectedCrop);
     }
   }, [selectedCrop]);
-  
+
   const handleRefresh = () => {
     if (selectedCrop) {
       fetchTrends(selectedCrop);
@@ -84,7 +86,7 @@ export default function DashboardPage() {
           </Button>
         </div>
       </div>
-      
+
       <DynamicCropPriceChart data={priceTrendData} isLoading={isPending} />
     </div>
   );
