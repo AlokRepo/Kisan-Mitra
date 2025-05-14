@@ -1,4 +1,4 @@
-tsx
+
 "use client";
 
 import { MandiInfoCard } from "@/components/locator/MandiInfoCard";
