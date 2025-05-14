@@ -1,17 +1,20 @@
+
 "use client";
 
 import { MandiInfoCard } from "@/components/locator/MandiInfoCard";
 import { getMandiLocations } from "@/lib/mockApi";
 import type { MandiLocation } from "@/types";
 import { MapPin, RefreshCw } from "lucide-react";
-import { useEffect, useState, useTransition } from "react";
+import { useEffect, useState, useTransition, useMemo } from "react";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import { GoogleMapComponent } from "@/components/locator/GoogleMapComponent";
 
 export default function LocatorPage() {
   const [mandiList, setMandiList] = useState<MandiLocation[]>([]);
   const [isPending, startTransition] = useTransition();
+  const apiKey = process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY;
 
   const fetchMandis = () => {
     startTransition(async () => {
@@ -28,6 +31,14 @@ export default function LocatorPage() {
     fetchMandis();
   };
 
+  const defaultMapCenter = useMemo(() => {
+    const firstMandiWithCoords = mandiList.find(m => typeof m.latitude === 'number' && typeof m.longitude === 'number');
+    if (firstMandiWithCoords) {
+      return { lat: firstMandiWithCoords.latitude!, lng: firstMandiWithCoords.longitude! };
+    }
+    return { lat: 20.5937, lng: 78.9629 }; // A central point in India
+  }, [mandiList]);
+
   return (
     <div className="container mx-auto py-8">
       <div className="flex flex-col sm:flex-row justify-between items-center mb-8 gap-4">
@@ -41,20 +52,9 @@ export default function LocatorPage() {
           </Button>
       </div>
 
-      {/* Placeholder for map integration */}
-      <Card className="mb-8 bg-muted/50 border-dashed">
-        <CardHeader>
-          <CardTitle className="text-lg">Interactive Map View</CardTitle>
-          <CardDescription>
-            Future enhancement: An interactive map will display mandi locations visually. 
-            For now, please see the list below.
-          </CardDescription>
-        </CardHeader>
-        <CardContent className="h-48 flex items-center justify-center rounded-md bg-muted">
-          <p className="text-muted-foreground">[Map Placeholder - requires Google Maps API setup]</p>
-        </CardContent>
-      </Card>
-
+      <div className="mb-8 shadow-lg rounded-lg overflow-hidden">
+        <GoogleMapComponent mandis={mandiList} defaultCenter={defaultMapCenter} apiKey={apiKey} />
+      </div>
 
       {isPending && (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -86,8 +86,8 @@ export default function LocatorPage() {
 
       {!isPending && mandiList.length > 0 && (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {mandiList.map(mandi => (
-            <MandiInfoCard key={mandi.id} mandi={mandi} />
+          {mandiList.map((mandi, index) => (
+            <MandiInfoCard key={mandi.id || `mandi-${index}`} mandi={mandi} />
           ))}
         </div>
       )}
