@@ -30,9 +30,15 @@ export function SidebarNavigation() {
   const pathname = usePathname();
   const { translate } = useLanguage();
 
+  const orderedNavItems = [
+    ...navItemsConfig.filter(item => item.labelKey !== 'Settings'),
+    ...navItemsConfig.filter(item => item.labelKey === 'Settings')
+  ];
+
+
   return (
     <SidebarMenu>
-      {navItemsConfig.map((item) => (
+      {orderedNavItems.map((item) => (
         <SidebarMenuItem key={item.href}>
           <Link href={item.href} legacyBehavior passHref>
             <SidebarMenuButton
