@@ -2,13 +2,15 @@
 "use client";
 
 import type { ReactNode } from 'react';
-import { createContext, useContext, useState, useMemo, useCallback } from 'react';
+import { createContext, useContext, useState, useMemo, useCallback, useEffect } from 'react';
 
-type Language = 'en' | 'hi';
+type Language = 'en' | 'hi'; // For now, only 'en' and 'hi' are fully supported
+const VALID_LANGUAGES: Language[] = ['en', 'hi'];
+
 
 interface Translations {
   [key: string]: {
-    [lang in Language]: string;
+    [lang in Language]?: string; // Make specific language entries optional
   };
 }
 
@@ -37,6 +39,7 @@ const translations: Translations = {
   navAiAdvisor: { en: 'AI Advisor', hi: 'एआई सलाहकार' },
   navDashboard: { en: 'Dashboard', hi: 'डैशबोर्ड' },
   navMandis: { en: 'Mandis', hi: 'मंडियां' },
+  Settings: { en: 'Settings', hi: 'सेटिंग्स'}, // For sidebar
   // Header
   appHeaderMobileTitle: { en: 'Kisan Mitra', hi: 'किसान मित्र' },
   // Theme Switcher
@@ -50,6 +53,9 @@ const translations: Translations = {
   languageLabel: { en: 'Language', hi: 'भाषा' },
   english: { en: 'English', hi: 'अंग्रेज़ी' },
   hindi: { en: 'Hindi', hi: 'हिन्दी' },
+  tamil: { en: 'Tamil', hi: 'तमिल' },
+  punjabi: { en: 'Punjabi', hi: 'पंजाबी' },
+
 
   // General UI
   refresh: { en: "Refresh", hi: "ताज़ा करें" },
@@ -63,7 +69,7 @@ const translations: Translations = {
   homeTitle: { en: "Real-Time Crop Prices", hi: "वास्तविक समय में फसल की कीमतें" },
   selectCropPlaceholder: { en: "Select crop", hi: "फसल चुनें" },
   allCrops: { en: "All Crops", hi: "सभी फसलें" },
-  refreshPricesSr: { en: "Refresh prices", hi: "कीमतें ताज़ा करें" }, // Sr for Screen Reader
+  refreshPricesSr: { en: "Refresh prices", hi: "कीमतें ताज़ा करें" },
   noPricesAvailableTitle: { en: "No Prices Available", hi: "कोई कीमत उपलब्ध नहीं है" },
   noPricesAvailableDesc: { en: "Could not fetch price data. Please try refreshing or select a different crop.", hi: "मूल्य डेटा प्राप्त नहीं हो सका। कृपया ताज़ा करने का प्रयास करें या कोई भिन्न फसल चुनें।" },
   varietyLabel: { en: "Variety:", hi: "किस्म:" },
@@ -73,7 +79,7 @@ const translations: Translations = {
   // DashboardPage
   dashboardTitle: { en: "Price Fluctuation Dashboard", hi: "मूल्य उतार-चढ़ाव डैशबोर्ड" },
   selectCropPlaceholderDashboard: { en: "Select a crop", hi: "एक फसल चुनें" },
-  refreshTrendsSr: { en: "Refresh trends", hi: "रुझान ताज़ा करें" }, // Sr for Screen Reader
+  refreshTrendsSr: { en: "Refresh trends", hi: "रुझान ताज़ा करें" }, 
   loadingPriceTrends: { en: "Loading Price Trends...", hi: "मूल्य रुझान लोड हो रहे हैं..." },
   fetchingHistoricalData: { en: "Fetching historical price data.", hi: "ऐतिहासिक मूल्य डेटा प्राप्त किया जा रहा है।" },
 
@@ -136,16 +142,86 @@ const translations: Translations = {
   aiRecommendationTitle: { en: "AI Recommendation", hi: "एआई सिफारिश" },
   suggestionLabel: { en: "Suggestion:", hi: "सुझाव:" },
   reasoningLabel: { en: "Reasoning:", hi: "तर्क:" },
+
+  // Settings Page
+  settingsTitle: { en: "Farmer Profile & Settings", hi: "किसान प्रोफ़ाइल और सेटिंग्स" },
+  profileSetupTitle: { en: "Profile Setup", hi: "प्रोफ़ाइल सेटअप" },
+  profileSetupDesc: { en: "Personalize your app experience.", hi: "अपने ऐप अनुभव को वैयक्तिकृत करें।" },
+  locationLabelSettings: { en: "Your Primary Location", hi: "आपका प्राथमिक स्थान" },
+  locationPlaceholderSettings: { en: "e.g., Patiala, Punjab", hi: "उदा., पटियाला, पंजाब" },
+  locationHintSettings: { en: "Used for localized information and recommendations.", hi: "स्थानीय जानकारी और सिफारिशों के लिए उपयोग किया जाता है।" },
+  primaryCropsLabel: { en: "Primary Crops You Grow", hi: "आपके द्वारा उगाई जाने वाली प्राथमिक फसलें" },
+  primaryCropsPlaceholder: { en: "Select your main crops", hi: "अपनी मुख्य फसलें चुनें" },
+  primaryCropsHint: { en: "Helps tailor content related to these crops.", hi: "इन फसलों से संबंधित सामग्री को अनुकूलित करने में मदद करता है।" },
+  preferredMandisLabel: { en: "Preferred Mandis (Markets)", hi: "पसंदीदा मंडियां (बाजार)" },
+  preferredMandisPlaceholder: { en: "Select your preferred mandis", hi: "अपनी पसंदीदा मंडियां चुनें" },
+  preferredMandisHint: { en: "For quick access to their price data.", hi: "उनके मूल्य डेटा तक त्वरित पहुंच के लिए।" },
+  saveProfileButton: { en: "Save Profile", hi: "प्रोफ़ाइल सहेजें" },
+  toastSettingsSavedTitle: { en: "Settings Saved", hi: "सेटिंग्स सहेजी गईं" },
+  toastProfileSettingsSavedDesc: { en: "Your profile information has been updated.", hi: "आपकी प्रोफ़ाइल जानकारी अपडेट कर दी गई है।" },
+
+  priceAlertsTitle: { en: "Price Alerts", hi: "मूल्य अलर्ट" },
+  priceAlertsDesc: { en: "Get notified when crop prices reach your target.", hi: "फसल की कीमतें आपके लक्ष्य तक पहुंचने पर सूचित करें।" },
+  enablePriceAlertsLabel: { en: "Enable Price Alerts", hi: "मूल्य अलर्ट सक्षम करें" },
+  alertThresholdLabel: { en: "Alert Condition", hi: "अलर्ट शर्त" },
+  alertThresholdPlaceholder: { en: "e.g., Wheat > 2300 in Punjab", hi: "उदा., पंजाब में गेहूं > 2300" },
+  addAlertButton: { en: "Add Alert", hi: "अलर्ट जोड़ें" },
+  currentAlertsLabel: { en: "Current Alerts", hi: "वर्तमान अलर्ट" },
+  noActiveAlerts: { en: "No active alerts.", hi: "कोई सक्रिय अलर्ट नहीं।" },
+  removeButton: { en: "Remove", hi: "हटाएं" },
+  toastAlertAddedTitle: { en: "Alert Added", hi: "अलर्ट जोड़ा गया" },
+  toastPriceAlertSetDesc: { en: "Your new price alert has been set.", hi: "आपका नया मूल्य अलर्ट सेट कर दिया गया है।" },
+  toastAlertRemovedTitle: { en: "Alert Removed", hi: "अलर्ट हटाया गया" },
+  toastPriceAlertRemovedDesc: { en: "The price alert has been removed.", hi: "मूल्य अलर्ट हटा दिया गया है।" },
+  toastEnterAlertCondition: { en: "Please enter an alert condition.", hi: "कृपया एक अलर्ट शर्त दर्ज करें।" },
+
+  languageSupportTitle: { en: "Language Support", hi: "भाषा समर्थन" },
+  languageSupportDesc: { en: "Choose your preferred language for the app.", hi: "ऐप के लिए अपनी पसंदीदा भाषा चुनें।" },
+  selectLanguageLabel: { en: "Select Language", hi: "भाषा चुनें" },
+  selectLanguagePlaceholder: { en: "Choose language", hi: "भाषा चुनें" },
+  toastLanguageChangedTitle: { en: "Language Changed", hi: "भाषा बदली गई" },
+  toastLanguageChangedDesc: { en: "App language set to {lang}.", hi: "ऐप की भाषा {lang} पर सेट की गई।" },
+
+  dataPreferencesTitle: { en: "Data Preferences", hi: "डेटा प्राथमिकताएँ" },
+  dataPreferencesDesc: { en: "Manage data sources and refresh settings.", hi: "डेटा स्रोतों और रीफ्रेश सेटिंग्स का प्रबंधन करें।" },
+  enableWeatherDataLabel: { en: "Include Weather Data in Analysis", hi: "विश्लेषण में मौसम डेटा शामिल करें" },
+  apiRefreshFrequencyLabel: { en: "Data Refresh Frequency (minutes)", hi: "डेटा रीफ्रेश आवृत्ति (मिनट)" },
+  apiRefreshFrequencyHint: {en: "How often to check for new data (e.g., prices).", hi: "कितनी बार नया डेटा (जैसे कीमतें) जांचना है।"},
+  savePreferencesButton: { en: "Save Preferences", hi: "प्राथमिकताएं सहेजें" },
+  toastDataPreferencesSavedDesc: { en: "Your data preferences have been updated.", hi: "आपकी डेटा प्राथमिकताएं अपडेट कर दी गई हैं।" },
+
+  feedbackFormTitle: { en: "Feedback & Suggestions", hi: "प्रतिक्रिया और सुझाव" },
+  feedbackFormDesc: { en: "Help us improve Kisan Mitra.", hi: "किसान मित्र को बेहतर बनाने में हमारी मदद करें।" },
+  yourFeedbackLabel: { en: "Your Feedback", hi: "आपकी प्रतिक्रिया" },
+  feedbackPlaceholder: { en: "Tell us what you think or suggest new features...", hi: "हमें बताएं कि आप क्या सोचते हैं या नई सुविधाओं का सुझाव दें..." },
+  submitFeedbackButton: { en: "Submit Feedback", hi: "प्रतिक्रिया जमा करें" },
+  toastFeedbackSubmittedTitle: { en: "Feedback Submitted", hi: "प्रतिक्रिया जमा की गई" },
+  toastFeedbackThanks: { en: "Thank you for your feedback!", hi: "आपकी प्रतिक्रिया के लिए धन्यवाद!" },
+  toastEnterFeedback: { en: "Please enter your feedback before submitting.", hi: "कृपया जमा करने से पहले अपनी प्रतिक्रिया दर्ज करें।" },
 };
 
 const LanguageContext = createContext<LanguageContextType | undefined>(undefined);
 
 export function LanguageProvider({ children }: { children: ReactNode }) {
-  const [language, setLanguage] = useState<Language>('en');
+  const [language, setLanguageInternal] = useState<Language>('en');
+
+  useEffect(() => {
+    const storedLang = localStorage.getItem('userLanguage') as Language | null;
+    if (storedLang && VALID_LANGUAGES.includes(storedLang)) {
+      setLanguageInternal(storedLang);
+    }
+  }, []);
+
+  const setLanguage = useCallback((newLanguage: Language) => {
+    if (VALID_LANGUAGES.includes(newLanguage)) {
+      setLanguageInternal(newLanguage);
+      localStorage.setItem('userLanguage', newLanguage);
+    }
+  }, []);
 
   const translate = useCallback((key: string, params?: Record<string, string | number>, fallback?: string): string => {
     const yearPlaceholder = "{year}";
-    let text = translations[key]?.[language] || fallback || key;
+    let text = translations[key]?.[language] || translations[key]?.['en'] || fallback || key;
     
     if (text.includes(yearPlaceholder)) {
       text = text.replace(new RegExp(yearPlaceholder, 'g'), new Date().getFullYear().toString());
@@ -154,7 +230,7 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
     return text;
   }, [language]);
 
-  const value = useMemo(() => ({ language, setLanguage, translate }), [language, translate]);
+  const value = useMemo(() => ({ language, setLanguage, translate }), [language, setLanguage, translate]);
 
   return <LanguageContext.Provider value={value}>{children}</LanguageContext.Provider>;
 }
