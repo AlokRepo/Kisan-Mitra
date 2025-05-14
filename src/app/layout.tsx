@@ -1,6 +1,5 @@
-
 import type { Metadata } from 'next';
-import { Geist, Geist_Mono } from 'next/font/google'; // Assuming these are custom font configurations
+import { GeistSans, GeistMono } from 'next/font/geist';
 import './globals.css';
 import { AppLayout } from '@/components/layout/AppLayout';
 import { Toaster } from "@/components/ui/toaster";

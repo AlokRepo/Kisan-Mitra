@@ -3,7 +3,7 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { Home, Lightbulb, BarChart3, MapPin, type LucideIcon } from 'lucide-react';
+import { Home, Lightbulb, BarChart3, MapPin, Settings, type LucideIcon } from 'lucide-react';
 import {
   SidebarMenu,
   SidebarMenuItem,
@@ -23,6 +23,7 @@ const navItemsConfig: NavItem[] = [
   { href: '/recommendations', labelKey: 'navAiAdvisor', icon: Lightbulb },
   { href: '/dashboard', labelKey: 'navDashboard', icon: BarChart3 },
   { href: '/locator', labelKey: 'navMandis', icon: MapPin },
+  { href: '/settings', labelKey: 'Settings', icon: Settings },
 ];
 
 export function SidebarNavigation() {
