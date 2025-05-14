@@ -19,9 +19,15 @@ This is a Next.js starter app for Kisan Mitra, developed in Firebase Studio.
     Replace the placeholder values with your actual API keys.
 
     ```env
-    # Google AI Studio API Key (for AI recommendations)
+    # Google AI API Key (for AI recommendations via Genkit)
+    # This key is used by the Genkit Google AI plugin.
     # Get your API key from Google AI Studio: https://aistudio.google.com/app/apikey
     GOOGLE_API_KEY="YOUR_GOOGLE_API_KEY_HERE"
+
+    # (Optional) Gemini API Key
+    # If you plan to make direct calls to the Gemini API outside of Genkit, or if your key is specifically named this.
+    # For Genkit's googleAI plugin, GOOGLE_API_KEY is used.
+    GEMINI_API_KEY="YOUR_GEMINI_API_KEY_HERE"
 
     # Google Maps API Key (for Mandi Locator map feature)
     # Get your API key from Google Cloud Console: https://console.cloud.google.com/google/maps-apis/credentials
@@ -78,3 +84,4 @@ This is a Next.js starter app for Kisan Mitra, developed in Firebase Studio.
     *   Run `npm install` (or your package manager's install command) to ensure all dependencies are installed.
 
 To get started, take a look at `src/app/page.tsx`.
+
