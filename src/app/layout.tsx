@@ -37,7 +37,7 @@ export default function RootLayout({
           attribute="data-theme" // Use data-theme for custom named themes
           defaultTheme="system"
           enableSystem
-          themes={['light', 'dark', 'oceanic']} // List available themes
+          themes={['light', 'dark', 'oceanic', 'desert']} // List available themes
         >
           <LanguageProvider>
             <AppLayout>

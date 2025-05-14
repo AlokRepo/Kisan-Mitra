@@ -9,7 +9,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { Sun, Moon, Contrast, Laptop } from "lucide-react";
+import { Sun, Moon, Contrast, Laptop, Mountain } from "lucide-react"; // Added Mountain for Desert
 import { useLanguage } from "@/contexts/LanguageContext";
 import { useEffect, useState } from "react";
 
@@ -31,6 +31,7 @@ export function ThemeSwitcher() {
     { value: "light", labelKey: "lightTheme", icon: Sun },
     { value: "dark", labelKey: "darkTheme", icon: Moon },
     { value: "oceanic", labelKey: "oceanicTheme", icon: Contrast },
+    { value: "desert", labelKey: "desertTheme", icon: Mountain }, // Added Desert theme
     { value: "system", labelKey: "systemTheme", icon: Laptop },
   ];
   

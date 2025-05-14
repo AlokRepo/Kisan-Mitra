@@ -34,6 +34,7 @@ const translations: Translations = {
   lightTheme: { en: 'Light', hi: 'हल्का' },
   darkTheme: { en: 'Dark', hi: 'गहरा' },
   oceanicTheme: { en: 'Oceanic', hi: 'समुद्री' },
+  desertTheme: { en: 'Desert Mirage', hi: 'रेगिस्तानी मृगतृष्णा' }, // Added Desert theme translation
   systemTheme: { en: 'System', hi: 'सिस्टम' },
   // Language Switcher
   languageLabel: { en: 'Language', hi: 'भाषा' },
