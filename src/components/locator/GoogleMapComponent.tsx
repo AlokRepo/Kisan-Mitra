@@ -6,6 +6,7 @@ import { GoogleMap, LoadScript, MarkerF } from '@react-google-maps/api';
 import { useState, useMemo } from 'react';
 import { Skeleton } from '@/components/ui/skeleton';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../ui/card';
+import { useLanguage } from '@/contexts/LanguageContext';
 
 interface GoogleMapComponentProps {
   mandis: MandiLocation[];
@@ -16,12 +17,12 @@ interface GoogleMapComponentProps {
 const containerStyle = {
   width: '100%',
   height: '400px',
-  borderRadius: '0.5rem', // Match card radius from theme
+  borderRadius: '0.5rem', 
 };
 
 export function GoogleMapComponent({ mandis, defaultCenter, apiKey }: GoogleMapComponentProps) {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [selectedMandi, setSelectedMandi] = useState<MandiLocation | null>(null);
+  const { translate } = useLanguage();
 
   const validMandis = useMemo(() =>
     mandis.filter(mandi => typeof mandi.latitude === 'number' && typeof mandi.longitude === 'number'),
@@ -31,15 +32,15 @@ export function GoogleMapComponent({ mandis, defaultCenter, apiKey }: GoogleMapC
     return (
       <Card className="h-[400px] w-full flex flex-col items-center justify-center bg-destructive/10 border-destructive/30">
         <CardHeader>
-          <CardTitle className="text-destructive">Google Maps API Error</CardTitle>
+          <CardTitle className="text-destructive">{translate('mapsApiErrorTitle')}</CardTitle>
         </CardHeader>
         <CardContent>
+           {/* Using p tag for multiline content for simplicity with translation */}
           <p className="text-destructive-foreground p-4 bg-destructive rounded-md text-center">
-            Google Maps API key is missing. <br />
-            Please set <code className="bg-destructive/80 px-1 rounded">NEXT_PUBLIC_GOOGLE_MAPS_API_KEY</code> in your <code className="bg-destructive/80 px-1 rounded">.env</code> file.
+            {translate('mapsApiKeyMissing')}
           </p>
           <CardDescription className="text-center mt-2 text-destructive/80">
-            You may need to restart your development server after adding the key.
+            {translate('mapsApiKeyRestartNote')}
           </CardDescription>
         </CardContent>
       </Card>
@@ -57,7 +58,7 @@ export function GoogleMapComponent({ mandis, defaultCenter, apiKey }: GoogleMapC
       <GoogleMap
         mapContainerStyle={containerStyle}
         center={defaultCenter}
-        zoom={validMandis.length > 0 ? 7 : 5} // Zoom out if no specific mandis, zoom in slightly if there are
+        zoom={validMandis.length > 0 ? 7 : 5} 
         options={{
           streetViewControl: false,
           mapTypeControl: false,
@@ -71,8 +72,6 @@ export function GoogleMapComponent({ mandis, defaultCenter, apiKey }: GoogleMapC
             title={mandi.name}
             onClick={() => {
               setSelectedMandi(mandi);
-              // Future: Show InfoWindow or navigate to mandi details
-              // console.log("Clicked mandi:", mandi.name);
             }}
           />
         ))}

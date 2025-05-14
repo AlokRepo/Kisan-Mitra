@@ -23,6 +23,7 @@ import { useState, useTransition, useEffect } from "react";
 import { generateRecommendation, type GenerateRecommendationInput, type GenerateRecommendationOutput } from "@/ai/flows/generate-recommendation";
 import { useToast } from "@/hooks/use-toast";
 import { Loader2, ThumbsUp, MessageSquareWarning } from "lucide-react";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 const formSchema = z.object({
   crop: z.string().min(1, "Crop selection is required."),
@@ -37,15 +38,16 @@ export function RecommendationClientForm() {
   const [recommendationResult, setRecommendationResult] = useState<GenerateRecommendationOutput | null>(null);
   const [error, setError] = useState<string | null>(null);
   const { toast } = useToast();
+  const { translate } = useLanguage();
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
       crop: "",
-      quantity: 100, // Defaulting to Quintals as per form label
+      quantity: 100,
       location: "",
-      historicalProductionData: "Historical data will be auto-suggested based on crop and location. Please edit as needed.",
-      weatherData: "Weather information will be auto-suggested based on crop and location. Please edit as needed.",
+      historicalProductionData: translate('histProdDataDefault'),
+      weatherData: translate('weatherDataDefault'),
     },
   });
 
@@ -54,20 +56,8 @@ export function RecommendationClientForm() {
 
   useEffect(() => {
     if (watchedCrop && watchedLocation) {
-      const historicalTemplate = `For ${watchedCrop} cultivation in ${watchedLocation} on my farm:
-- Average yield over the past 3 years: (e.g., X quintals/acre)
-- Last season's yield & price: (e.g., Y quintals/acre, Rs. Z/quintal)
-- Key factors affecting past production (e.g., weather events, pest issues):
-
-(Please edit and add your specific farm data)`;
-      
-      const weatherTemplate = `Current season outlook for ${watchedCrop} in ${watchedLocation}:
-- Monsoon/Rainfall status: (e.g., on time, deficient, normal)
-- Temperature trends: (e.g., normal, above average)
-- Relevant local forecast points:
-- Potential impact on crop:
-
-(Please edit with specific local conditions & official forecasts)`;
+      const historicalTemplate = translate('histProdDataDescDynamic', {crop: watchedCrop, location: watchedLocation});
+      const weatherTemplate = translate('weatherDataDescDynamic', {crop: watchedCrop, location: watchedLocation});
       
       if (!form.formState.dirtyFields.historicalProductionData) {
         form.setValue("historicalProductionData", historicalTemplate, { shouldValidate: true });
@@ -77,13 +67,39 @@ export function RecommendationClientForm() {
       }
     } else if (watchedCrop || watchedLocation) {
         if (!form.formState.dirtyFields.historicalProductionData) {
-             form.setValue("historicalProductionData", "Please select both crop and location to get specific suggestions.", { shouldValidate: true });
+             form.setValue("historicalProductionData", translate('histProdDataPleaseSelect'), { shouldValidate: true });
         }
        if (!form.formState.dirtyFields.weatherData) {
-            form.setValue("weatherData", "Please select both crop and location to get specific suggestions.", { shouldValidate: true });
+            form.setValue("weatherData", translate('weatherDataPleaseSelect'), { shouldValidate: true });
        }
+    } else {
+        if (!form.formState.dirtyFields.historicalProductionData) {
+            form.setValue("historicalProductionData", translate('histProdDataDefault'), { shouldValidate: true });
+        }
+        if (!form.formState.dirtyFields.weatherData) {
+            form.setValue("weatherData", translate('weatherDataDefault'), { shouldValidate: true });
+        }
     }
-  }, [watchedCrop, watchedLocation, form]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [watchedCrop, watchedLocation, form.setValue, form.formState.dirtyFields, translate]); // Added translate to dependency array
+
+  useEffect(() => {
+    // Reset default values if language changes and fields are not dirty
+    if (!form.formState.dirtyFields.historicalProductionData) {
+        form.setValue("historicalProductionData", 
+            (watchedCrop && watchedLocation) ? translate('histProdDataDescDynamic', {crop: watchedCrop, location: watchedLocation}) : 
+            (watchedCrop || watchedLocation) ? translate('histProdDataPleaseSelect') : translate('histProdDataDefault'), 
+        { shouldValidate: true });
+    }
+    if (!form.formState.dirtyFields.weatherData) {
+        form.setValue("weatherData", 
+            (watchedCrop && watchedLocation) ? translate('weatherDataDescDynamic', {crop: watchedCrop, location: watchedLocation}) :
+            (watchedCrop || watchedLocation) ? translate('weatherDataPleaseSelect') : translate('weatherDataDefault'),
+        { shouldValidate: true });
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [translate]); // Rerun this effect when language changes
+
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
     setRecommendationResult(null);
@@ -93,17 +109,17 @@ export function RecommendationClientForm() {
         const result = await generateRecommendation(values as GenerateRecommendationInput);
         setRecommendationResult(result);
         toast({
-          title: "Recommendation Generated!",
-          description: "AI advisor has provided selling insights.",
+          title: translate('toastRecGeneratedTitle'),
+          description: translate('toastRecGeneratedDesc'),
           variant: "default",
         });
       } catch (e) {
         console.error("Error generating recommendation:", e);
         const errorMessage = e instanceof Error ? e.message : "An unknown error occurred.";
-        setError(`Failed to generate recommendation: ${errorMessage}`);
+        setError(translate('formErrorOccurred', {errorMessage}));
         toast({
-          title: "Error",
-          description: `Could not generate recommendation. ${errorMessage}`,
+          title: translate('toastErrorTitle'),
+          description: translate('toastErrorDesc', {errorMessage}),
           variant: "destructive",
         });
       }
@@ -113,8 +129,8 @@ export function RecommendationClientForm() {
   return (
     <Card className="w-full max-w-2xl mx-auto shadow-xl bg-card">
       <CardHeader>
-        <CardTitle className="text-2xl text-primary">AI Selling Advisor</CardTitle>
-        <CardDescription>Get AI-powered recommendations on when and where to sell your crops for maximum profit.</CardDescription>
+        <CardTitle className="text-2xl text-primary">{translate('aiAdvisorTitle')}</CardTitle>
+        <CardDescription>{translate('aiAdvisorDescription')}</CardDescription>
       </CardHeader>
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)}>
@@ -124,11 +140,11 @@ export function RecommendationClientForm() {
               name="crop"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Crop</FormLabel>
+                  <FormLabel>{translate('cropLabel')}</FormLabel>
                   <Select onValueChange={field.onChange} defaultValue={field.value}>
                     <FormControl>
                       <SelectTrigger>
-                        <SelectValue placeholder="Select a crop" />
+                        <SelectValue placeholder={translate('selectCropPlaceholderForm')} />
                       </SelectTrigger>
                     </FormControl>
                     <SelectContent>
@@ -146,9 +162,9 @@ export function RecommendationClientForm() {
               name="quantity"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Quantity (in Quintals)</FormLabel>
+                  <FormLabel>{translate('quantityLabel')}</FormLabel>
                   <FormControl>
-                    <Input type="number" placeholder="e.g., 100" {...field} />
+                    <Input type="number" placeholder={translate('quantityPlaceholder')} {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -159,11 +175,11 @@ export function RecommendationClientForm() {
               name="location"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Your Location (State)</FormLabel>
+                  <FormLabel>{translate('locationLabel')}</FormLabel>
                    <Select onValueChange={field.onChange} defaultValue={field.value}>
                     <FormControl>
                       <SelectTrigger>
-                        <SelectValue placeholder="Select your state" />
+                        <SelectValue placeholder={translate('selectStatePlaceholder')} />
                       </SelectTrigger>
                     </FormControl>
                     <SelectContent>
@@ -172,7 +188,7 @@ export function RecommendationClientForm() {
                       ))}
                     </SelectContent>
                   </Select>
-                  <FormDescription>This helps in generating relevant suggestions.</FormDescription>
+                  <FormDescription>{translate('locationDescription')}</FormDescription>
                   <FormMessage />
                 </FormItem>
               )}
@@ -182,10 +198,10 @@ export function RecommendationClientForm() {
               name="historicalProductionData"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Historical Production Data</FormLabel>
+                  <FormLabel>{translate('historicalDataLabel')}</FormLabel>
                   <FormControl>
                     <Textarea
-                      placeholder="Describe your farm's past yields, market prices, significant events..."
+                      placeholder={translate('historicalDataPlaceholder')}
                       className="resize-none"
                       rows={7} 
                       {...field}
@@ -193,8 +209,8 @@ export function RecommendationClientForm() {
                   </FormControl>
                   <FormDescription>
                     {watchedCrop && watchedLocation 
-                      ? `Provide your farm's specific historical data for ${watchedCrop} in ${watchedLocation}. Include yields, prices, and significant events. This helps the AI tailor advice.`
-                      : "Enter details about your farm's past production."}
+                      ? translate('historicalDataDescDynamic', {crop: watchedCrop, location: watchedLocation})
+                      : translate('historicalDataDescStatic')}
                   </FormDescription>
                   <FormMessage />
                 </FormItem>
@@ -205,10 +221,10 @@ export function RecommendationClientForm() {
               name="weatherData"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Current Weather & Forecast Context</FormLabel>
+                  <FormLabel>{translate('weatherDataLabel')}</FormLabel>
                   <FormControl>
                     <Textarea
-                      placeholder="Describe current weather conditions, forecasts, and their impact on your crop..."
+                      placeholder={translate('weatherDataPlaceholder')}
                       className="resize-none"
                       rows={7}
                       {...field}
@@ -216,8 +232,8 @@ export function RecommendationClientForm() {
                   </FormControl>
                    <FormDescription>
                     {watchedCrop && watchedLocation
-                      ? `Detail the current weather and upcoming forecast for ${watchedCrop} in ${watchedLocation}. Accurate local information improves recommendation quality.`
-                      : "Enter current weather conditions and forecasts."}
+                      ? translate('weatherDataDescDynamic', {crop: watchedCrop, location: watchedLocation})
+                      : translate('weatherDataDescStatic')}
                    </FormDescription>
                   <FormMessage />
                 </FormItem>
@@ -229,10 +245,10 @@ export function RecommendationClientForm() {
               {isPending ? (
                 <>
                   <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                  Generating...
+                  {translate('generatingButton')}
                 </>
               ) : (
-                "Get Recommendation"
+                translate('getRecommendationButton')
               )}
             </Button>
             
@@ -240,7 +256,7 @@ export function RecommendationClientForm() {
               <div className="mt-4 p-4 bg-destructive/10 border border-destructive/30 rounded-md text-destructive">
                 <div className="flex items-center gap-2">
                   <MessageSquareWarning className="h-5 w-5" />
-                  <h3 className="font-semibold">Error</h3>
+                  <h3 className="font-semibold">{translate('error')}</h3>
                 </div>
                 <p className="text-sm">{error}</p>
               </div>
@@ -251,16 +267,16 @@ export function RecommendationClientForm() {
                 <CardHeader>
                   <CardTitle className="text-xl text-primary flex items-center gap-2">
                     <ThumbsUp className="h-6 w-6" />
-                    AI Recommendation
+                    {translate('aiRecommendationTitle')}
                   </CardTitle>
                 </CardHeader>
                 <CardContent className="space-y-3">
                   <div>
-                    <h4 className="font-semibold text-foreground">Suggestion:</h4>
+                    <h4 className="font-semibold text-foreground">{translate('suggestionLabel')}</h4>
                     <p className="text-foreground/90">{recommendationResult.recommendation}</p>
                   </div>
                   <div>
-                    <h4 className="font-semibold text-foreground">Reasoning:</h4>
+                    <h4 className="font-semibold text-foreground">{translate('reasoningLabel')}</h4>
                     <p className="text-foreground/90 whitespace-pre-wrap">{recommendationResult.reasoning}</p>
                   </div>
                 </CardContent>

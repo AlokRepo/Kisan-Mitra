@@ -1,24 +1,25 @@
 
 import type { Metadata } from 'next';
-import { Geist, Geist_Mono } from 'next/font/google';
+import { Geist, Geist_Mono } from 'next/font/google'; // Assuming these are custom font configurations
 import './globals.css';
 import { AppLayout } from '@/components/layout/AppLayout';
 import { Toaster } from "@/components/ui/toaster";
 import { ThemeProvider } from "next-themes";
 import { LanguageProvider } from '@/contexts/LanguageContext';
 
-const geistSans = Geist({
+const geistSans = Geist({ // If Geist is from next/font/google, it should be Geist()
   variable: '--font-geist-sans',
   subsets: ['latin'],
 });
 
-const geistMono = Geist_Mono({
+const geistMono = Geist_Mono({ // Same here, Geist_Mono()
   variable: '--font-geist-mono',
   subsets: ['latin'],
 });
 
+// Metadata can't use hooks, so title will be generic here or set per page
 export const metadata: Metadata = {
-  title: 'Kisan Mitra - Crop Price Tracker & Advisor',
+  title: 'Kisan Mitra', // Generic title, specific titles can be set on pages
   description: 'Real-time crop prices, AI-powered selling recommendations, and market insights for Indian farmers.',
   icons: {
     icon: "/favicon.ico", 
@@ -33,19 +34,19 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={`${geistSans.variable} ${geistMono.variable} font-sans antialiased`}>
-        <ThemeProvider
-          attribute="data-theme" // Use data-theme for custom named themes
-          defaultTheme="system"
-          enableSystem
-          themes={['light', 'dark', 'oceanic', 'desert']} // List available themes
-        >
-          <LanguageProvider>
+        <LanguageProvider>
+          <ThemeProvider
+            attribute="data-theme" 
+            defaultTheme="system"
+            enableSystem
+            themes={['light', 'dark', 'oceanic', 'desert']} 
+          >
             <AppLayout>
               {children}
             </AppLayout>
             <Toaster />
-          </LanguageProvider>
-        </ThemeProvider>
+          </ThemeProvider>
+        </LanguageProvider>
       </body>
     </html>
   );
