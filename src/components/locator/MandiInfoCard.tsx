@@ -34,8 +34,8 @@ export function MandiInfoCard({ mandi }: MandiInfoCardProps) {
           <div>
             <h4 className="font-semibold mb-1 text-foreground">Current Prices:</h4>
             <ul className="list-disc list-inside text-sm text-foreground/80 space-y-0.5">
-              {mandi.currentPrices.slice(0,3).map(price => ( // Show max 3 prices
-                <li key={price.crop}>{price.crop}: ₹{price.price}/{price.unit}</li>
+              {mandi.currentPrices.slice(0,3).map((price, index) => ( // Show max 3 prices
+                <li key={`${price.crop}-${index}`}>{price.crop}: ₹{price.price}/{price.unit}</li>
               ))}
             </ul>
           </div>
