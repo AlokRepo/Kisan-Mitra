@@ -46,8 +46,8 @@ export function RecommendationClientForm() {
       crop: "",
       quantity: 100,
       location: "",
-      historicalProductionData: "", // Initially empty
-      weatherData: "",           // Initially empty
+      historicalProductionData: "", 
+      weatherData: "",
     },
   });
 
@@ -63,43 +63,21 @@ export function RecommendationClientForm() {
       const weatherTemplate = translate('weatherDataAutoText', {crop: watchedCrop, location: watchedLocation});
 
       if (!isHistDirty) {
-        form.setValue("historicalProductionData", historicalTemplate, { shouldValidate: false });
+        form.setValue("historicalProductionData", historicalTemplate, { shouldValidate: true });
       }
       if (!isWeatherDirty) {
-        form.setValue("weatherData", weatherTemplate, { shouldValidate: false });
+        form.setValue("weatherData", weatherTemplate, { shouldValidate: true });
       }
     } else {
         if (!isHistDirty) {
-             form.setValue("historicalProductionData", "", { shouldValidate: false }); // Empty if not both selected
+             form.setValue("historicalProductionData", "", { shouldValidate: true }); 
         }
        if (!isWeatherDirty) {
-            form.setValue("weatherData", "", { shouldValidate: false }); // Empty if not both selected
+            form.setValue("weatherData", "", { shouldValidate: true }); 
        }
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [watchedCrop, watchedLocation, form.setValue, translate]); 
-
-  useEffect(() => {
-    const isHistDirty = form.formState.dirtyFields.historicalProductionData;
-    const isWeatherDirty = form.formState.dirtyFields.weatherData;
-
-    if (watchedCrop && watchedLocation) {
-      if (!isHistDirty) {
-          form.setValue("historicalProductionData", translate('histProdDataAutoText', {crop: watchedCrop, location: watchedLocation}), { shouldValidate: false });
-      }
-      if (!isWeatherDirty) {
-          form.setValue("weatherData", translate('weatherDataAutoText', {crop: watchedCrop, location: watchedLocation}), { shouldValidate: false });
-      }
-    } else {
-        if (!isHistDirty) {
-            form.setValue("historicalProductionData", "", { shouldValidate: false });
-        }
-        if (!isWeatherDirty) {
-            form.setValue("weatherData", "", { shouldValidate: false });
-        }
-    }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [translate, watchedCrop, watchedLocation]);
+  }, [watchedCrop, watchedLocation, translate, form.setValue, form.formState.dirtyFields]);
 
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
@@ -285,4 +263,3 @@ export function RecommendationClientForm() {
     </Card>
   );
 }
-

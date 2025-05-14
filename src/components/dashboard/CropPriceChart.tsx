@@ -21,22 +21,31 @@ interface CropPriceChartProps {
   isLoading: boolean;
 }
 
-const getChartColor = (index: number) => {
-  if (typeof window === "undefined") return `hsl(var(--chart-${index + 1}))`; 
-  const style = getComputedStyle(document.documentElement);
-  return style.getPropertyValue(`--chart-${index + 1}`).trim();
-};
-
-
 export function CropPriceChart({ data, isLoading }: CropPriceChartProps) {
   const { theme } = useTheme();
   const { translate } = useLanguage();
   const [chartColors, setChartColors] = useState<string[]>([]);
+  const [chartConfig, setChartConfig] = useState<any>({});
 
   useEffect(() => {
+    // Ensure this runs only on the client after mount
+    const getClientChartColor = (index: number) => {
+      const style = getComputedStyle(document.documentElement);
+      return style.getPropertyValue(`--chart-${index + 1}`).trim();
+    };
+
     if (data?.trends.length) {
-      const colors = data.trends.map((_, i) => getChartColor(i % 5)); 
+      const colors = data.trends.map((_, i) => getClientChartColor(i % 5));
       setChartColors(colors);
+
+      const newChartConfig = data.trends.reduce((config, trend, index) => {
+        config[trend.state] = {
+          label: trend.state,
+          color: colors[index] || getClientChartColor(index % 5),
+        };
+        return config;
+      }, {} as any);
+      setChartConfig(newChartConfig);
     }
   }, [theme, data]);
 
@@ -71,22 +80,13 @@ export function CropPriceChart({ data, isLoading }: CropPriceChartProps) {
     );
   }
   
-  const chartConfig = data.trends.reduce((config, trend, index) => {
-    config[trend.state] = {
-      label: trend.state,
-      color: chartColors[index] || getChartColor(index % 5),
-    };
-    return config;
-  }, {} as any);
-
-
-  const chartData = data.trends[0].data.map((_, i) => {
+  const chartData = data.trends.length > 0 ? data.trends[0].data.map((_, i) => {
     const entry: { [key: string]: string | number } = { date: data.trends[0].data[i].date };
     data.trends.forEach(trend => {
       entry[trend.state] = trend.data[i]?.price || 0;
     });
     return entry;
-  });
+  }) : [];
 
 
   return (
@@ -125,7 +125,7 @@ export function CropPriceChart({ data, isLoading }: CropPriceChartProps) {
               <ChartLegend content={<ChartLegendContent wrapperStyle={{ color: 'hsl(var(--foreground))' }} />} />
               {data.trends.map((trend, index) => (
                 <Line
-                  key={trend.state}
+                  key={`trend-${trend.state}-${index}`} // More robust key
                   dataKey={trend.state}
                   type="monotone"
                   stroke={chartColors[index] || `var(--chart-${(index % 5) + 1})`}
