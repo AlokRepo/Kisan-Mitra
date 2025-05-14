@@ -42,7 +42,7 @@ export function RecommendationClientForm() {
     resolver: zodResolver(formSchema),
     defaultValues: {
       crop: "",
-      quantity: 100,
+      quantity: 100, // Defaulting to Quintals as per form label
       location: "",
       historicalProductionData: "Historical data will be auto-suggested based on crop and location. Please edit as needed.",
       weatherData: "Weather information will be auto-suggested based on crop and location. Please edit as needed.",
@@ -54,13 +54,28 @@ export function RecommendationClientForm() {
 
   useEffect(() => {
     if (watchedCrop && watchedLocation) {
-      const historicalTemplate = `Average yield for ${watchedCrop} in ${watchedLocation} for the last 3 years was [X quintals/acre]. Last year's yield was [e.g., good/bad due to specific reason like drought/pests]. Market price received was [Rs. Y/quintal]. Please update with your specific data.`;
-      const weatherTemplate = `Current weather in ${watchedLocation} for the upcoming ${watchedCrop} season: [e.g., Monsoon status - on time/delayed, rainfall - normal/deficient/excessive, temperature trends - normal/higher/lower]. Key forecast points: [e.g., predicts normal rain for next month, potential heatwaves during sowing/harvesting]. Please update with specific local conditions and official forecasts.`;
+      const historicalTemplate = `For ${watchedCrop} cultivation in ${watchedLocation} on my farm:
+- Average yield over the past 3 years: (e.g., X quintals/acre)
+- Last season's yield & price: (e.g., Y quintals/acre, Rs. Z/quintal)
+- Key factors affecting past production (e.g., weather events, pest issues):
+
+(Please edit and add your specific farm data)`;
       
-      form.setValue("historicalProductionData", historicalTemplate, { shouldValidate: true });
-      form.setValue("weatherData", weatherTemplate, { shouldValidate: true });
+      const weatherTemplate = `Current season outlook for ${watchedCrop} in ${watchedLocation}:
+- Monsoon/Rainfall status: (e.g., on time, deficient, normal)
+- Temperature trends: (e.g., normal, above average)
+- Relevant local forecast points:
+- Potential impact on crop:
+
+(Please edit with specific local conditions & official forecasts)`;
+      
+      if (!form.formState.dirtyFields.historicalProductionData) {
+        form.setValue("historicalProductionData", historicalTemplate, { shouldValidate: true });
+      }
+      if (!form.formState.dirtyFields.weatherData) {
+        form.setValue("weatherData", weatherTemplate, { shouldValidate: true });
+      }
     } else if (watchedCrop || watchedLocation) {
-        // If only one is selected, revert to a more generic placeholder or clear them if preferred
         if (!form.formState.dirtyFields.historicalProductionData) {
              form.setValue("historicalProductionData", "Please select both crop and location to get specific suggestions.", { shouldValidate: true });
         }
@@ -172,11 +187,15 @@ export function RecommendationClientForm() {
                     <Textarea
                       placeholder="Describe your farm's past yields, market prices, significant events..."
                       className="resize-none"
-                      rows={5} // Increased rows for better visibility
+                      rows={7} 
                       {...field}
                     />
                   </FormControl>
-                  <FormDescription>e.g., "Last 3 years average yield for wheat was 20 quintals/acre. Last year, drought reduced yield by 30%." Please edit with your details.</FormDescription>
+                  <FormDescription>
+                    {watchedCrop && watchedLocation 
+                      ? `Provide your farm's specific historical data for ${watchedCrop} in ${watchedLocation}. Include yields, prices, and significant events. This helps the AI tailor advice.`
+                      : "Enter details about your farm's past production."}
+                  </FormDescription>
                   <FormMessage />
                 </FormItem>
               )}
@@ -191,11 +210,15 @@ export function RecommendationClientForm() {
                     <Textarea
                       placeholder="Describe current weather conditions, forecasts, and their impact on your crop..."
                       className="resize-none"
-                      rows={5} // Increased rows for better visibility
+                      rows={7}
                       {...field}
                     />
                   </FormControl>
-                   <FormDescription>e.g., "Monsoon arrived on time, good rainfall so far. Forecast predicts normal rain for next month." Please edit with local specifics.</FormDescription>
+                   <FormDescription>
+                    {watchedCrop && watchedLocation
+                      ? `Detail the current weather and upcoming forecast for ${watchedCrop} in ${watchedLocation}. Accurate local information improves recommendation quality.`
+                      : "Enter current weather conditions and forecasts."}
+                   </FormDescription>
                   <FormMessage />
                 </FormItem>
               )}
@@ -249,4 +272,3 @@ export function RecommendationClientForm() {
     </Card>
   );
 }
-
