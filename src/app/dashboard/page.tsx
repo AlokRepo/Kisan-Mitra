@@ -1,6 +1,6 @@
+tsx
 "use client";
 
-import { CropPriceChart } from "@/components/dashboard/CropPriceChart";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { getPriceTrends } from "@/lib/mockApi";
 import type { CropPriceTrend } from "@/types";
@@ -8,6 +8,27 @@ import { CROPS } from "@/types";
 import { BarChart3, RefreshCw } from "lucide-react";
 import { useEffect, useState, useTransition } from "react";
 import { Button } from "@/components/ui/button";
+import dynamic from 'next/dynamic';
+import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card";
+import { Skeleton } from "@/components/ui/skeleton";
+
+const DynamicCropPriceChart = dynamic(() =>
+  import('@/components/dashboard/CropPriceChart').then((mod) => mod.CropPriceChart),
+  {
+    loading: () => (
+      <Card className="shadow-lg bg-card">
+        <CardHeader>
+          <CardTitle>Loading Price Trends...</CardTitle>
+          <CardDescription>Fetching historical price data.</CardDescription>
+        </CardHeader>
+        <CardContent className="h-[400px]">
+          <Skeleton className="h-full w-full bg-muted rounded-md" />
+        </CardContent>
+      </Card>
+    ),
+    ssr: false // Charts often rely on browser APIs that are not available on the server
+  }
+);
 
 export default function DashboardPage() {
   const [selectedCrop, setSelectedCrop] = useState<string>(CROPS[0]);
@@ -58,7 +79,7 @@ export default function DashboardPage() {
         </div>
       </div>
       
-      <CropPriceChart data={priceTrendData} isLoading={isPending} />
+      <DynamicCropPriceChart data={priceTrendData} isLoading={isPending} />
 
       {/* Placeholder for more charts or data visualizations */}
       {/* 

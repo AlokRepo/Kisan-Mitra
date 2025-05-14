@@ -1,4 +1,4 @@
-
+tsx
 "use client";
 
 import { MandiInfoCard } from "@/components/locator/MandiInfoCard";
@@ -9,7 +9,15 @@ import { useEffect, useState, useTransition, useMemo } from "react";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { GoogleMapComponent } from "@/components/locator/GoogleMapComponent";
+import dynamic from 'next/dynamic';
+
+const DynamicGoogleMapComponent = dynamic(() =>
+  import('@/components/locator/GoogleMapComponent').then((mod) => mod.GoogleMapComponent),
+  {
+    ssr: false, // Google Maps typically relies on browser APIs
+    loading: () => <Skeleton className="h-[400px] w-full rounded-md" /> 
+  }
+);
 
 export default function LocatorPage() {
   const [mandiList, setMandiList] = useState<MandiLocation[]>([]);
@@ -53,10 +61,10 @@ export default function LocatorPage() {
       </div>
 
       <div className="mb-8 shadow-lg rounded-lg overflow-hidden">
-        <GoogleMapComponent mandis={mandiList} defaultCenter={defaultMapCenter} apiKey={apiKey} />
+        <DynamicGoogleMapComponent mandis={mandiList} defaultCenter={defaultMapCenter} apiKey={apiKey} />
       </div>
 
-      {isPending && (
+      {isPending && mandiList.length === 0 && ( // Show skeleton only if initial fetch is pending
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {[...Array(6)].map((_, i) => (
             <Card key={i} className="overflow-hidden">
