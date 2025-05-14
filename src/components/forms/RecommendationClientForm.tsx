@@ -20,7 +20,8 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { CROPS, STATES } from "@/types";
 import { useState, useTransition, useEffect } from "react";
-import { generateRecommendation, type GenerateRecommendationInput, type GenerateRecommendationOutput } from "@/ai/flows/generate-recommendation";
+// import { generateRecommendation, type GenerateRecommendationInput, type GenerateRecommendationOutput } from "@/ai/flows/generate-recommendation"; // Temporarily commented out
+import type { GenerateRecommendationOutput } from "@/ai/flows/generate-recommendation"; // Keep type for state if needed, or comment out too
 import { useToast } from "@/hooks/use-toast";
 import { Loader2, ThumbsUp, MessageSquareWarning } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
@@ -38,7 +39,7 @@ export function RecommendationClientForm() {
   const [recommendationResult, setRecommendationResult] = useState<GenerateRecommendationOutput | null>(null);
   const [error, setError] = useState<string | null>(null);
   const { toast } = useToast();
-  const { translate } = useLanguage();
+  const { translate, language } = useLanguage(); // Added language for useEffect dependency
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -46,7 +47,7 @@ export function RecommendationClientForm() {
       crop: "",
       quantity: 100,
       location: "",
-      historicalProductionData: "", 
+      historicalProductionData: "",
       weatherData: "",
     },
   });
@@ -63,21 +64,21 @@ export function RecommendationClientForm() {
       const weatherTemplate = translate('weatherDataAutoText', {crop: watchedCrop, location: watchedLocation});
 
       if (!isHistDirty) {
-        form.setValue("historicalProductionData", historicalTemplate, { shouldValidate: true });
+        form.setValue("historicalProductionData", historicalTemplate, { shouldValidate: false }); // Avoid re-validation loop
       }
       if (!isWeatherDirty) {
-        form.setValue("weatherData", weatherTemplate, { shouldValidate: true });
+        form.setValue("weatherData", weatherTemplate, { shouldValidate: false }); // Avoid re-validation loop
       }
     } else {
         if (!isHistDirty) {
-             form.setValue("historicalProductionData", "", { shouldValidate: true }); 
+             form.setValue("historicalProductionData", "", { shouldValidate: false });
         }
        if (!isWeatherDirty) {
-            form.setValue("weatherData", "", { shouldValidate: true }); 
+            form.setValue("weatherData", "", { shouldValidate: false });
        }
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [watchedCrop, watchedLocation, translate, form.setValue, form.formState.dirtyFields]);
+  }, [watchedCrop, watchedLocation, translate, form.setValue, language]); // Added language to dependencies
 
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
@@ -85,13 +86,27 @@ export function RecommendationClientForm() {
     setError(null);
     startTransition(async () => {
       try {
-        const result = await generateRecommendation(values as GenerateRecommendationInput);
-        setRecommendationResult(result);
+        // Temporarily bypass AI call
+        // const result = await generateRecommendation(values as GenerateRecommendationInput);
+        // setRecommendationResult(result);
+        // toast({
+        //   title: translate('toastRecGeneratedTitle'),
+        //   description: translate('toastRecGeneratedDesc'),
+        //   variant: "default",
+        // });
+
+        // Mock successful response for UI testing
+        await new Promise(resolve => setTimeout(resolve, 1000)); // Simulate delay
+        setRecommendationResult({
+            recommendation: "Mock Recommendation: Sell " + values.crop + " next week in " + values.location + ".",
+            reasoning: "Mock Reasoning: Market prices are expected to be favorable based on mock historical trends and weather.",
+        });
         toast({
           title: translate('toastRecGeneratedTitle'),
-          description: translate('toastRecGeneratedDesc'),
+          description: "Mock recommendation generated successfully.",
           variant: "default",
         });
+
       } catch (e) {
         console.error("Error generating recommendation:", e);
         const errorMessage = e instanceof Error ? e.message : "An unknown error occurred.";
@@ -182,7 +197,7 @@ export function RecommendationClientForm() {
                     <Textarea
                       placeholder={translate('historicalDataPlaceholder')}
                       className="resize-none"
-                      rows={7} 
+                      rows={7}
                       {...field}
                     />
                   </FormControl>
