@@ -237,8 +237,8 @@ const translations: Translations = {
   sampleGuideTitle2: { en: "Maximizing Your Kisan Mitra App", hi: "किसान मित्र ऐप का अधिकतम लाभ उठाना" },
   sampleGuideDesc2: { en: "Tips and tricks to get the most out of the app's features.", hi: "ऐप की सुविधाओं का अधिकतम लाभ उठाने के लिए टिप्स और ट्रिक्स।" },
   viewGuideButton: { en: "View Guide", hi: "गाइड देखें" },
-  schemesTitle: { en: "Government Schemes", hi: "सरकारी योजनाएं" }, // Used on Education Page
-  schemesDesc: { en: "Discover relevant agricultural schemes and their benefits.", hi: "प्रासंगिक कृषि योजनाओं और उनके लाभों की खोज करें।" }, // Used on Education Page
+  schemesTitle: { en: "Government Schemes Spotlight", hi: "सरकारी योजनाएं स्पॉटलाइट" }, // Used on Education Page
+  schemesDesc: { en: "Discover relevant agricultural schemes and their benefits. Explore all schemes for detailed filtering.", hi: "प्रासंगिक कृषि योजनाओं और उनके लाभों की खोज करें। विस्तृत फ़िल्टरिंग के लिए सभी योजनाएँ देखें।" }, // Used on Education Page
   exploreAllSchemesButton: { en: "Explore All Schemes", hi: "सभी योजनाएँ देखें"},
   sampleSchemeTitle1: { en: "PM-KISAN Samman Nidhi", hi: "पीएम-किसान सम्मान निधि" },
   sampleSchemeDesc1: { en: "Direct income support for small and marginal farmers across India.", hi: "पूरे भारत में छोटे और सीमांत किसानों के लिए प्रत्यक्ष आय सहायता।" },
@@ -378,6 +378,36 @@ const translations: Translations = {
   femaleOption: { en: "Female", hi: "महिला" },
   transgenderOption: { en: "Transgender", hi: "ट्रांसजेंडर" },
 
+  // New Education Page Sections (inspired by india.gov.in)
+  agriMachineryTitle: { en: "Agricultural Machinery & Technology", hi: "कृषि मशीनरी और प्रौद्योगिकी" },
+  agriMachineryDesc: { en: "Learn about modern farming equipment, subsidies, maintenance, and emerging technologies like drones and precision farming.", hi: "आधुनिक कृषि उपकरण, सब्सिडी, रखरखाव, और ड्रोन और सटीक खेती जैसी उभरती प्रौद्योगिकियों के बारे में जानें।" },
+  agriMachinerySubTopic1: { en: "Choosing the right tractor and implements.", hi: "सही ट्रैक्टर और उपकरणों का चयन।" },
+  agriMachinerySubTopic2: { en: "Government subsidies for machinery.", hi: "मशीनरी के लिए सरकारी सब्सिडी।" },
+  agriMachinerySubTopic3: { en: "Basic maintenance of farm equipment.", hi: "कृषि उपकरणों का बुनियादी रखरखाव।" },
+  agriMachinerySubTopic4: { en: "Introduction to precision agriculture.", hi: "सटीक खेती का परिचय।" },
+
+  storageSolutionsTitle: { en: "Storage & Warehousing Solutions", hi: "भंडारण और वेयरहाउसिंग समाधान" },
+  storageSolutionsDesc: { en: "Information on proper storage techniques to minimize post-harvest losses and access to warehousing facilities.", hi: "कटाई के बाद के नुकसान को कम करने और वेयरहाउसिंग सुविधाओं तक पहुंचने के लिए उचित भंडारण तकनीकों पर जानकारी।" },
+  storageSolutionsSubTopic1: { en: "Best practices for grain & perishable storage.", hi: "अनाज और खराब होने वाली वस्तुओं के भंडारण के लिए सर्वोत्तम अभ्यास।" },
+  storageSolutionsSubTopic2: { en: "Understanding warehouse receipt systems.", hi: "वेयरहाउस रसीद प्रणालियों को समझना।" },
+  storageSolutionsSubTopic3: { en: "Schemes for cold storage and rural godowns.", hi: "कोल्ड स्टोरेज और ग्रामीण गोदामों के लिए योजनाएं।" },
+  storageSolutionsSubTopic4: { en: "Preventing pest infestation in stored produce.", hi: "संग्रहीत उपज में कीट संक्रमण की रोकथाम।" },
+
+  soilWaterConservationTitle: { en: "Soil & Water Conservation", hi: "मृदा और जल संरक्षण" },
+  soilWaterConservationDesc: { en: "Discover methods to maintain soil health, improve water use efficiency, and promote sustainable farming practices.", hi: "मिट्टी के स्वास्थ्य को बनाए रखने, जल उपयोग दक्षता में सुधार करने और टिकाऊ कृषि पद्धतियों को बढ़ावा देने के तरीकों की खोज करें।" },
+  soilWaterConservationSubTopic1: { en: "Soil testing and nutrient management.", hi: "मृदा परीक्षण और पोषक तत्व प्रबंधन।" },
+  soilWaterConservationSubTopic2: { en: "Rainwater harvesting & micro-irrigation techniques.", hi: "वर्षा जल संचयन और सूक्ष्म सिंचाई तकनीकें।" },
+  soilWaterConservationSubTopic3: { en: "Basics of organic farming.", hi: "जैविक खेती की मूल बातें।" },
+  soilWaterConservationSubTopic4: { en: "Preventing soil erosion and land degradation.", hi: "मिट्टी के कटाव और भूमि क्षरण की रोकथाम।" },
+
+  agriFinanceTitle: { en: "Agricultural Finance & Credit", hi: "कृषि वित्त और ऋण" },
+  agriFinanceDesc: { en: "Information on accessing farm loans, Kisan Credit Cards (KCC), crop insurance, and managing farm finances.", hi: "कृषि ऋण, किसान क्रेडिट कार्ड (केसीसी), फसल बीमा, और कृषि वित्त के प्रबंधन पर जानकारी।" },
+  agriFinanceSubTopic1: { en: "Understanding Kisan Credit Card (KCC).", hi: "किसान क्रेडिट कार्ड (केसीसी) को समझना।" },
+  agriFinanceSubTopic2: { en: "How to apply for agricultural loans.", hi: "कृषि ऋण के लिए आवेदन कैसे करें।" },
+  agriFinanceSubTopic3: { en: "Importance of crop insurance (PMFBY).", hi: "फसल बीमा का महत्व (पीएमएफबीवाई)।" },
+  agriFinanceSubTopic4: { en: "Managing farm budgets and financial planning.", hi: "कृषि बजट और वित्तीय योजना का प्रबंधन।" },
+  exploreFinancialSchemesButton: { en: "Explore Financial Schemes", hi: "वित्तीय योजनाएँ देखें" },
+
 };
 
 const LanguageContext = createContext<LanguageContextType | undefined>(undefined);
@@ -422,3 +452,4 @@ export function useLanguage(): LanguageContextType {
   }
   return context;
 }
+
