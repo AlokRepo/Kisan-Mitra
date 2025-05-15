@@ -11,17 +11,49 @@ export const APP_IMAGES: Record<string, ImageInfo | ImageInfo[]> = {
   // Crops (300x200)
   WHEAT: [
     { src: "https://cdn.pixabay.com/photo/2020/07/10/20/25/wheat-field-5392067_1280.jpg", aiHint: "wheat field" },
-    { src: "https://placehold.co/300x200.png?text=Wheat+Harvest", aiHint: "wheat harvest" },
-    { src: "https://placehold.co/300x200.png?text=Golden+Wheat", aiHint: "golden wheat" },
+    { src: "https://placehold.co/300x200.png?text=Wheat+Bales", aiHint: "wheat bales" },
+    { src: "https://placehold.co/300x200.png?text=Close-up+Wheat", aiHint: "closeup wheat" },
   ],
-  RICE: { src: "https://placehold.co/300x200.png", aiHint: "rice paddy" },
-  MAIZE: { src: "https://placehold.co/300x200.png", aiHint: "corn field" },
-  COTTON: { src: "https://placehold.co/300x200.png", aiHint: "cotton plant" },
-  SUGARCANE: { src: "https://placehold.co/300x200.png", aiHint: "sugarcane field" },
-  SOYBEAN: { src: "https://placehold.co/300x200.png", aiHint: "soybean plant" },
-  PULSES: { src: "https://placehold.co/300x200.png", aiHint: "lentils dal" },
-  MUSTARD: { src: "https://placehold.co/300x200.png", aiHint: "mustard field" },
-  GROUNDNUT: { src: "https://placehold.co/300x200.png", aiHint: "groundnuts crop" },
+  RICE: [
+    { src: "https://placehold.co/300x200.png?text=Rice+Paddy", aiHint: "rice paddy" },
+    { src: "https://placehold.co/300x200.png?text=Harvested+Rice", aiHint: "harvested rice" },
+    { src: "https://placehold.co/300x200.png?text=Rice+Grains", aiHint: "rice grains" },
+  ],
+  MAIZE: [
+    { src: "https://placehold.co/300x200.png?text=Corn+Field", aiHint: "corn field" },
+    { src: "https://placehold.co/300x200.png?text=Corn+Cobs", aiHint: "corn cobs" },
+    { src: "https://placehold.co/300x200.png?text=Maize+Growth", aiHint: "maize growth" },
+  ],
+  COTTON: [
+    { src: "https://placehold.co/300x200.png?text=Cotton+Plant", aiHint: "cotton plant" },
+    { src: "https://placehold.co/300x200.png?text=Cotton+Boll", aiHint: "cotton boll" },
+    { src: "https://placehold.co/300x200.png?text=Cotton+Field", aiHint: "cotton field" },
+  ],
+  SUGARCANE: [
+    { src: "https://placehold.co/300x200.png?text=Sugarcane+Field", aiHint: "sugarcane field" },
+    { src: "https://placehold.co/300x200.png?text=Sugarcane+Stalks", aiHint: "sugarcane stalks" },
+    { src: "https://placehold.co/300x200.png?text=Harvested+Sugarcane", aiHint: "harvested sugarcane" },
+  ],
+  SOYBEAN: [
+    { src: "https://placehold.co/300x200.png?text=Soybean+Plant", aiHint: "soybean plant" },
+    { src: "https://placehold.co/300x200.png?text=Soybean+Pods", aiHint: "soybean pods" },
+    { src: "https://placehold.co/300x200.png?text=Soybean+Field", aiHint: "soybean field" },
+  ],
+  PULSES: [
+    { src: "https://placehold.co/300x200.png?text=Lentils+Dal", aiHint: "lentils dal" },
+    { src: "https://placehold.co/300x200.png?text=Mixed+Pulses", aiHint: "mixed pulses" },
+    { src: "https://placehold.co/300x200.png?text=Chickpeas+Plant", aiHint: "chickpeas plant" },
+  ],
+  MUSTARD: [
+    { src: "https://placehold.co/300x200.png?text=Mustard+Field", aiHint: "mustard field" },
+    { src: "https://placehold.co/300x200.png?text=Mustard+Flowers", aiHint: "mustard flowers" },
+    { src: "https://placehold.co/300x200.png?text=Mustard+Seeds", aiHint: "mustard seeds" },
+  ],
+  GROUNDNUT: [
+    { src: "https://placehold.co/300x200.png?text=Groundnuts+Crop", aiHint: "groundnuts crop" },
+    { src: "https://placehold.co/300x200.png?text=Peanut+Plant", aiHint: "peanut plant" },
+    { src: "https://placehold.co/300x200.png?text=Harvested+Groundnuts", aiHint: "harvested groundnuts" },
+  ],
   DEFAULT_CROP: { src: "https://placehold.co/300x200.png", aiHint: "agriculture product" },
 
   // Mandi/Market (300x200 for cards)
