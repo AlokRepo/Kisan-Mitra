@@ -3,7 +3,7 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { Home, Lightbulb, BarChart3, MapPin, Settings, GraduationCap, Truck, TrendingUp, type LucideIcon } from 'lucide-react';
+import { Home, Lightbulb, BarChart3, MapPin, Settings, GraduationCap, Truck, TrendingUp, ScrollText, type LucideIcon } from 'lucide-react';
 import {
   SidebarMenu,
   SidebarMenuItem,
@@ -20,12 +20,13 @@ interface NavItem {
 
 // Ensure 'navHome' uses the Home icon and points to '/'
 const navItemsConfig: NavItem[] = [
-  { href: '/', labelKey: 'navHome', icon: Home }, // New Home Link
-  { href: '/prices', labelKey: 'navPrices', icon: TrendingUp }, // Updated Prices link
+  { href: '/', labelKey: 'navHome', icon: Home }, 
+  { href: '/prices', labelKey: 'navPrices', icon: TrendingUp }, 
   { href: '/recommendations', labelKey: 'navAiAdvisor', icon: Lightbulb },
   { href: '/dashboard', labelKey: 'navDashboard', icon: BarChart3 },
   { href: '/locator', labelKey: 'navMandis', icon: MapPin },
   { href: '/transport-estimator', labelKey: 'navTransportEstimator', icon: Truck },
+  { href: '/schemes', labelKey: 'navGovtSchemes', icon: ScrollText }, // New Schemes Link
   { href: '/education', labelKey: 'navEducation', icon: GraduationCap },
   // Settings will be ordered to be last
 ];
