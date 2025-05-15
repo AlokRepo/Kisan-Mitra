@@ -1,3 +1,4 @@
+
 import type { CropPriceInfo, MandiLocation, PriceDataPoint, StatePriceHistory, CropPriceTrend } from '@/types';
 import { CROPS, STATES } from '@/types';
 import { getCropImageDetails, APP_IMAGES } from './image-config';
@@ -9,15 +10,23 @@ export const getRealTimePrices = async (selectedCrop?: string): Promise<CropPric
   await new Promise(resolve => setTimeout(resolve, 500)); // Simulate network delay
 
   const prices: CropPriceInfo[] = [];
-  const cropsToDisplay = selectedCrop ? [selectedCrop] : CROPS.slice(0, 5); // Display specific crop or first 5
+  const cropsToDisplay = selectedCrop ? [selectedCrop] : CROPS.slice(0, 6); // Display specific crop or first 6 for more variety
+  const cropInstanceCounter: { [key: string]: number } = {}; // Counter for each crop type to cycle images
 
   cropsToDisplay.forEach(cropName => {
+    if (cropInstanceCounter[cropName] === undefined) {
+      cropInstanceCounter[cropName] = 0;
+    }
     for (let i = 0; i < 2; i++) { // 2 example markets per crop
       const state = STATES[Math.floor(Math.random() * STATES.length)];
       const modalPrice = randomPrice(1500, 5000);
-      const imageDetails = getCropImageDetails(cropName);
+      
+      // Pass the instance count as indexHint to cycle through images if multiple are defined
+      const imageDetails = getCropImageDetails(cropName, cropInstanceCounter[cropName]);
+      cropInstanceCounter[cropName]++; // Increment for the next instance of this specific crop
+
       prices.push({
-        id: `${cropName.toLowerCase().replace(' ', '-')}-${i}-${Date.now()}`,
+        id: `${cropName.toLowerCase().replace(' ', '-')}-${state.toLowerCase().replace(' ','-')}-${i}-${Date.now()}`,
         cropName,
         variety: "FAQ",
         market: `${state.split(' ')[0]} Mandi ${i + 1}`,
@@ -43,6 +52,7 @@ export const getMandiLocations = async (): Promise<MandiLocation[]> => {
     for (let i = 0; i < 2; i++) {
       const crop1 = CROPS[Math.floor(Math.random() * CROPS.length)];
       const crop2 = CROPS[Math.floor(Math.random() * CROPS.length)];
+      const defaultMandiImage = getCropImageDetails("DEFAULT_MANDI"); // Use helper for consistency
       mandis.push({
         id: `mandi-${stateIndex}-${i}`,
         name: `${state.split(" ")[0]} Main Mandi ${i + 1}`,
@@ -54,8 +64,8 @@ export const getMandiLocations = async (): Promise<MandiLocation[]> => {
           { crop: crop1, price: randomPrice(1800, 4500), unit: "Quintal" },
           { crop: crop2, price: randomPrice(2000, 5000), unit: "Quintal" },
         ],
-        imageUrl: APP_IMAGES.DEFAULT_MANDI.src,
-        aiHint: APP_IMAGES.DEFAULT_MANDI.aiHint,
+        imageUrl: defaultMandiImage.src,
+        aiHint: defaultMandiImage.aiHint,
       });
     }
   });
