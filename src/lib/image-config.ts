@@ -2,7 +2,7 @@
 // src/lib/image-config.ts
 export const APP_IMAGES = {
   // Crops (300x200)
-  WHEAT: { src: "https://placehold.co/300x200.png", aiHint: "wheat field" },
+  WHEAT: { src: "https://cdn.pixabay.com/photo/2020/07/10/20/25/wheat-field-5392067_1280.jpg", aiHint: "wheat field" },
   RICE: { src: "https://placehold.co/300x200.png", aiHint: "rice paddy" },
   MAIZE: { src: "https://placehold.co/300x200.png", aiHint: "corn field" },
   COTTON: { src: "https://placehold.co/300x200.png", aiHint: "cotton plant" },
