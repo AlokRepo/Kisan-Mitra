@@ -35,15 +35,17 @@ const translations: Translations = {
   appName: { en: 'Kisan Mitra', hi: 'किसान मित्र' },
   copyright: { en: '© {year} Kisan Mitra', hi: '© {year} किसान मित्र' },
   // Sidebar Navigation
-  navPrices: { en: 'Prices', hi: 'कीमतें' },
+  navHome: { en: 'Home', hi: 'मुख्य पृष्ठ' },
+  navPrices: { en: 'Crop Prices', hi: 'फसल कीमतें' }, // Updated from 'Prices'
   navAiAdvisor: { en: 'AI Advisor', hi: 'एआई सलाहकार' },
   navDashboard: { en: 'Dashboard', hi: 'डैशबोर्ड' },
   navMandis: { en: 'Mandis', hi: 'मंडियां' },
   navEducation: { en: "Education & Resources", hi: "शिक्षा और संसाधन" },
   navTransportEstimator: { en: "Transport Estimator", hi: "परिवहन अनुमानक" },
-  Settings: { en: 'Settings', hi: 'सेटिंग्स'}, // For sidebar
+  Settings: { en: 'Settings', hi: 'सेटिंग्स'},
   // Header
   appHeaderMobileTitle: { en: 'Kisan Mitra', hi: 'किसान मित्र' },
+  homeTitle: { en: "Kisan Mitra Home", hi: "किसान मित्र मुख्य पृष्ठ" }, // Title for the actual home page
   // Theme Switcher
   theme: { en: 'Theme', hi: 'थीम' },
   lightTheme: { en: 'Light', hi: 'हल्का' },
@@ -58,7 +60,6 @@ const translations: Translations = {
   tamil: { en: 'Tamil', hi: 'तमिल' },
   punjabi: { en: 'Punjabi', hi: 'पंजाबी' },
 
-
   // General UI
   refresh: { en: "Refresh", hi: "ताज़ा करें" },
   loading: { en: "Loading...", hi: "लोड हो रहा है..." },
@@ -66,9 +67,39 @@ const translations: Translations = {
   noDataAvailable: { en: "No Data Available", hi: "कोई डेटा उपलब्ध नहीं है" },
   tryRefreshing: { en: "Please try refreshing.", hi: "कृपया ताज़ा करने का प्रयास करें।" },
   selectPlaceholder: { en: "Select...", hi: "चुनें..." },
+  readMoreButton: { en: "Read More", hi: "और पढ़ें" },
+  exploreNowButton: { en: "Explore Now", hi: "अभी देखें" },
+  getAdviceButton: { en: "Get Advice", hi: "सलाह लें" },
+  findMandisButton: { en: "Find Mandis", hi: "मंडियां खोजें" },
   
-  // HomePage
-  homeTitle: { en: "Real-Time Crop Prices", hi: "वास्तविक समय में फसल की कीमतें" },
+  // New Home Page
+  heroTitle: { en: "Welcome to Kisan Mitra", hi: "किसान मित्र में आपका स्वागत है" },
+  heroSubtitle: { en: "Empowering Indian Farmers with Technology, Information, and Market Access.", hi: "प्रौद्योगिकी, सूचना और बाजार पहुंच के साथ भारतीय किसानों को सशक्त बनाना।" },
+  heroAltText: { en: "Indian agriculture landscape", hi: "भारतीय कृषि परिदृश्य" },
+  explorePricesButton: { en: "Explore Market Prices", hi: "बाजार मूल्य देखें" },
+  viewSchemesButton: { en: "Schemes & Resources", hi: "योजनाएं और संसाधन" },
+  keyFeaturesTitle: { en: "Our Key Features", hi: "हमारी मुख्य विशेषताएं" },
+  featurePriceTrackingTitle: { en: "Real-time Price Tracking", hi: "वास्तविक समय मूल्य ट्रैकिंग" },
+  featurePriceTrackingDesc: { en: "Access up-to-date crop prices from mandis across India.", hi: "पूरे भारत की मंडियों से नवीनतम फसल कीमतों तक पहुंचें।" },
+  featureAIAdviceTitle: { en: "AI-Powered Advice", hi: "एआई-संचालित सलाह" },
+  featureAIAdviceDesc: { en: "Get smart recommendations for selling your produce.", hi: "अपनी उपज बेचने के लिए स्मार्ट सिफारिशें प्राप्त करें।" },
+  featureMandiLocatorTitle: { en: "Mandi Locator", hi: "मंडी लोकेटर" },
+  featureMandiLocatorDesc: { en: "Find nearby agricultural markets with ease.", hi: "आसानी से आस-पास के कृषि बाजारों का पता लगाएं।" },
+  featureEducationTitle: { en: "Knowledge Hub", hi: "ज्ञान केंद्र" }, // Updated from 'Educational Resources' for card title
+  featureEducationDesc: { en: "Access guides, scheme details, and farming best practices.", hi: "गाइड, योजना विवरण और सर्वोत्तम कृषि पद्धतियों तक पहुंचें।" },
+  govSchemesTitle: { en: "Government Initiatives for Farmers", hi: "किसानों के लिए सरकारी पहल" },
+  schemePMKisanTitle: { en: "PM-KISAN Scheme", hi: "पीएम-किसान योजना" }, // Shortened for card
+  schemePMKisanDesc: { en: "Direct income support to eligible farmer families.", hi: "पात्र किसान परिवारों को प्रत्यक्ष आय सहायता।" },
+  schemeENAMTitle: { en: "e-NAM Platform", hi: "ई-नाम प्लेटफॉर्म" }, // Shortened for card
+  schemeENAMDesc: { en: "Online trading for better price discovery of agricultural produce.", hi: "कृषि उपज की बेहतर कीमत खोज के लिए ऑनलाइन ट्रेडिंग।" },
+  latestNewsTitle: { en: "Latest News & Announcements", hi: "नवीनतम समाचार और घोषणाएँ" },
+  newsItem1Title: { en: "New MSP Rates Announced for Kharif Crops", hi: "खरीफ फसलों के लिए नए एमएसपी दरों की घोषणा" },
+  newsItem1Summary: { en: "The government has approved an increase in the Minimum Support Prices (MSP) for all mandated Kharif crops for Marketing Season 2024-25.", hi: "सरकार ने विपणन सीजन 2024-25 के लिए सभी अनिवार्य खरीफ फसलों के लिए न्यूनतम समर्थन मूल्य (एमएसपी) में वृद्धि को मंजूरी दे दी है।" },
+  newsItem2Title: { en: "Weather Advisory for Northern States", hi: "उत्तरी राज्यों के लिए मौसम सलाह" },
+  newsItem2Summary: { en: "Farmers in northern India are advised to take necessary precautions due to expected heavy rainfall in the coming week.", hi: "उत्तरी भारत के किसानों को अगले सप्ताह में अपेक्षित भारी वर्षा के कारण आवश्यक सावधानी बरतने की सलाह दी जाती है।" },
+  quickLinksTitle: { en: "Quick Links", hi: "त्वरित लिंक्स" },
+
+  // PricesPage (Old Home Page)
   selectCropPlaceholder: { en: "Select crop", hi: "फसल चुनें" },
   allCrops: { en: "All Crops", hi: "सभी फसलें" },
   refreshPricesSr: { en: "Refresh prices", hi: "कीमतें ताज़ा करें" },
@@ -216,7 +247,7 @@ const translations: Translations = {
   sampleSchemeDesc1: { en: "Direct income support for small and marginal farmers across India.", hi: "पूरे भारत में छोटे और सीमांत किसानों के लिए प्रत्यक्ष आय सहायता।" },
   sampleSchemeTitle2: { en: "e-NAM (National Agriculture Market)", hi: "ई-नाम (राष्ट्रीय कृषि बाजार)" },
   sampleSchemeDesc2: { en: "Online trading platform for agricultural commodities aiming for better price discovery.", hi: "बेहतर मूल्य खोज के लक्ष्य के साथ कृषि वस्तुओं के लिए ऑनलाइन ट्रेडिंग प्लेटफॉर्म।" },
-  learnMoreButton: { en: "Learn More", hi: "और अधिक जानें" },
+  // learnMoreButton is already defined under New Home Page section
   faqTitle: { en: "Frequently Asked Questions", hi: "अक्सर पूछे जाने वाले प्रश्न" },
   faqDesc: { en: "Find answers to common questions about the app and agricultural markets.", hi: "ऐप और कृषि बाजारों के बारे में सामान्य प्रश्नों के उत्तर पाएं।" },
   faqQ1: { en: "How are mandi prices determined?", hi: "मंडी की कीमतें कैसे निर्धारित होती हैं?" },

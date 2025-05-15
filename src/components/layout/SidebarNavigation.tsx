@@ -3,7 +3,7 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { Home, Lightbulb, BarChart3, MapPin, Settings, GraduationCap, Truck, type LucideIcon } from 'lucide-react';
+import { Home, Lightbulb, BarChart3, MapPin, Settings, GraduationCap, Truck, TrendingUp, type LucideIcon } from 'lucide-react';
 import {
   SidebarMenu,
   SidebarMenuItem,
@@ -18,14 +18,16 @@ interface NavItem {
   icon: LucideIcon;
 }
 
+// Ensure 'navHome' uses the Home icon and points to '/'
 const navItemsConfig: NavItem[] = [
-  { href: '/', labelKey: 'navPrices', icon: Home },
+  { href: '/', labelKey: 'navHome', icon: Home }, // New Home Link
+  { href: '/prices', labelKey: 'navPrices', icon: TrendingUp }, // Updated Prices link
   { href: '/recommendations', labelKey: 'navAiAdvisor', icon: Lightbulb },
   { href: '/dashboard', labelKey: 'navDashboard', icon: BarChart3 },
   { href: '/locator', labelKey: 'navMandis', icon: MapPin },
   { href: '/transport-estimator', labelKey: 'navTransportEstimator', icon: Truck },
   { href: '/education', labelKey: 'navEducation', icon: GraduationCap },
-  { href: '/settings', labelKey: 'Settings', icon: Settings },
+  // Settings will be ordered to be last
 ];
 
 export function SidebarNavigation() {
@@ -33,10 +35,9 @@ export function SidebarNavigation() {
   const { translate } = useLanguage();
 
   const orderedNavItems = [
-    ...navItemsConfig.filter(item => item.labelKey !== 'Settings'),
-    navItemsConfig.find(item => item.labelKey === 'Settings') // Ensure settings is last
-  ].filter(Boolean) as NavItem[]; // Filter out undefined if settings isn't found (should not happen)
-
+    ...navItemsConfig.filter(item => item.labelKey !== 'Settings'), // All items except Settings
+    { href: '/settings', labelKey: 'Settings', icon: Settings } // Add Settings at the end
+  ].filter(Boolean) as NavItem[];
 
   return (
     <SidebarMenu>
