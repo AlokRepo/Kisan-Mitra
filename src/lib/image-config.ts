@@ -11,32 +11,32 @@ export const APP_IMAGES: Record<string, ImageInfo | ImageInfo[]> = {
   // Crops (300x200)
   WHEAT: [
     { src: "https://cdn.pixabay.com/photo/2020/07/10/20/25/wheat-field-5392067_1280.jpg", aiHint: "wheat field" },
-    { src: "https://placehold.co/300x200.png?text=Wheat+Bales", aiHint: "wheat bales" },
+    { src: "https://cdn.pixabay.com/photo/2014/06/20/19/36/wheat-crops-373360_1280.jpg?text=Wheat+Bales", aiHint: "wheat bales" },
     { src: "https://placehold.co/300x200.png?text=Close-up+Wheat", aiHint: "closeup wheat" },
   ],
   RICE: [
-    { src: "https://placehold.co/300x200.png?text=Rice+Paddy", aiHint: "rice paddy" },
-    { src: "https://placehold.co/300x200.png?text=Harvested+Rice", aiHint: "harvested rice" },
-    { src: "https://placehold.co/300x200.png?text=Rice+Grains", aiHint: "rice grains" },
+    { src: "https://cdn.pixabay.com/photo/2017/08/25/05/30/in-rice-field-2679153_1280.jpg?text=Rice+Paddy", aiHint: "rice paddy" },
+    { src: "https://cdn.pixabay.com/photo/2021/10/10/11/14/ch-6696389_1280.jpg?text=Harvested+Rice", aiHint: "harvested rice" },
+    { src: "https://pixabay.com/photos/rice-ears-of-rice-golden-color-1594612/?text=Rice+Grains", aiHint: "rice grains" },
   ],
   MAIZE: [
-    { src: "https://placehold.co/300x200.png?text=Corn+Field", aiHint: "corn field" },
-    { src: "https://placehold.co/300x200.png?text=Corn+Cobs", aiHint: "corn cobs" },
-    { src: "https://placehold.co/300x200.png?text=Maize+Growth", aiHint: "maize growth" },
+    { src: "https://cdn.pixabay.com/photo/2019/09/25/14/12/maize-4503781_1280.jpg?text=Corn+Field", aiHint: "corn field" },
+    { src: "https://cdn.pixabay.com/photo/2019/09/20/04/16/maize-4490754_1280.jpg?text=Corn+Cobs", aiHint: "corn cobs" },
+    { src: "https://cdn.pixabay.com/photo/2020/08/04/14/57/maize-5463051_1280.jpg?text=Maize+Growth", aiHint: "maize growth" },
   ],
   COTTON: [
-    { src: "https://placehold.co/300x200.png?text=Cotton+Plant", aiHint: "cotton plant" },
-    { src: "https://placehold.co/300x200.png?text=Cotton+Boll", aiHint: "cotton boll" },
-    { src: "https://placehold.co/300x200.png?text=Cotton+Field", aiHint: "cotton field" },
+    { src: "https://cdn.pixabay.com/photo/2020/03/02/19/13/cotton-flower-4896622_1280.jpg?text=Cotton+Plant", aiHint: "cotton plant" },
+    { src: "https://cdn.pixabay.com/photo/2020/01/26/12/37/cotton-grass-4794532_1280.jpg?text=Cotton+Boll", aiHint: "cotton boll" },
+    { src: "https://cdn.pixabay.com/photo/2017/05/08/17/03/grass-2295888_1280.jpg?text=Cotton+Field", aiHint: "cotton field" },
   ],
   SUGARCANE: [
-    { src: "https://placehold.co/300x200.png?text=Sugarcane+Field", aiHint: "sugarcane field" },
-    { src: "https://placehold.co/300x200.png?text=Sugarcane+Stalks", aiHint: "sugarcane stalks" },
-    { src: "https://placehold.co/300x200.png?text=Harvested+Sugarcane", aiHint: "harvested sugarcane" },
+    { src: "https://cdn.pixabay.com/photo/2013/12/04/16/28/sugarcane-223457_1280.jpg?text=Sugarcane+Field", aiHint: "sugarcane field" },
+    { src: "https://cdn.pixabay.com/photo/2020/07/09/20/00/sugarcane-5388614_1280.jpg?text=Sugarcane+Stalks", aiHint: "sugarcane stalks" },
+    { src: "https://cdn.pixabay.com/photo/2017/10/16/17/58/sugarcane-2857972_1280.jpg?text=Harvested+Sugarcane", aiHint: "harvested sugarcane" },
   ],
   SOYBEAN: [
-    { src: "https://placehold.co/300x200.png?text=Soybean+Plant", aiHint: "soybean plant" },
-    { src: "https://placehold.co/300x200.png?text=Soybean+Pods", aiHint: "soybean pods" },
+    { src: "https://cdn.pixabay.com/photo/2016/11/17/14/24/soy-1831704_1280.jpg?text=Soybean+Plant", aiHint: "soybean plant" },
+    { src: "https://cdn.pixabay.com/photo/2021/08/27/05/10/soybean-6577766_1280.jpg?text=Soybean+Pods", aiHint: "soybean pods" },
     { src: "https://placehold.co/300x200.png?text=Soybean+Field", aiHint: "soybean field" },
   ],
   PULSES: [
@@ -54,33 +54,33 @@ export const APP_IMAGES: Record<string, ImageInfo | ImageInfo[]> = {
     { src: "https://placehold.co/300x200.png?text=Peanut+Plant", aiHint: "peanut plant" },
     { src: "https://placehold.co/300x200.png?text=Harvested+Groundnuts", aiHint: "harvested groundnuts" },
   ],
-  DEFAULT_CROP: { src: "https://placehold.co/300x200.png", aiHint: "agriculture product" },
+  DEFAULT_CROP: { src: "https://cdn.pixabay.com/photo/2017/09/10/02/49/drone-2734228_1280.jpg", aiHint: "agriculture product" },
 
   // Mandi/Market (300x200 for cards)
-  DEFAULT_MANDI: { src: "https://placehold.co/300x200.png", aiHint: "market agriculture" },
+  DEFAULT_MANDI: { src: "https://cdn.pixabay.com/photo/2012/03/03/23/02/almonds-21502_1280.jpg", aiHint: "market agriculture" },
   
   // Education Page - Guides (600x400 for main display, can be reused for smaller cards if needed)
-  GUIDE_PRICE_FLUCTUATIONS: { src: "https://placehold.co/600x400.png", aiHint: "market chart" },
+  GUIDE_PRICE_FLUCTUATIONS: { src: "https://cdn.pixabay.com/photo/2016/11/23/14/37/blur-1853262_1280.jpg", aiHint: "market chart" },
   GUIDE_APP_USAGE: { src: "https://placehold.co/600x400.png", aiHint: "app interface" },
 
   // Education Page & Schemes Page - Schemes (600x400 for main display, 400x250 for cards)
   SCHEME_PM_KISAN: { src: "https://placehold.co/600x400.png", aiHint: "government building" }, // Used on education
   SCHEME_E_NAM: { src: "https://placehold.co/600x400.png", aiHint: "digital india" }, // Used on education
   
-  SCHEME_PM_KISAN_CARD: { src: "https://placehold.co/400x250.png", aiHint: "farmer finance" },
-  SCHEME_E_NAM_CARD: { src: "https://placehold.co/400x250.png", aiHint: "market online" },
-  SCHEME_CROP_INSURANCE_CARD: { src: "https://placehold.co/400x250.png", aiHint: "insurance protection" },
-  SCHEME_SOIL_HEALTH_CARD: { src: "https://placehold.co/400x250.png", aiHint: "soil health" },
-  SCHEME_GENERIC_1: { src: "https://placehold.co/400x250.png", aiHint: "government program" },
+  SCHEME_PM_KISAN_CARD: { src: "https://www.jagranimages.com/images/newimg/26122023/26_12_2023-kisan_credit_card_23614380_204254319.webp", aiHint: "farmer finance" },
+  SCHEME_E_NAM_CARD: { src: "https://www.indiafilings.com/learn/wp-content/uploads/2019/07/eNAM.jpg", aiHint: "market online" },
+  SCHEME_CROP_INSURANCE_CARD: { src: "https://smeventure.com/wp-content/uploads/2021/01/Crop-Insurance-Online.jpg", aiHint: "insurance protection" },
+  SCHEME_SOIL_HEALTH_CARD: { src: "https://kj1bcdn.b-cdn.net/media/102414/soil-health-card.jpg", aiHint: "soil health" },
+  SCHEME_GENERIC_1: { src: "https://ik.imagekit.io/tractorkarvan/tr:f-webp/images/Blogs/top-central-government-schemes-for-farmers-in-india/Central-Government-Schemes.jpg", aiHint: "government program" },
   SCHEME_GENERIC_2: { src: "https://placehold.co/400x250.png", aiHint: "community benefit" },
   SCHEME_GENERIC_3: { src: "https://placehold.co/400x250.png", aiHint: "rural development" },
   SCHEME_GENERIC_4: { src: "https://placehold.co/400x250.png", aiHint: "farmer support" },
 
 
   // New Home Page Images
-  HOME_HERO_BANNER: { src: "https://placehold.co/1200x400.png", aiHint: "indian agriculture panoramic" },
-  HOME_SCHEME_PM_KISAN: { src: "https://placehold.co/400x250.png", aiHint: "government scheme farmer" }, // For smaller cards on home page
-  HOME_SCHEME_E_NAM: { src: "https://placehold.co/400x250.png", aiHint: "digital market agriculture" }, // For smaller cards on home page
+  HOME_HERO_BANNER: { src: "https://cdn.pixabay.com/photo/2019/05/23/08/46/dji-4223421_1280.jpg", aiHint: "indian agriculture panoramic" },
+  HOME_SCHEME_PM_KISAN: { src: "https://img.khetivyapar.com/images/news/1713762716-these-government-schemes-for-farmers-in-madhya-pradesh-madhya-pradesh-scheme-2024.jpg", aiHint: "government scheme farmer" }, // For smaller cards on home page
+  HOME_SCHEME_E_NAM: { src: "https://upload.wikimedia.org/wikipedia/en/1/13/National_Agriculture_Market_%28eNAM%29_logo.png", aiHint: "digital market agriculture" }, // For smaller cards on home page
 };
 
 export type AppImageKey = keyof typeof APP_IMAGES; // This type might not be directly usable for indexing if keys are dynamic strings
