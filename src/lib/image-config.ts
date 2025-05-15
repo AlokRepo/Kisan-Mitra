@@ -1,14 +1,27 @@
 
 // src/lib/image-config.ts
-export const APP_IMAGES = {
+
+// Define ImageInfo type locally
+interface ImageInfo {
+  src: string;
+  aiHint: string;
+}
+
+export const APP_IMAGES: Record<string, ImageInfo | ImageInfo[]> = {
   // Crops (300x200)
-  WHEAT: { src: "https://cdn.pixabay.com/photo/2020/07/10/20/25/wheat-field-5392067_1280.jpg", aiHint: "wheat field" },
+  WHEAT: [
+    { src: "https://cdn.pixabay.com/photo/2020/07/10/20/25/wheat-field-5392067_1280.jpg", aiHint: "wheat field" },
+    { src: "https://placehold.co/300x200.png?text=Wheat+Harvest", aiHint: "wheat harvest" },
+    { src: "https://placehold.co/300x200.png?text=Golden+Wheat", aiHint: "golden wheat" },
+  ],
   RICE: { src: "https://placehold.co/300x200.png", aiHint: "rice paddy" },
   MAIZE: { src: "https://placehold.co/300x200.png", aiHint: "corn field" },
   COTTON: { src: "https://placehold.co/300x200.png", aiHint: "cotton plant" },
   SUGARCANE: { src: "https://placehold.co/300x200.png", aiHint: "sugarcane field" },
   SOYBEAN: { src: "https://placehold.co/300x200.png", aiHint: "soybean plant" },
   PULSES: { src: "https://placehold.co/300x200.png", aiHint: "lentils dal" },
+  MUSTARD: { src: "https://placehold.co/300x200.png", aiHint: "mustard field" },
+  GROUNDNUT: { src: "https://placehold.co/300x200.png", aiHint: "groundnuts crop" },
   DEFAULT_CROP: { src: "https://placehold.co/300x200.png", aiHint: "agriculture product" },
 
   // Mandi/Market (300x200 for cards)
@@ -38,13 +51,18 @@ export const APP_IMAGES = {
   HOME_SCHEME_E_NAM: { src: "https://placehold.co/400x250.png", aiHint: "digital market agriculture" }, // For smaller cards on home page
 };
 
-export type AppImageKey = keyof typeof APP_IMAGES;
+export type AppImageKey = keyof typeof APP_IMAGES; // This type might not be directly usable for indexing if keys are dynamic strings
 
 // Helper function to get image data by crop name string
-export function getCropImageDetails(cropName: string): { src: string; aiHint: string } {
-  const upperCropName = cropName.toUpperCase().replace(/\s+/g, '_') as AppImageKey; 
-  if (APP_IMAGES[upperCropName]) {
-    return APP_IMAGES[upperCropName];
+export function getCropImageDetails(cropName: string, indexHint: number = 0): ImageInfo {
+  const upperCropName = cropName.toUpperCase().replace(/\s+/g, '_'); 
+  // Check if upperCropName is a valid key in APP_IMAGES to satisfy TypeScript
+  const imageEntry = APP_IMAGES[upperCropName as AppImageKey] || APP_IMAGES.DEFAULT_CROP;
+
+  if (Array.isArray(imageEntry)) {
+    return imageEntry[indexHint % imageEntry.length];
   }
-  return APP_IMAGES.DEFAULT_CROP;
+  // If it's not an array, it should be a single ImageInfo object.
+  // The type of APP_IMAGES allows ImageInfo | ImageInfo[], so this cast is safe here.
+  return imageEntry as ImageInfo; 
 }
