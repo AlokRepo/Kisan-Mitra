@@ -34,6 +34,7 @@ const translations: Translations = {
   // App General
   appName: { en: 'Kisan Mitra', hi: 'किसान मित्र' },
   copyright: { en: '© {year} Kisan Mitra', hi: '© {year} किसान मित्र' },
+  userProfile: { en: 'User Profile', hi: 'उपयोगकर्ता प्रोफ़ाइल' },
   // Sidebar Navigation
   navHome: { en: 'Home', hi: 'मुख्य पृष्ठ' },
   navPrices: { en: 'Crop Prices', hi: 'फसल कीमतें' },
@@ -411,6 +412,22 @@ const translations: Translations = {
   agriFinanceSubTopic4: { en: "Managing farm budgets and financial planning.", hi: "कृषि बजट और वित्तीय योजना का प्रबंधन।" },
   exploreFinancialSchemesButton: { en: "Explore Financial Schemes", hi: "वित्तीय योजनाएँ देखें" },
 
+  // Wizard
+  schemeFinderWizardTitle: { en: "Scheme Finder Wizard", hi: "योजना खोज विज़ार्ड" },
+  schemeFinderWizardDesc: { en: "Answer a few questions to find schemes tailored to your needs.", hi: "अपनी आवश्यकताओं के अनुरूप योजनाएँ खोजने के लिए कुछ प्रश्नों के उत्तर दें।" },
+  wizardStepLabel: { en: "Step {current} of {total}", hi: "चरण {current} का {total}" },
+  wizardStepDemographicsTitle: { en: "Your Details", hi: "आपके विवरण" },
+  wizardGenderLabel: { en: "Select Your Gender", hi: "अपना लिंग चुनें" },
+  wizardAgeLabel: { en: "Enter Your Age", hi: "अपनी आयु दर्ज करें" },
+  wizardAgePlaceholder: { en: "Age in years", hi: "आयु (वर्षों में)" },
+  youSelectedLabel: { en: "You selected", hi: "आपने चुना" },
+  yourAgeLabel: { en: "Your age", hi: "आपकी आयु" },
+  yearsOldLabel: { en: "years", hi: "वर्ष" },
+  nextButton: { en: "Next", hi: "अगला" },
+  findSchemesButton: { en: "Find Schemes", hi: "योजनाएँ खोजें" },
+  resetWizardButton: { en: "Reset", hi: "रीसेट" },
+  wizardProgressLabel: { en: "Wizard progress", hi: "विज़ार्ड प्रगति" },
+
 };
 
 const LanguageContext = createContext<LanguageContextType | undefined>(undefined);
@@ -455,4 +472,3 @@ export function useLanguage(): LanguageContextType {
   }
   return context;
 }
-

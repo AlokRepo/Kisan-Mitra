@@ -16,12 +16,15 @@ interface FeatureCardProps {
   description: string;
   link: string;
   linkText: string;
-  delay?: string;
+  animationDelay?: string; // e.g., '200ms'
 }
 
-const FeatureCard: React.FC<FeatureCardProps> = ({ icon: Icon, title, description, link, linkText, delay = 'animate-slide-up' }) => {
+const FeatureCard: React.FC<FeatureCardProps> = ({ icon: Icon, title, description, link, linkText, animationDelay }) => {
   return (
-    <Card className={`bg-card shadow-lg hover:shadow-xl transition-all duration-300 group hover:scale-105 ${delay} opacity-0`} style={{ animationFillMode: 'forwards' }}>
+    <Card 
+      className="bg-card shadow-lg hover:shadow-xl transition-all duration-300 group hover:scale-105 animate-slide-up opacity-0" 
+      style={{ animationFillMode: 'forwards', animationDelay }}
+    >
       <CardHeader className="items-center text-center">
         <Icon className="h-12 w-12 text-primary mb-3" />
         <CardTitle className="text-xl text-primary">{title}</CardTitle>
@@ -46,13 +49,16 @@ interface SchemeCardProps {
   imageUrl: string;
   aiHint: string;
   link: string;
-  delay?: string;
+  animationDelay?: string; // e.g., '300ms'
 }
 
-const SchemeCard: React.FC<SchemeCardProps> = ({ title, description, imageUrl, aiHint, link, delay = 'animate-slide-up' }) => {
+const SchemeCard: React.FC<SchemeCardProps> = ({ title, description, imageUrl, aiHint, link, animationDelay }) => {
   const { translate } = useLanguage();
   return (
-    <Card className={`overflow-hidden bg-card shadow-lg hover:shadow-xl transition-all duration-300 group hover:scale-105 ${delay} opacity-0`} style={{ animationFillMode: 'forwards' }}>
+    <Card 
+      className="overflow-hidden bg-card shadow-lg hover:shadow-xl transition-all duration-300 group hover:scale-105 animate-slide-up opacity-0" 
+      style={{ animationFillMode: 'forwards', animationDelay }}
+    >
       <div className="relative h-40 w-full">
         <Image src={imageUrl} alt={title} fill sizes="(max-width: 768px) 100vw, 50vw" style={{ objectFit: 'cover' }} data-ai-hint={aiHint} />
       </div>
@@ -77,27 +83,27 @@ export default function HomePage() {
   const { translate } = useLanguage();
 
   const features = [
-    { icon: TrendingUp, titleKey: 'featurePriceTrackingTitle', descriptionKey: 'featurePriceTrackingDesc', link: '/prices', linkTextKey: 'exploreNowButton', delay: 'animate-slide-up animation-delay-200' },
-    { icon: Lightbulb, titleKey: 'featureAIAdviceTitle', descriptionKey: 'featureAIAdviceDesc', link: '/recommendations', linkTextKey: 'getAdviceButton', delay: 'animate-slide-up animation-delay-400' },
-    { icon: MapPin, titleKey: 'featureMandiLocatorTitle', descriptionKey: 'featureMandiLocatorDesc', link: '/locator', linkTextKey: 'findMandisButton', delay: 'animate-slide-up animation-delay-600' },
-    { icon: GraduationCap, titleKey: 'featureEducationTitle', descriptionKey: 'featureEducationDesc', link: '/education', linkTextKey: 'learnMoreButton', delay: 'animate-slide-up animation-delay-800' },
+    { icon: TrendingUp, titleKey: 'featurePriceTrackingTitle', descriptionKey: 'featurePriceTrackingDesc', link: '/prices', linkTextKey: 'exploreNowButton', animationDelay: '200ms' },
+    { icon: Lightbulb, titleKey: 'featureAIAdviceTitle', descriptionKey: 'featureAIAdviceDesc', link: '/recommendations', linkTextKey: 'getAdviceButton', animationDelay: '400ms' },
+    { icon: MapPin, titleKey: 'featureMandiLocatorTitle', descriptionKey: 'featureMandiLocatorDesc', link: '/locator', linkTextKey: 'findMandisButton', animationDelay: '600ms' },
+    { icon: GraduationCap, titleKey: 'featureEducationTitle', descriptionKey: 'featureEducationDesc', link: '/education', linkTextKey: 'learnMoreButton', animationDelay: '800ms' },
   ];
 
   const schemes = [
-    { titleKey: 'schemePMKisanTitle', descriptionKey: 'schemePMKisanDesc', imageDetails: APP_IMAGES.HOME_SCHEME_PM_KISAN, link: 'https://pmkisan.gov.in/', delay: 'animate-slide-up animation-delay-300' },
-    { titleKey: 'schemeENAMTitle', descriptionKey: 'schemeENAMDesc', imageDetails: APP_IMAGES.HOME_SCHEME_E_NAM, link: 'https://www.enam.gov.in/web/', delay: 'animate-slide-up animation-delay-500' },
+    { titleKey: 'schemePMKisanTitle', descriptionKey: 'schemePMKisanDesc', imageDetails: APP_IMAGES.HOME_SCHEME_PM_KISAN, link: 'https://pmkisan.gov.in/', animationDelay: '300ms' },
+    { titleKey: 'schemeENAMTitle', descriptionKey: 'schemeENAMDesc', imageDetails: APP_IMAGES.HOME_SCHEME_E_NAM, link: 'https://www.enam.gov.in/web/', animationDelay: '500ms' },
   ];
 
   const newsItems = [
-    { id: 1, titleKey: 'newsItem1Title', summaryKey: 'newsItem1Summary', date: '2024-07-28', delay: 'animate-slide-up animation-delay-200' },
-    { id: 2, titleKey: 'newsItem2Title', summaryKey: 'newsItem2Summary', date: '2024-07-25', delay: 'animate-slide-up animation-delay-400' },
+    { id: 1, titleKey: 'newsItem1Title', summaryKey: 'newsItem1Summary', date: '2024-07-28', animationDelay: '200ms' },
+    { id: 2, titleKey: 'newsItem2Title', summaryKey: 'newsItem2Summary', date: '2024-07-25', animationDelay: '400ms' },
   ];
   
   const quickLinks = [
-    { textKey: 'navDashboard', href: '/dashboard', delay: 'animate-fade-in animation-delay-200' },
-    { textKey: 'navTransportEstimator', href: '/transport-estimator', delay: 'animate-fade-in animation-delay-300' },
-    { textKey: 'navEducation', href: '/education', delay: 'animate-fade-in animation-delay-400' },
-    { textKey: 'Settings', href: '/settings', delay: 'animate-fade-in animation-delay-500' },
+    { textKey: 'navDashboard', href: '/dashboard', animationDelay: '200ms' },
+    { textKey: 'navTransportEstimator', href: '/transport-estimator', animationDelay: '300ms' },
+    { textKey: 'navEducation', href: '/education', animationDelay: '400ms' },
+    { textKey: 'Settings', href: '/settings', animationDelay: '500ms' },
   ];
 
 
@@ -136,7 +142,7 @@ export default function HomePage() {
         <div className="container mx-auto px-4">
           <h2 className="text-3xl font-bold text-center text-primary mb-10 animate-slide-up opacity-0" style={{ animationFillMode: 'forwards'}}>{translate('keyFeaturesTitle')}</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {features.map((feature, index) => (
+            {features.map((feature) => (
               <FeatureCard
                 key={feature.titleKey}
                 icon={feature.icon}
@@ -144,7 +150,7 @@ export default function HomePage() {
                 description={translate(feature.descriptionKey)}
                 link={feature.link}
                 linkText={translate(feature.linkTextKey)}
-                delay={`animate-slide-up opacity-0 animation-delay-${(index + 1) * 200}ms`}
+                animationDelay={feature.animationDelay}
               />
             ))}
           </div>
@@ -156,7 +162,7 @@ export default function HomePage() {
         <div className="container mx-auto px-4">
           <h2 className="text-3xl font-bold text-center text-primary mb-10 animate-slide-up opacity-0" style={{ animationFillMode: 'forwards'}}>{translate('govSchemesTitle')}</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            {schemes.map((scheme, index) => (
+            {schemes.map((scheme) => (
               <SchemeCard
                 key={scheme.titleKey}
                 title={translate(scheme.titleKey)}
@@ -164,7 +170,7 @@ export default function HomePage() {
                 imageUrl={scheme.imageDetails.src}
                 aiHint={scheme.imageDetails.aiHint}
                 link={scheme.link}
-                delay={`animate-slide-up opacity-0 animation-delay-${(index + 1) * 300}ms`}
+                animationDelay={scheme.animationDelay}
               />
             ))}
           </div>
@@ -176,8 +182,12 @@ export default function HomePage() {
         <div className="container mx-auto px-4">
           <h2 className="text-3xl font-bold text-center text-primary mb-10 animate-slide-up opacity-0" style={{ animationFillMode: 'forwards'}}>{translate('latestNewsTitle')}</h2>
           <div className="space-y-6">
-            {newsItems.map((item, index) => (
-              <Card key={item.id} className={`bg-card shadow-md hover:shadow-lg transition-shadow ${item.delay} opacity-0`} style={{ animationFillMode: 'forwards' }}>
+            {newsItems.map((item) => (
+              <Card 
+                key={item.id} 
+                className="bg-card shadow-md hover:shadow-lg transition-shadow animate-slide-up opacity-0" 
+                style={{ animationFillMode: 'forwards', animationDelay: item.animationDelay }}
+              >
                 <CardHeader>
                   <CardTitle className="text-xl text-primary">{translate(item.titleKey)}</CardTitle>
                   <CardDescription className="text-xs text-muted-foreground">{item.date}</CardDescription>
@@ -201,8 +211,12 @@ export default function HomePage() {
         <div className="container mx-auto px-4">
           <h2 className="text-3xl font-bold text-center text-primary mb-10 animate-slide-up opacity-0" style={{ animationFillMode: 'forwards' }}>{translate('quickLinksTitle')}</h2>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
-            {quickLinks.map((link, index) => (
-              <div key={link.href} className={`${link.delay} opacity-0`} style={{ animationFillMode: 'forwards' }}>
+            {quickLinks.map((link) => (
+              <div 
+                key={link.href} 
+                className="animate-fade-in opacity-0" 
+                style={{ animationFillMode: 'forwards', animationDelay: link.animationDelay }}
+              >
                 <Button variant="ghost" asChild className="text-lg text-foreground hover:text-primary hover:bg-accent/20 py-3 px-4 w-full justify-center">
                   <Link href={link.href}>{translate(link.textKey)}</Link>
                 </Button>
