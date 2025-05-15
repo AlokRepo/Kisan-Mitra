@@ -3,11 +3,12 @@
 
 import React from 'react';
 import Image from 'next/image';
+import Link from 'next/link';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { Button } from "@/components/ui/button";
 import { useLanguage } from "@/contexts/LanguageContext";
-import { GraduationCap, BookOpen, Users, ExternalLink, Lightbulb } from 'lucide-react';
+import { GraduationCap, BookOpen, Users, ExternalLink, Lightbulb, ScrollText, ChevronRight } from 'lucide-react';
 import { APP_IMAGES } from '@/lib/image-config';
 
 interface InfoCardProps {
@@ -76,21 +77,21 @@ export default function EducationPage() {
     },
   ];
 
-  const schemes = [
+  const spotlightSchemes = [
     {
       id: "scheme1",
-      titleKey: "sampleSchemeTitle1",
+      titleKey: "sampleSchemeTitle1", // PM-KISAN
       descriptionKey: "sampleSchemeDesc1",
-      image: APP_IMAGES.SCHEME_PM_KISAN,
-      linkUrl: "#", 
+      image: APP_IMAGES.SCHEME_PM_KISAN, // Use the larger image for spotlight
+      linkUrl: "https://pmkisan.gov.in/", // Link to official site
       buttonTextKey: "learnMoreButton",
     },
     {
       id: "scheme2",
-      titleKey: "sampleSchemeTitle2",
+      titleKey: "sampleSchemeTitle2", // e-NAM
       descriptionKey: "sampleSchemeDesc2",
-      image: APP_IMAGES.SCHEME_E_NAM,
-      linkUrl: "#", 
+      image: APP_IMAGES.SCHEME_E_NAM, // Use the larger image for spotlight
+      linkUrl: "https://www.enam.gov.in/web/", // Link to official site
       buttonTextKey: "learnMoreButton",
     },
   ];
@@ -134,30 +135,38 @@ export default function EducationPage() {
         </CardContent>
       </Card>
 
-      {/* Government Schemes Section */}
+      {/* Government Schemes Spotlight Section */}
       <Card className="bg-card text-card-foreground shadow-xl">
         <CardHeader>
           <div className="flex items-center gap-3">
-            <Lightbulb className="h-7 w-7 text-primary" />
+            <ScrollText className="h-7 w-7 text-primary" /> {/* Updated Icon */}
             <CardTitle className="text-2xl text-primary">{translate('schemesTitle')}</CardTitle>
           </div>
           <CardDescription>{translate('schemesDesc')}</CardDescription>
         </CardHeader>
         <CardContent>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {schemes.map(scheme => (
+            {spotlightSchemes.map(scheme => (
               <InfoCard
                 key={scheme.id}
                 title={translate(scheme.titleKey)}
                 description={translate(scheme.descriptionKey)}
                 imageUrl={scheme.image.src}
                 aiHint={scheme.image.aiHint}
-                linkUrl={scheme.linkUrl}
+                linkUrl={scheme.linkUrl} // Official link for spotlight cards
                 buttonTextKey={scheme.buttonTextKey}
               />
             ))}
           </div>
         </CardContent>
+        <CardFooter>
+          <Button asChild variant="default" size="lg" className="w-full sm:w-auto">
+            <Link href="/schemes">
+              {translate('exploreAllSchemesButton')}
+              <ChevronRight className="ml-2 h-4 w-4" />
+            </Link>
+          </Button>
+        </CardFooter>
       </Card>
 
       {/* FAQ Section */}
@@ -196,7 +205,7 @@ export default function EducationPage() {
         </CardContent>
         <CardFooter>
           <Button asChild variant="default" size="lg">
-            <a href="https://x.com" target="_blank" rel="noopener noreferrer"> {/* Placeholder link to X */}
+            <a href="https://x.com" target="_blank" rel="noopener noreferrer">
               {translate('visitForumButton')}
               <ExternalLink className="ml-2 h-4 w-4" />
             </a>

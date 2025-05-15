@@ -36,16 +36,17 @@ const translations: Translations = {
   copyright: { en: '© {year} Kisan Mitra', hi: '© {year} किसान मित्र' },
   // Sidebar Navigation
   navHome: { en: 'Home', hi: 'मुख्य पृष्ठ' },
-  navPrices: { en: 'Crop Prices', hi: 'फसल कीमतें' }, // Updated from 'Prices'
+  navPrices: { en: 'Crop Prices', hi: 'फसल कीमतें' },
   navAiAdvisor: { en: 'AI Advisor', hi: 'एआई सलाहकार' },
   navDashboard: { en: 'Dashboard', hi: 'डैशबोर्ड' },
   navMandis: { en: 'Mandis', hi: 'मंडियां' },
+  navGovtSchemes: { en: 'Govt. Schemes', hi: 'सरकारी योजनाएँ' },
   navEducation: { en: "Education & Resources", hi: "शिक्षा और संसाधन" },
   navTransportEstimator: { en: "Transport Estimator", hi: "परिवहन अनुमानक" },
   Settings: { en: 'Settings', hi: 'सेटिंग्स'},
   // Header
   appHeaderMobileTitle: { en: 'Kisan Mitra', hi: 'किसान मित्र' },
-  homeTitle: { en: "Kisan Mitra Home", hi: "किसान मित्र मुख्य पृष्ठ" }, // Title for the actual home page
+  homeTitle: { en: "Kisan Mitra Home", hi: "किसान मित्र मुख्य पृष्ठ" },
   // Theme Switcher
   theme: { en: 'Theme', hi: 'थीम' },
   lightTheme: { en: 'Light', hi: 'हल्का' },
@@ -71,6 +72,11 @@ const translations: Translations = {
   exploreNowButton: { en: "Explore Now", hi: "अभी देखें" },
   getAdviceButton: { en: "Get Advice", hi: "सलाह लें" },
   findMandisButton: { en: "Find Mandis", hi: "मंडियां खोजें" },
+  learnMoreButton: { en: "Learn More", hi: "और अधिक जानें" },
+  allStates: { en: "All States", hi: "सभी राज्य" },
+  allCrops: { en: "All Crops", hi: "सभी फसलें" },
+  filterButton: { en: "Apply Filters", hi: "फ़िल्टर लागू करें" },
+  resetFiltersButton: { en: "Reset Filters", hi: "फ़िल्टर रीसेट करें" },
   
   // New Home Page
   heroTitle: { en: "Welcome to Kisan Mitra", hi: "किसान मित्र में आपका स्वागत है" },
@@ -85,12 +91,12 @@ const translations: Translations = {
   featureAIAdviceDesc: { en: "Get smart recommendations for selling your produce.", hi: "अपनी उपज बेचने के लिए स्मार्ट सिफारिशें प्राप्त करें।" },
   featureMandiLocatorTitle: { en: "Mandi Locator", hi: "मंडी लोकेटर" },
   featureMandiLocatorDesc: { en: "Find nearby agricultural markets with ease.", hi: "आसानी से आस-पास के कृषि बाजारों का पता लगाएं।" },
-  featureEducationTitle: { en: "Knowledge Hub", hi: "ज्ञान केंद्र" }, // Updated from 'Educational Resources' for card title
+  featureEducationTitle: { en: "Knowledge Hub", hi: "ज्ञान केंद्र" },
   featureEducationDesc: { en: "Access guides, scheme details, and farming best practices.", hi: "गाइड, योजना विवरण और सर्वोत्तम कृषि पद्धतियों तक पहुंचें।" },
   govSchemesTitle: { en: "Government Initiatives for Farmers", hi: "किसानों के लिए सरकारी पहल" },
-  schemePMKisanTitle: { en: "PM-KISAN Scheme", hi: "पीएम-किसान योजना" }, // Shortened for card
+  schemePMKisanTitle: { en: "PM-KISAN Scheme", hi: "पीएम-किसान योजना" },
   schemePMKisanDesc: { en: "Direct income support to eligible farmer families.", hi: "पात्र किसान परिवारों को प्रत्यक्ष आय सहायता।" },
-  schemeENAMTitle: { en: "e-NAM Platform", hi: "ई-नाम प्लेटफॉर्म" }, // Shortened for card
+  schemeENAMTitle: { en: "e-NAM Platform", hi: "ई-नाम प्लेटफॉर्म" },
   schemeENAMDesc: { en: "Online trading for better price discovery of agricultural produce.", hi: "कृषि उपज की बेहतर कीमत खोज के लिए ऑनलाइन ट्रेडिंग।" },
   latestNewsTitle: { en: "Latest News & Announcements", hi: "नवीनतम समाचार और घोषणाएँ" },
   newsItem1Title: { en: "New MSP Rates Announced for Kharif Crops", hi: "खरीफ फसलों के लिए नए एमएसपी दरों की घोषणा" },
@@ -99,9 +105,8 @@ const translations: Translations = {
   newsItem2Summary: { en: "Farmers in northern India are advised to take necessary precautions due to expected heavy rainfall in the coming week.", hi: "उत्तरी भारत के किसानों को अगले सप्ताह में अपेक्षित भारी वर्षा के कारण आवश्यक सावधानी बरतने की सलाह दी जाती है।" },
   quickLinksTitle: { en: "Quick Links", hi: "त्वरित लिंक्स" },
 
-  // PricesPage (Old Home Page)
+  // PricesPage
   selectCropPlaceholder: { en: "Select crop", hi: "फसल चुनें" },
-  allCrops: { en: "All Crops", hi: "सभी फसलें" },
   refreshPricesSr: { en: "Refresh prices", hi: "कीमतें ताज़ा करें" },
   noPricesAvailableTitle: { en: "No Prices Available", hi: "कोई कीमत उपलब्ध नहीं है" },
   noPricesAvailableDesc: { en: "Could not fetch price data. Please try refreshing or select a different crop.", hi: "मूल्य डेटा प्राप्त नहीं हो सका। कृपया ताज़ा करने का प्रयास करें या कोई भिन्न फसल चुनें।" },
@@ -154,17 +159,12 @@ const translations: Translations = {
   locationLabel: { en: "Your Location (State)", hi: "आपका स्थान (राज्य)" },
   selectStatePlaceholder: { en: "Select your state", hi: "अपना राज्य चुनें" },
   locationDescription: { en: "This helps in generating relevant suggestions.", hi: "यह प्रासंगिक सुझाव उत्पन्न करने में मदद करता है।" },
-  
   historicalDataLabel: { en: "Historical Production Data", hi: "ऐतिहासिक उत्पादन डेटा" },
-  historicalDataPlaceholder: { en: "Describe your farm's past yields, market prices, significant events...", hi: "अपने खेत की पिछली पैदावार, बाजार मूल्य, महत्वपूर्ण घटनाओं का वर्णन करें..." },
   histProdDataAutoText: { en: "For {crop} in {location}, detail past yields (e.g., X quintals/acre over last 3 seasons), average prices fetched (e.g., Y INR/quintal range), and any significant events (e.g., drought in 2021 reduced yield by Z%, pest attack on specific variety). Mention local storage practices if any.", hi: "{location} में {crop} के लिए, पिछली पैदावार का विवरण दें (उदा., पिछले 3 मौसमों में X क्विंटल/एकड़), प्राप्त औसत कीमतें (उदा., Y रुपये/क्विंटल रेंज), और कोई महत्वपूर्ण घटनाएं (उदा., 2021 में सूखे से उपज में Z% की कमी, विशिष्ट किस्म पर कीट हमला)। यदि कोई हो तो स्थानीय भंडारण प्रथाओं का उल्लेख करें।" },
   historicalDataDescStatic: { en: "Provide context like past yields, prices, and major farm events.", hi: "पिछली पैदावार, कीमतें और खेत की प्रमुख घटनाओं जैसा संदर्भ प्रदान करें।" },
-
   weatherDataLabel: { en: "Current Weather & Forecast Context", hi: "वर्तमान मौसम और पूर्वानुमान संदर्भ" },
-  weatherDataPlaceholder: { en: "Describe current weather conditions, forecasts, and their impact on your crop...", hi: "वर्तमान मौसम की स्थिति, पूर्वानुमान और आपकी फसल पर उनके प्रभाव का वर्णन करें..." },
   weatherDataAutoText: { en: "For {crop} in {location}, describe current weather (e.g., temperature range, recent rainfall in mm/inches) and upcoming forecasts (e.g., monsoon expected by X date, heatwave warning for Y days). How might this impact your {crop} quality or harvest time?", hi: "{location} में {crop} के लिए, वर्तमान मौसम का वर्णन करें (उदा., तापमान सीमा, हाल की वर्षा मिमी/इंच में) और आगामी पूर्वानुमान (उदा., X तारीख तक मानसून की उम्मीद, Y दिनों के लिए लू की चेतावनी)। यह आपकी {crop} की गुणवत्ता या कटाई के समय को कैसे प्रभावित कर सकता है?" },
   weatherDataDescStatic: { en: "Include local weather, rainfall, temperature trends, and forecasts.", hi: "स्थानीय मौसम, वर्षा, तापमान के रुझान और पूर्वानुमान शामिल करें।" },
-  
   getRecommendationButton: { en: "Get Recommendation", hi: "सिफारिश प्राप्त करें" },
   generatingButton: { en: "Generating...", hi: "उत्पन्न हो रहा है..." },
   toastRecGeneratedTitle: { en: "Recommendation Generated!", hi: "सिफारिश उत्पन्न हुई!" },
@@ -192,7 +192,6 @@ const translations: Translations = {
   saveProfileButton: { en: "Save Profile", hi: "प्रोफ़ाइल सहेजें" },
   toastSettingsSavedTitle: { en: "Settings Saved", hi: "सेटिंग्स सहेजी गईं" },
   toastProfileSettingsSavedDesc: { en: "Your profile information has been updated.", hi: "आपकी प्रोफ़ाइल जानकारी अपडेट कर दी गई है।" },
-
   priceAlertsTitle: { en: "Price Alerts", hi: "मूल्य अलर्ट" },
   priceAlertsDesc: { en: "Get notified when crop prices reach your target.", hi: "फसल की कीमतें आपके लक्ष्य तक पहुंचने पर सूचित करें।" },
   enablePriceAlertsLabel: { en: "Enable Price Alerts", hi: "मूल्य अलर्ट सक्षम करें" },
@@ -207,14 +206,12 @@ const translations: Translations = {
   toastAlertRemovedTitle: { en: "Alert Removed", hi: "अलर्ट हटाया गया" },
   toastPriceAlertRemovedDesc: { en: "The price alert has been removed.", hi: "मूल्य अलर्ट हटा दिया गया है।" },
   toastEnterAlertCondition: { en: "Please enter an alert condition.", hi: "कृपया एक अलर्ट शर्त दर्ज करें।" },
-
   languageSupportTitle: { en: "Language Support", hi: "भाषा समर्थन" },
   languageSupportDesc: { en: "Choose your preferred language for the app.", hi: "ऐप के लिए अपनी पसंदीदा भाषा चुनें।" },
   selectLanguageLabel: { en: "Select Language", hi: "भाषा चुनें" },
   selectLanguagePlaceholder: { en: "Choose language", hi: "भाषा चुनें" },
   toastLanguageChangedTitle: { en: "Language Changed", hi: "भाषा बदली गई" },
   toastLanguageChangedDesc: { en: "App language set to {lang}.", hi: "ऐप की भाषा {lang} पर सेट की गई।" },
-
   dataPreferencesTitle: { en: "Data Preferences", hi: "डेटा प्राथमिकताएँ" },
   dataPreferencesDesc: { en: "Manage data sources and refresh settings.", hi: "डेटा स्रोतों और रीफ्रेश सेटिंग्स का प्रबंधन करें।" },
   enableWeatherDataLabel: { en: "Include Weather Data in Analysis", hi: "विश्लेषण में मौसम डेटा शामिल करें" },
@@ -222,7 +219,6 @@ const translations: Translations = {
   apiRefreshFrequencyHint: {en: "How often to check for new data (e.g., prices).", hi: "कितनी बार नया डेटा (जैसे कीमतें) जांचना है।"},
   savePreferencesButton: { en: "Save Preferences", hi: "प्राथमिकताएं सहेजें" },
   toastDataPreferencesSavedDesc: { en: "Your data preferences have been updated.", hi: "आपकी डेटा प्राथमिकताएं अपडेट कर दी गई हैं।" },
-
   feedbackFormTitle: { en: "Feedback & Suggestions", hi: "प्रतिक्रिया और सुझाव" },
   feedbackFormDesc: { en: "Help us improve Kisan Mitra.", hi: "किसान मित्र को बेहतर बनाने में हमारी मदद करें।" },
   yourFeedbackLabel: { en: "Your Feedback", hi: "आपकी प्रतिक्रिया" },
@@ -241,13 +237,13 @@ const translations: Translations = {
   sampleGuideTitle2: { en: "Maximizing Your Kisan Mitra App", hi: "किसान मित्र ऐप का अधिकतम लाभ उठाना" },
   sampleGuideDesc2: { en: "Tips and tricks to get the most out of the app's features.", hi: "ऐप की सुविधाओं का अधिकतम लाभ उठाने के लिए टिप्स और ट्रिक्स।" },
   viewGuideButton: { en: "View Guide", hi: "गाइड देखें" },
-  schemesTitle: { en: "Government Schemes", hi: "सरकारी योजनाएं" },
-  schemesDesc: { en: "Discover relevant agricultural schemes and their benefits.", hi: "प्रासंगिक कृषि योजनाओं और उनके लाभों की खोज करें।" },
+  schemesTitle: { en: "Government Schemes", hi: "सरकारी योजनाएं" }, // Used on Education Page
+  schemesDesc: { en: "Discover relevant agricultural schemes and their benefits.", hi: "प्रासंगिक कृषि योजनाओं और उनके लाभों की खोज करें।" }, // Used on Education Page
+  exploreAllSchemesButton: { en: "Explore All Schemes", hi: "सभी योजनाएँ देखें"},
   sampleSchemeTitle1: { en: "PM-KISAN Samman Nidhi", hi: "पीएम-किसान सम्मान निधि" },
   sampleSchemeDesc1: { en: "Direct income support for small and marginal farmers across India.", hi: "पूरे भारत में छोटे और सीमांत किसानों के लिए प्रत्यक्ष आय सहायता।" },
   sampleSchemeTitle2: { en: "e-NAM (National Agriculture Market)", hi: "ई-नाम (राष्ट्रीय कृषि बाजार)" },
   sampleSchemeDesc2: { en: "Online trading platform for agricultural commodities aiming for better price discovery.", hi: "बेहतर मूल्य खोज के लक्ष्य के साथ कृषि वस्तुओं के लिए ऑनलाइन ट्रेडिंग प्लेटफॉर्म।" },
-  // learnMoreButton is already defined under New Home Page section
   faqTitle: { en: "Frequently Asked Questions", hi: "अक्सर पूछे जाने वाले प्रश्न" },
   faqDesc: { en: "Find answers to common questions about the app and agricultural markets.", hi: "ऐप और कृषि बाजारों के बारे में सामान्य प्रश्नों के उत्तर पाएं।" },
   faqQ1: { en: "How are mandi prices determined?", hi: "मंडी की कीमतें कैसे निर्धारित होती हैं?" },
@@ -291,6 +287,64 @@ const translations: Translations = {
   quantityNotEnteredError: { en: "Please enter crop quantity.", hi: "कृपया फसल की मात्रा दर्ज करें।" },
   locationNotSelectedError: { en: "Please select your location.", hi: "कृपया अपना स्थान चुनें।" },
   vehicleNotSelectedError: { en: "Please select a vehicle type.", hi: "कृपया एक वाहन प्रकार चुनें।" },
+
+  // Schemes Page
+  schemesPageTitle: { en: "Government Schemes for Farmers", hi: "किसानों के लिए सरकारी योजनाएँ" },
+  schemesPageDescription: { en: "Find and filter government schemes relevant to your needs.", hi: "अपनी आवश्यकताओं के अनुसार सरकारी योजनाओं को खोजें और फ़िल्टर करें।" },
+  filterByStateLabel: { en: "Filter by State", hi: "राज्य द्वारा फ़िल्टर करें" },
+  filterByCropLabel: { en: "Filter by Relevant Crop", hi: "संबंधित फसल द्वारा फ़िल्टर करें" },
+  filterByKeywordsLabel: { en: "Filter by Keywords", hi: "कीवर्ड द्वारा फ़िल्टर करें" },
+  keywordsPlaceholder: { en: "e.g., subsidy, loan, insurance", hi: "उदा., सब्सिडी, ऋण, बीमा" },
+  noSchemesFoundTitle: { en: "No Schemes Found", hi: "कोई योजना नहीं मिली" },
+  noSchemesFoundDesc: { en: "No schemes match your current filter criteria. Try adjusting your filters.", hi: "कोई भी योजना आपके वर्तमान फ़िल्टर मानदंडों से मेल नहीं खाती। अपने फ़िल्टर समायोजित करने का प्रयास करें।" },
+  schemeCardEligibilityTitle: { en: "Eligibility Criteria", hi: "पात्रता मापदंड" },
+  schemeCardBenefitsTitle: { en: "Benefits", hi: "लाभ" },
+  schemeCardHowToApplyTitle: { en: "How to Apply", hi: "आवेदन कैसे करें" },
+  visitSchemeWebsiteButton: { en: "Visit Official Website", hi: "आधिकारिक वेबसाइट पर जाएं" },
+
+  // Mock Scheme Data Translations (PM-KISAN)
+  schemePMKisanTitleFull: { en: "Pradhan Mantri Kisan Samman Nidhi (PM-KISAN)", hi: "प्रधानमंत्री किसान सम्मान निधि (पीएम-किसान)" },
+  schemePMKisanShortDesc: { en: "Provides income support to all landholding farmer families.", hi: "सभी भूमिधारक किसान परिवारों को आय सहायता प्रदान करता है।" },
+  schemePMKisanDetailedDesc: { en: "An initiative by the government of India in which all farmers will get up to ₹6,000 per year as minimum income support.", hi: "भारत सरकार की एक पहल जिसमें सभी किसानों को न्यूनतम आय सहायता के रूप में प्रति वर्ष ₹6,000 तक मिलेंगे।" },
+  pmKisanEligibility1: { en: "Landholding farmer families with cultivable land.", hi: "खेती योग्य भूमि वाले भूमिधारक किसान परिवार।" },
+  pmKisanEligibility2: { en: "Excludes institutional landholders, families holding constitutional posts, etc.", hi: "संस्थागत भूमिधारकों, संवैधानिक पदों पर आसीन परिवारों आदि को शामिल नहीं करता है।" },
+  pmKisanEligibility3: { en: "Aadhaar linked bank account is mandatory.", hi: "आधार से जुड़ा बैंक खाता अनिवार्य है।" },
+  pmKisanBenefit1: { en: "₹6,000 per year, paid in three equal installments of ₹2,000.", hi: "प्रति वर्ष ₹6,000, ₹2,000 की तीन समान किस्तों में भुगतान किया जाता है।" },
+  pmKisanBenefit2: { en: "Direct Benefit Transfer (DBT) to bank accounts.", hi: "बैंक खातों में प्रत्यक्ष लाभ हस्तांतरण (डीबीटी)।" },
+  pmKisanHowToApply: { en: "Register through the PM-KISAN portal or Common Service Centres (CSCs). Requires Aadhaar, land records, and bank account details.", hi: "पीएम-किसान पोर्टल या कॉमन सर्विस सेंटर (सीएससी) के माध्यम से पंजीकरण करें। आधार, भूमि रिकॉर्ड और बैंक खाते का विवरण आवश्यक है।" },
+
+  // Mock Scheme Data Translations (e-NAM)
+  schemeENAMTitleFull: { en: "National Agriculture Market (e-NAM)", hi: "राष्ट्रीय कृषि बाजार (ई-नाम)" },
+  schemeENAMShortDesc: { en: "Online trading platform for agricultural commodities.", hi: "कृषि वस्तुओं के लिए ऑनलाइन ट्रेडिंग प्लेटफॉर्म।" },
+  schemeENAMDetailedDesc: { en: "A pan-India electronic trading portal networking existing APMC mandis to create a unified national market for agricultural commodities.", hi: "कृषि वस्तुओं के लिए एक एकीकृत राष्ट्रीय बाजार बनाने के लिए मौजूदा एपीएमसी मंडियों को नेटवर्किंग करने वाला एक अखिल भारतीय इलेक्ट्रॉनिक ट्रेडिंग पोर्टल।" },
+  eNAMEligibility1: { en: "Farmers, traders, and Farmer Producer Organizations (FPOs).", hi: "किसान, व्यापारी और किसान उत्पादक संगठन (एफपीओ)।" },
+  eNAMEligibility2: { en: "Must be registered with an e-NAM enabled mandi.", hi: "ई-नाम सक्षम मंडी के साथ पंजीकृत होना चाहिए।" },
+  eNAMBenefit1: { en: "Better price discovery through transparent auction process.", hi: "पारदर्शी नीलामी प्रक्रिया के माध्यम से बेहतर मूल्य खोज।" },
+  eNAMBenefit2: { en: "Access to a wider national market.", hi: "एक व्यापक राष्ट्रीय बाजार तक पहुंच।" },
+  eNAMBenefit3: { en: "Reduced transaction costs and information asymmetry.", hi: "कम लेनदेन लागत और सूचना विषमता।" },
+  eNAMHowToApply: { en: "Register on the e-NAM portal or through an e-NAM mandi. KYC documents are required.", hi: "ई-नाम पोर्टल पर या ई-नाम मंडी के माध्यम से पंजीकरण करें। केवाईसी दस्तावेज आवश्यक हैं।" },
+
+  // Mock Scheme Data Translations (PMFBY)
+  schemePMFBYTitleFull: { en: "Pradhan Mantri Fasal Bima Yojana (PMFBY)", hi: "प्रधानमंत्री फसल बीमा योजना (पीएमएफबीवाई)" },
+  schemePMFBYShortDesc: { en: "Crop insurance scheme to protect farmers against yield losses.", hi: "किसानों को उपज हानि से बचाने के लिए फसल बीमा योजना।" },
+  schemePMFBYDetailedDesc: { en: "PMFBY aims to provide comprehensive insurance coverage and financial support to farmers in the event of failure of any of the notified crops as a result of natural calamities, pests & diseases.", hi: "पीएमएफबीवाई का उद्देश्य प्राकृतिक आपदाओं, कीटों और बीमारियों के परिणामस्वरूप अधिसूचित फसलों में से किसी के भी विफल होने की स्थिति में किसानों को व्यापक बीमा कवरेज और वित्तीय सहायता प्रदान करना है।" },
+  pmfbyEligibility1: { en: "All farmers including sharecroppers and tenant farmers growing notified crops in notified areas.", hi: "अधिसूचित क्षेत्रों में अधिसूचित फसलें उगाने वाले बटाईदार और काश्तकार किसानों सहित सभी किसान।" },
+  pmfbyEligibility2: { en: "Compulsory for loanee farmers availing crop loan / KCC account for notified crops.", hi: "अधिसूचित फसलों के लिए फसल ऋण/केसीसी खाता प्राप्त करने वाले ऋणी किसानों के लिए अनिवार्य।" },
+  pmfbyEligibility3: { en: "Voluntary for non-loanee farmers.", hi: "गैर-ऋणी किसानों के लिए स्वैच्छिक।" },
+  pmfbyBenefit1: { en: "Financial support in case of crop loss due to non-preventable risks.", hi: "गैर-निवारणीय जोखिमों के कारण फसल हानि की स्थिति में वित्तीय सहायता।" },
+  pmfbyBenefit2: { en: "Stabilizes farm income and encourages adoption of innovative farming practices.", hi: "कृषि आय को स्थिर करता है और नवीन कृषि पद्धतियों को अपनाने को प्रोत्साहित करता है।" },
+  pmfbyHowToApply: { en: "Approach nearest bank branch, Primary Agricultural Credit Society, CSC, or contact an authorized insurance company. Can also apply online through the National Crop Insurance Portal (NCIP).", hi: "निकटतम बैंक शाखा, प्राथमिक कृषि ऋण समिति, सीएससी से संपर्क करें, या एक अधिकृत बीमा कंपनी से संपर्क करें। राष्ट्रीय फसल बीमा पोर्टल (एनसीआईपी) के माध्यम से ऑनलाइन भी आवेदन कर सकते हैं।" },
+
+  // Mock Scheme Data Translations (Soil Health Card)
+  schemeSoilHealthCardTitleFull: { en: "Soil Health Card Scheme", hi: "मृदा स्वास्थ्य कार्ड योजना" },
+  schemeSoilHealthCardShortDesc: { en: "Assists farmers in improving soil health and increasing productivity.", hi: "किसानों को मिट्टी के स्वास्थ्य में सुधार और उत्पादकता बढ़ाने में सहायता करता है।" },
+  schemeSoilHealthCardDetailedDesc: { en: "A scheme to provide every farmer with a Soil Health Card which will display soil nutrient status of their land and provide recommendations on appropriate dosage of nutrients to be applied for improving soil health and fertility.", hi: "प्रत्येक किसान को मृदा स्वास्थ्य कार्ड प्रदान करने की एक योजना जो उनकी भूमि की मिट्टी के पोषक तत्वों की स्थिति प्रदर्शित करेगी और मिट्टी के स्वास्थ्य और उर्वरता में सुधार के लिए लागू किए जाने वाले पोषक तत्वों की उचित खुराक पर सिफारिशें प्रदान करेगी।" },
+  soilHealthCardEligibility1: { en: "All farmers in India are eligible to get a Soil Health Card.", hi: "भारत के सभी किसान मृदा स्वास्थ्य कार्ड प्राप्त करने के पात्र हैं।" },
+  soilHealthCardBenefit1: { en: "Information on soil nutrient status and recommendations for fertilizer application.", hi: "मिट्टी के पोषक तत्वों की स्थिति और उर्वरक आवेदन के लिए सिफारिशों पर जानकारी।" },
+  soilHealthCardBenefit2: { en: "Helps in balanced use of fertilizers, reducing input costs.", hi: "उर्वरकों के संतुलित उपयोग में मदद करता है, इनपुट लागत को कम करता है।" },
+  soilHealthCardBenefit3: { en: "Promotes sustainable agriculture and improves crop yields.", hi: "सतत कृषि को बढ़ावा देता है और फसल की पैदावार में सुधार करता है।" },
+  soilHealthCardHowToApply: { en: "Soil samples are collected by State Government officials or designated agencies. Farmers receive cards based on these tests.", hi: "मिट्टी के नमूने राज्य सरकार के अधिकारियों या नामित एजेंसियों द्वारा एकत्र किए जाते हैं। किसानों को इन परीक्षणों के आधार पर कार्ड मिलते हैं।" },
+
 };
 
 const LanguageContext = createContext<LanguageContextType | undefined>(undefined);
@@ -316,7 +370,7 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
     const yearPlaceholder = "{year}";
     let text = translations[key]?.[language] || translations[key]?.['en'] || fallback || key;
     
-    if (text.includes(yearPlaceholder)) {
+    if (text && text.includes(yearPlaceholder)) {
       text = text.replace(new RegExp(yearPlaceholder, 'g'), new Date().getFullYear().toString());
     }
     text = interpolate(text, params);

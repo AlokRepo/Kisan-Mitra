@@ -18,9 +18,16 @@ export const APP_IMAGES = {
   GUIDE_PRICE_FLUCTUATIONS: { src: "https://placehold.co/600x400.png", aiHint: "market chart" },
   GUIDE_APP_USAGE: { src: "https://placehold.co/600x400.png", aiHint: "app interface" },
 
-  // Education Page - Schemes (600x400 for main display)
-  SCHEME_PM_KISAN: { src: "https://placehold.co/600x400.png", aiHint: "government building" },
-  SCHEME_E_NAM: { src: "https://placehold.co/600x400.png", aiHint: "digital india" },
+  // Education Page & Schemes Page - Schemes (600x400 for main display, 400x250 for cards)
+  // Original large ones for education page might be too big if we have many scheme cards
+  SCHEME_PM_KISAN: { src: "https://placehold.co/600x400.png", aiHint: "government building" }, // Used on education
+  SCHEME_E_NAM: { src: "https://placehold.co/600x400.png", aiHint: "digital india" }, // Used on education
+  
+  SCHEME_PM_KISAN_CARD: { src: "https://placehold.co/400x250.png", aiHint: "farmer finance" },
+  SCHEME_E_NAM_CARD: { src: "https://placehold.co/400x250.png", aiHint: "market online" },
+  SCHEME_CROP_INSURANCE_CARD: { src: "https://placehold.co/400x250.png", aiHint: "insurance protection" },
+  SCHEME_SOIL_HEALTH_CARD: { src: "https://placehold.co/400x250.png", aiHint: "soil health" },
+
 
   // New Home Page Images
   HOME_HERO_BANNER: { src: "https://placehold.co/1200x400.png", aiHint: "indian agriculture panoramic" },

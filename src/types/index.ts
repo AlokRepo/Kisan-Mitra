@@ -42,8 +42,25 @@ export interface CropPriceTrend {
   trends: StatePriceHistory[];
 }
 
-export const CROPS = ["Wheat", "Rice", "Maize", "Cotton", "Sugarcane", "Soybean", "Pulses"];
-export const STATES = ["Punjab", "Haryana", "Uttar Pradesh", "Madhya Pradesh", "Maharashtra", "Rajasthan", "Gujarat", "Andhra Pradesh", "Telangana", "Karnataka"];
+export interface GovernmentScheme {
+  id: string;
+  titleKey: string;
+  shortDescriptionKey: string;
+  detailedDescriptionKey: string;
+  eligibilityCriteriaKeys: string[]; // Array of translation keys for each criterion
+  benefitsKeys: string[]; // Array of translation keys for each benefit
+  howToApplyKey: string;
+  linkUrl: string;
+  imageUrl: string;
+  aiHint: string;
+  tags: string[]; // For simple keyword filtering e.g., ["subsidy", "irrigation", "Punjab", "Wheat"]
+  targetStates?: string[]; // Specific states this scheme applies to, for filtering
+  relevantCrops?: string[]; // Specific crops this scheme is relevant for, for filtering
+}
+
+
+export const CROPS = ["Wheat", "Rice", "Maize", "Cotton", "Sugarcane", "Soybean", "Pulses", "Mustard", "Groundnut"];
+export const STATES = ["Punjab", "Haryana", "Uttar Pradesh", "Madhya Pradesh", "Maharashtra", "Rajasthan", "Gujarat", "Andhra Pradesh", "Telangana", "Karnataka", "West Bengal", "Bihar", "Odisha", "Tamil Nadu", "Kerala"];
 
 export const VEHICLE_TYPES = [
   { id: 'tractor', nameKey: 'vehicleTractor', efficiency: 5, capacityQuintals: 30 }, // km/liter, quintals
