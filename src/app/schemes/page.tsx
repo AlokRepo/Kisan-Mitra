@@ -9,9 +9,9 @@ import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Skeleton } from '@/components/ui/skeleton';
 import { useLanguage } from '@/contexts/LanguageContext';
-import type { GovernmentScheme } from '@/types';
-import { CROPS, STATES } from '@/types';
-import { getGovernmentSchemes } from '@/lib/schemeData'; // Using the new mock data file
+import type { GovernmentScheme, SocialCategory, GenderTarget } from '@/types';
+import { CROPS, STATES, SOCIAL_CATEGORIES, GENDER_TARGETS } from '@/types';
+import { getGovernmentSchemes } from '@/lib/schemeData';
 import { SchemeDetailCard } from '@/components/schemes/SchemeDetailCard';
 import { ScrollText, FilterX, SearchX } from 'lucide-react';
 
@@ -23,6 +23,9 @@ export default function SchemesPage() {
   const [selectedState, setSelectedState] = useState<string>('');
   const [selectedCrop, setSelectedCrop] = useState<string>('');
   const [keywords, setKeywords] = useState<string>('');
+  const [selectedSocialCategory, setSelectedSocialCategory] = useState<SocialCategory | '' >('');
+  const [selectedGender, setSelectedGender] = useState<GenderTarget | ''>('');
+
 
   useEffect(() => {
     const fetchData = async () => {
@@ -45,14 +48,20 @@ export default function SchemesPage() {
         translate(scheme.titleKey).toLowerCase().includes(term) ||
         translate(scheme.shortDescriptionKey).toLowerCase().includes(term)
       );
-      return stateMatch && cropMatch && keywordMatch;
+
+      const socialCategoryMatch = selectedSocialCategory === '' || selectedSocialCategory === 'Any' || !scheme.socialCategories || scheme.socialCategories.includes('Any') || scheme.socialCategories.includes(selectedSocialCategory);
+      const genderMatch = selectedGender === '' || selectedGender === 'Any' || !scheme.genderTargets || scheme.genderTargets.includes('Any') || scheme.genderTargets.includes(selectedGender);
+
+      return stateMatch && cropMatch && keywordMatch && socialCategoryMatch && genderMatch;
     });
-  }, [allSchemes, selectedState, selectedCrop, keywords, translate]);
+  }, [allSchemes, selectedState, selectedCrop, keywords, selectedSocialCategory, selectedGender, translate]);
 
   const resetFilters = () => {
     setSelectedState('');
     setSelectedCrop('');
     setKeywords('');
+    setSelectedSocialCategory('');
+    setSelectedGender('');
   };
 
   return (
@@ -96,6 +105,46 @@ export default function SchemesPage() {
               </Select>
             </div>
             <div>
+              <Label htmlFor="social-category-filter">{translate('filterBySocialCategoryLabel')}</Label>
+              <Select value={selectedSocialCategory} onValueChange={(value) => setSelectedSocialCategory(value as SocialCategory | '')}>
+                <SelectTrigger id="social-category-filter" className="bg-input">
+                  <SelectValue placeholder={translate('selectSocialCategoryPlaceholder')} />
+                </SelectTrigger>
+                <SelectContent>
+                  {SOCIAL_CATEGORIES.map(category => (
+                    <SelectItem key={category} value={category}>
+                      {category === "Any" ? translate('anyOption') : 
+                       category === "General" ? translate('generalOption') :
+                       category === "SC" ? translate('scOption') :
+                       category === "ST" ? translate('stOption') :
+                       category === "OBC" ? translate('obcOption') :
+                       category === "EWS" ? translate('ewsOption') :
+                       category}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
+             <div>
+              <Label htmlFor="gender-filter">{translate('filterByGenderLabel')}</Label>
+              <Select value={selectedGender} onValueChange={(value) => setSelectedGender(value as GenderTarget | '')}>
+                <SelectTrigger id="gender-filter" className="bg-input">
+                  <SelectValue placeholder={translate('selectGenderPlaceholder')} />
+                </SelectTrigger>
+                <SelectContent>
+                  {GENDER_TARGETS.map(gender => (
+                    <SelectItem key={gender} value={gender}>
+                      {gender === "Any" ? translate('anyOption') :
+                       gender === "Male" ? translate('maleOption') :
+                       gender === "Female" ? translate('femaleOption') :
+                       gender === "Transgender" ? translate('transgenderOption') :
+                       gender}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
+            <div className="lg:col-span-2"> {/* Making keyword span 2 columns on larger screens */}
               <Label htmlFor="keyword-filter">{translate('filterByKeywordsLabel')}</Label>
               <Input
                 id="keyword-filter"
@@ -115,7 +164,7 @@ export default function SchemesPage() {
 
       {isLoading ? (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {[...Array(3)].map((_, i) => (
+          {[...Array(6)].map((_, i) => ( // Increased skeleton count
             <Card key={`skeleton-${i}`} className="overflow-hidden">
               <Skeleton className="h-48 w-full" />
               <CardHeader>

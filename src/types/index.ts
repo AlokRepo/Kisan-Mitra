@@ -42,20 +42,35 @@ export interface CropPriceTrend {
   trends: StatePriceHistory[];
 }
 
+export type SocialCategory = "General" | "SC" | "ST" | "OBC" | "EWS" | "Any";
+export const SOCIAL_CATEGORIES: SocialCategory[] = ["Any", "General", "SC", "ST", "OBC", "EWS"];
+
+export type GenderTarget = "Male" | "Female" | "Transgender" | "Any";
+export const GENDER_TARGETS: GenderTarget[] = ["Any", "Male", "Female", "Transgender"];
+
+
 export interface GovernmentScheme {
   id: string;
   titleKey: string;
   shortDescriptionKey: string;
   detailedDescriptionKey: string;
-  eligibilityCriteriaKeys: string[]; // Array of translation keys for each criterion
-  benefitsKeys: string[]; // Array of translation keys for each benefit
+  eligibilityCriteriaKeys: string[];
+  benefitsKeys: string[];
   howToApplyKey: string;
   linkUrl: string;
   imageUrl: string;
   aiHint: string;
-  tags: string[]; // For simple keyword filtering e.g., ["subsidy", "irrigation", "Punjab", "Wheat"]
-  targetStates?: string[]; // Specific states this scheme applies to, for filtering
-  relevantCrops?: string[]; // Specific crops this scheme is relevant for, for filtering
+  tags: string[];
+  targetStates?: string[];
+  relevantCrops?: string[];
+  // New filterable attributes inspired by myscheme.gov.in
+  socialCategories?: SocialCategory[];
+  genderTargets?: GenderTarget[];
+  applicableToMinority?: boolean; // null or undefined means not specific
+  isForDisabled?: boolean; // null or undefined means not specific
+  minAge?: number; // in years
+  maxAge?: number; // in years
+  // Potentially more: forStudents, forRural, forUrban, familyIncomeLimit, etc.
 }
 
 
