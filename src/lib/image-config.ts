@@ -19,7 +19,6 @@ export const APP_IMAGES = {
   GUIDE_APP_USAGE: { src: "https://placehold.co/600x400.png", aiHint: "app interface" },
 
   // Education Page & Schemes Page - Schemes (600x400 for main display, 400x250 for cards)
-  // Original large ones for education page might be too big if we have many scheme cards
   SCHEME_PM_KISAN: { src: "https://placehold.co/600x400.png", aiHint: "government building" }, // Used on education
   SCHEME_E_NAM: { src: "https://placehold.co/600x400.png", aiHint: "digital india" }, // Used on education
   
@@ -27,6 +26,10 @@ export const APP_IMAGES = {
   SCHEME_E_NAM_CARD: { src: "https://placehold.co/400x250.png", aiHint: "market online" },
   SCHEME_CROP_INSURANCE_CARD: { src: "https://placehold.co/400x250.png", aiHint: "insurance protection" },
   SCHEME_SOIL_HEALTH_CARD: { src: "https://placehold.co/400x250.png", aiHint: "soil health" },
+  SCHEME_GENERIC_1: { src: "https://placehold.co/400x250.png", aiHint: "government program" },
+  SCHEME_GENERIC_2: { src: "https://placehold.co/400x250.png", aiHint: "community benefit" },
+  SCHEME_GENERIC_3: { src: "https://placehold.co/400x250.png", aiHint: "rural development" },
+  SCHEME_GENERIC_4: { src: "https://placehold.co/400x250.png", aiHint: "farmer support" },
 
 
   // New Home Page Images

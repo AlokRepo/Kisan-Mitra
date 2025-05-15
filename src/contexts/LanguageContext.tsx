@@ -117,7 +117,7 @@ const translations: Translations = {
   // DashboardPage
   dashboardTitle: { en: "Price Fluctuation Dashboard", hi: "मूल्य उतार-चढ़ाव डैशबोर्ड" },
   selectCropPlaceholderDashboard: { en: "Select a crop", hi: "एक फसल चुनें" },
-  refreshTrendsSr: { en: "Refresh trends", hi: "रुझान ताज़ा करें" }, 
+  refreshTrendsSr: { en: "Refresh trends", hi: "रुझान ताज़ा करें" },
   loadingPriceTrends: { en: "Loading Price Trends...", hi: "मूल्य रुझान लोड हो रहे हैं..." },
   fetchingHistoricalData: { en: "Fetching historical price data.", hi: "ऐतिहासिक मूल्य डेटा प्राप्त किया जा रहा है।" },
 
@@ -348,6 +348,36 @@ const translations: Translations = {
   soilHealthCardBenefit3: { en: "Aids in improving soil health over time, leading to increased crop yields and better farm income.", hi: "समय के साथ मिट्टी के स्वास्थ्य में सुधार करने में सहायता करता है, जिससे फसल की पैदावार बढ़ती है और खेत की आय बेहतर होती है।" },
   soilHealthCardHowToApply: { en: "Farmers generally do not need to apply directly. State Governments collect soil samples through their agriculture department staff or outsourced agencies. The samples are tested in soil testing labs, and the Soil Health Card is then generated and distributed to the farmers.", hi: "किसानों को आमतौर पर सीधे आवेदन करने की आवश्यकता नहीं होती है। राज्य सरकारें अपने कृषि विभाग के कर्मचारियों या आउटसोर्स एजेंसियों के माध्यम से मिट्टी के नमूने एकत्र करती हैं। नमूनों का मिट्टी परीक्षण प्रयोगशालाओं में परीक्षण किया जाता है, और फिर मृदा स्वास्थ्य कार्ड तैयार कर किसानों को वितरित किया जाता है।" },
 
+  // Placeholder schemes translations
+  schemeComingSoonDesc: { en: "Detailed information about this scheme will be available soon. Please check the official government portals for the most up-to-date information.", hi: "इस योजना के बारे में विस्तृत जानकारी जल्द ही उपलब्ध होगी। नवीनतम जानकारी के लिए कृपया आधिकारिक सरकारी पोर्टल देखें।" },
+  schemeGenericEligibility: { en: "Refer to official scheme documents for specific eligibility criteria.", hi: "विशिष्ट पात्रता मानदंडों के लिए आधिकारिक योजना दस्तावेजों का संदर्भ लें।" },
+  schemeGenericBenefit: { en: "Benefits vary based on the scheme's objectives. Refer to official guidelines.", hi: "योजना के उद्देश्यों के आधार पर लाभ भिन्न होते हैं। आधिकारिक दिशानिर्देशों का संदर्भ लें।" },
+  schemeGenericHowToApply: { en: "Application process details are available on the respective scheme's official website.", hi: "आवेदन प्रक्रिया का विवरण संबंधित योजना की आधिकारिक वेबसाइट पर उपलब्ध है।" },
+
+  schemeKCCTitle: { en: "Kisan Credit Card (KCC)", hi: "किसान क्रेडिट कार्ड (केसीसी)" },
+  schemeKCCShortDesc: { en: "Provides short-term formal credit to farmers for cultivation and other needs.", hi: "किसानों को खेती और अन्य जरूरतों के लिए अल्पकालिक औपचारिक ऋण प्रदान करता है।" },
+  schemePMKSYTitle: { en: "Pradhan Mantri Krishi Sinchayee Yojana (PMKSY)", hi: "प्रधानमंत्री कृषि सिंचाई योजना (पीएमकेएसवाई)" },
+  schemePMKSYShortDesc: { en: "Aims to enhance water use efficiency through micro-irrigation and other measures.", hi: "सूक्ष्म सिंचाई और अन्य उपायों के माध्यम से जल उपयोग दक्षता बढ़ाने का लक्ष्य है।" },
+  schemeMGNREGAAgriTitle: { en: "MGNREGA for Agriculture", hi: "कृषि के लिए मनरेगा" },
+  schemeMGNREGAAgriShortDesc: { en: "Utilizes MGNREGA for creating agriculture-related rural assets and providing wage employment.", hi: "कृषि से संबंधित ग्रामीण संपत्ति बनाने और मजदूरी रोजगार प्रदान करने के लिए मनरेगा का उपयोग करता है।" },
+  schemeNFSMLTitle: { en: "National Food Security Mission (NFSM)", hi: "राष्ट्रीय खाद्य सुरक्षा मिशन (एनएफएसएम)" },
+  schemeNFSMLShortDesc: { en: "Aims to increase production of rice, wheat, pulses, and coarse cereals through area expansion and productivity enhancement.", hi: "क्षेत्र विस्तार और उत्पादकता वृद्धि के माध्यम से चावल, गेहूं, दालों और मोटे अनाज का उत्पादन बढ़ाने का लक्ष्य है।" },
+
+  // Filter UI Translations
+  filterBySocialCategoryLabel: { en: "Filter by Social Category", hi: "सामाजिक श्रेणी द्वारा फ़िल्टर करें" },
+  selectSocialCategoryPlaceholder: { en: "Select social category", hi: "सामाजिक श्रेणी चुनें" },
+  filterByGenderLabel: { en: "Filter by Gender Target", hi: "लिंग लक्ष्य द्वारा फ़िल्टर करें" },
+  selectGenderPlaceholder: { en: "Select gender", hi: "लिंग चुनें" },
+  anyOption: { en: "Any", hi: "कोई भी" },
+  generalOption: { en: "General", hi: "सामान्य" },
+  scOption: { en: "SC (Scheduled Caste)", hi: "एससी (अनुसूचित जाति)" },
+  stOption: { en: "ST (Scheduled Tribe)", hi: "एसटी (अनुसूचित जनजाति)" },
+  obcOption: { en: "OBC (Other Backward Class)", hi: "ओबीसी (अन्य पिछड़ा वर्ग)" },
+  ewsOption: { en: "EWS (Economically Weaker Section)", hi: "ईडब्ल्यूएस (आर्थिक रूप से कमजोर वर्ग)" },
+  maleOption: { en: "Male", hi: "पुरुष" },
+  femaleOption: { en: "Female", hi: "महिला" },
+  transgenderOption: { en: "Transgender", hi: "ट्रांसजेंडर" },
+
 };
 
 const LanguageContext = createContext<LanguageContextType | undefined>(undefined);
@@ -392,4 +422,3 @@ export function useLanguage(): LanguageContextType {
   }
   return context;
 }
-
