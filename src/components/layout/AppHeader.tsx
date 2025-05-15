@@ -2,13 +2,14 @@
 "use client";
 
 import { SidebarTrigger } from '@/components/ui/sidebar';
-import { Leaf } from 'lucide-react';
+import { Leaf, UserCircle } from 'lucide-react';
 import Link from 'next/link';
 import { ThemeSwitcher } from './ThemeSwitcher';
 import { LanguageSwitcher } from './LanguageSwitcher';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { usePathname } from 'next/navigation';
 import { useMemo } from 'react';
+import { Button } from '@/components/ui/button';
 
 // No props needed for pageTitle as it's derived from path
 export function AppHeader() {
@@ -20,6 +21,11 @@ export function AppHeader() {
     if (pathname === '/recommendations') return translate('recommendationsTitle');
     if (pathname === '/dashboard') return translate('dashboardTitle');
     if (pathname === '/locator') return translate('locatorTitle');
+    if (pathname === '/prices') return translate('navPrices');
+    if (pathname === '/transport-estimator') return translate('transportEstimatorTitle');
+    if (pathname === '/schemes') return translate('schemesPageTitle');
+    if (pathname === '/education') return translate('educationTitle');
+    if (pathname === '/settings') return translate('settingsTitle');
     return ''; // Default or no title
   }, [pathname, translate]);
 
@@ -38,6 +44,9 @@ export function AppHeader() {
       <div className="flex items-center gap-2">
         <ThemeSwitcher />
         <LanguageSwitcher />
+        <Button variant="ghost" size="icon" className="rounded-full" aria-label={translate('userProfile')}>
+          <UserCircle className="h-6 w-6 text-foreground/70 hover:text-primary" />
+        </Button>
       </div>
     </header>
   );

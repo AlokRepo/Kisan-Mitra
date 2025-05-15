@@ -28,9 +28,9 @@ export function AppLayout({ children }: AppLayoutProps) {
     <SidebarProvider defaultOpen={true}>
       <Sidebar collapsible="icon" variant="sidebar" side="left" className="border-r border-sidebar-border">
         <SidebarHeader className="p-4">
-          <Link href="/" className="flex items-center gap-2 text-lg font-semibold text-sidebar-foreground">
-            <Leaf className="h-7 w-7 text-sidebar-primary" />
-            <span className="group-data-[collapsible=icon]:hidden">{translate('appName')}</span>
+          <Link href="/" className="flex items-center gap-2 text-lg font-semibold text-sidebar-foreground group">
+            <Leaf className="h-7 w-7 text-sidebar-primary transition-transform duration-300 ease-in-out group-hover:rotate-[360deg] group-hover:scale-110" />
+            <span className="group-data-[collapsible=icon]:hidden transition-all duration-300 group-hover:text-sidebar-primary group-hover:tracking-wide">{translate('appName')}</span>
           </Link>
         </SidebarHeader>
         <SidebarContent>
