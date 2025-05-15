@@ -290,7 +290,8 @@ const translations: Translations = {
 
   // Schemes Page
   schemesPageTitle: { en: "Government Schemes for Farmers", hi: "किसानों के लिए सरकारी योजनाएँ" },
-  schemesPageDescription: { en: "Find and filter government schemes relevant to your needs.", hi: "अपनी आवश्यकताओं के अनुसार सरकारी योजनाओं को खोजें और फ़िल्टर करें।" },
+  filterSchemesTitle: { en: "Filter Schemes", hi: "योजनाओं को फ़िल्टर करें" },
+  filterSchemesDesc: { en: "Refine the list of schemes based on your criteria.", hi: "अपनी मानदंडों के आधार पर योजनाओं की सूची को परिष्कृत करें।" },
   filterByStateLabel: { en: "Filter by State", hi: "राज्य द्वारा फ़िल्टर करें" },
   filterByCropLabel: { en: "Filter by Relevant Crop", hi: "संबंधित फसल द्वारा फ़िल्टर करें" },
   filterByKeywordsLabel: { en: "Filter by Keywords", hi: "कीवर्ड द्वारा फ़िल्टर करें" },
@@ -364,9 +365,11 @@ const translations: Translations = {
   schemeNFSMLShortDesc: { en: "Aims to increase production of rice, wheat, pulses, and coarse cereals through area expansion and productivity enhancement.", hi: "क्षेत्र विस्तार और उत्पादकता वृद्धि के माध्यम से चावल, गेहूं, दालों और मोटे अनाज का उत्पादन बढ़ाने का लक्ष्य है।" },
 
   // Filter UI Translations
+  filterByAgeLabel: { en: "Age", hi: "आयु" },
+  agePlaceholderFilters: { en: "Enter your age", hi: "अपनी आयु दर्ज करें"},
   filterBySocialCategoryLabel: { en: "Filter by Social Category", hi: "सामाजिक श्रेणी द्वारा फ़िल्टर करें" },
   selectSocialCategoryPlaceholder: { en: "Select social category", hi: "सामाजिक श्रेणी चुनें" },
-  filterByGenderLabel: { en: "Filter by Gender Target", hi: "लिंग लक्ष्य द्वारा फ़िल्टर करें" },
+  filterByGenderLabel: { en: "Gender", hi: "लिंग" },
   selectGenderPlaceholder: { en: "Select gender", hi: "लिंग चुनें" },
   anyOption: { en: "Any", hi: "कोई भी" },
   generalOption: { en: "General", hi: "सामान्य" },
