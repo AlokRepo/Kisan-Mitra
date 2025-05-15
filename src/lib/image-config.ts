@@ -71,10 +71,10 @@ export const APP_IMAGES: Record<string, ImageInfo | ImageInfo[]> = {
   SCHEME_E_NAM_CARD: { src: "https://www.indiafilings.com/learn/wp-content/uploads/2019/07/eNAM.jpg", aiHint: "market online" },
   SCHEME_CROP_INSURANCE_CARD: { src: "https://smeventure.com/wp-content/uploads/2021/01/Crop-Insurance-Online.jpg", aiHint: "insurance protection" },
   SCHEME_SOIL_HEALTH_CARD: { src: "https://kj1bcdn.b-cdn.net/media/102414/soil-health-card.jpg", aiHint: "soil health" },
-  SCHEME_GENERIC_1: { src: "https://ik.imagekit.io/tractorkarvan/tr:f-webp/images/Blogs/top-central-government-schemes-for-farmers-in-india/Central-Government-Schemes.jpg", aiHint: "government program" },
-  SCHEME_GENERIC_2: { src: "https://placehold.co/400x250.png", aiHint: "community benefit" },
-  SCHEME_GENERIC_3: { src: "https://placehold.co/400x250.png", aiHint: "rural development" },
-  SCHEME_GENERIC_4: { src: "https://placehold.co/400x250.png", aiHint: "farmer support" },
+  SCHEME_GENERIC_1: { src: "https://www.finshastra.com/_next/image/?url=https%3A%2F%2Fwww.paisabazaar.com%2Fwp-content%2Fuploads%2F2017%2F10%2FKisan-Credit-Card-KCC-Loan-Scheme.jpg&w=1920&q=75", aiHint: "government program" },
+  SCHEME_GENERIC_2: { src: "https://img.etimg.com/thumb/msid-120123709,width-300,height-225,imgsize-372554,resizemode-75/file-photo-soybeans-are-irrigated-in-platte-county-nebraska.jpg", aiHint: "community benefit" },
+  SCHEME_GENERIC_3: { src: "https://images.indianexpress.com/2017/04/farmer11.jpg?w=650", aiHint: "rural development" },
+  SCHEME_GENERIC_4: { src: "https://cdn.pixabay.com/photo/2021/09/27/11/01/man-6660387_1280.jpg", aiHint: "farmer support" },
 
 
   // New Home Page Images
