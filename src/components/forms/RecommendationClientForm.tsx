@@ -39,7 +39,7 @@ export function RecommendationClientForm() {
   const [recommendationResult, setRecommendationResult] = useState<GenerateRecommendationOutput | null>(null);
   const [error, setError] = useState<string | null>(null);
   const { toast } = useToast();
-  const { translate, language } = useLanguage(); // Added language for useEffect dependency
+  const { translate, language } = useLanguage(); 
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -63,22 +63,22 @@ export function RecommendationClientForm() {
       const historicalTemplate = translate('histProdDataAutoText', {crop: watchedCrop, location: watchedLocation});
       const weatherTemplate = translate('weatherDataAutoText', {crop: watchedCrop, location: watchedLocation});
 
-      if (!isHistDirty) {
-        form.setValue("historicalProductionData", historicalTemplate, { shouldValidate: false }); // Avoid re-validation loop
+      if (!isHistDirty && form.getValues("historicalProductionData") !== historicalTemplate) {
+        form.setValue("historicalProductionData", historicalTemplate, { shouldValidate: true, shouldDirty: false });
       }
-      if (!isWeatherDirty) {
-        form.setValue("weatherData", weatherTemplate, { shouldValidate: false }); // Avoid re-validation loop
+      if (!isWeatherDirty && form.getValues("weatherData") !== weatherTemplate) {
+        form.setValue("weatherData", weatherTemplate, { shouldValidate: true, shouldDirty: false });
       }
     } else {
-        if (!isHistDirty) {
-             form.setValue("historicalProductionData", "", { shouldValidate: false });
+        if (!isHistDirty && form.getValues("historicalProductionData")) {
+             form.setValue("historicalProductionData", "", { shouldValidate: true, shouldDirty: false });
         }
-       if (!isWeatherDirty) {
-            form.setValue("weatherData", "", { shouldValidate: false });
+       if (!isWeatherDirty && form.getValues("weatherData")) {
+            form.setValue("weatherData", "", { shouldValidate: true, shouldDirty: false });
        }
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [watchedCrop, watchedLocation, translate, form.setValue, language]); // Added language to dependencies
+  }, [watchedCrop, watchedLocation, translate, form.setValue, language, form.formState.dirtyFields, form.getValues]);
 
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
@@ -86,7 +86,7 @@ export function RecommendationClientForm() {
     setError(null);
     startTransition(async () => {
       try {
-        // Temporarily bypass AI call
+        // Temporarily bypass AI call for UI testing with enhanced mock
         // const result = await generateRecommendation(values as GenerateRecommendationInput);
         // setRecommendationResult(result);
         // toast({
@@ -95,15 +95,26 @@ export function RecommendationClientForm() {
         //   variant: "default",
         // });
 
-        // Mock successful response for UI testing
-        await new Promise(resolve => setTimeout(resolve, 1000)); // Simulate delay
-        setRecommendationResult({
-            recommendation: "Mock Recommendation: Sell " + values.crop + " next week in " + values.location + ".",
-            reasoning: "Mock Reasoning: Market prices are expected to be favorable based on mock historical trends and weather.",
-        });
+        await new Promise(resolve => setTimeout(resolve, 1200)); // Simulate AI delay
+
+        const mockQuantityToSellNow = Math.round(values.quantity * 0.6);
+        const mockPotentialPrice = values.crop === "Wheat" ? 2200 : values.crop === "Rice" ? 3500 : 2800;
+        const mockHistoricalPriceIncrease = Math.floor(Math.random() * 10) + 5; // Random 5-15%
+
+        const mockRecommendation: GenerateRecommendationOutput = {
+          recommendation: `For your ${values.quantity} quintals of ${values.crop} in ${values.location}, consider selling approximately ${mockQuantityToSellNow} quintals (60%) within the next 7-10 days, potentially at a major district mandi. It might be beneficial to hold the remaining ${values.quantity - mockQuantityToSellNow} quintals (40%) for another 2-3 weeks to observe market trends.`,
+          reasoning: `This advice is based on several factors:
+- Your historical note: "${values.historicalProductionData.substring(0, 50)}..." suggests you've seen price fluctuations in the past. For instance, if past data indicated a post-harvest dip, selling a portion now hedges against that.
+- Weather context: "${values.weatherData.substring(0, 50)}..." If current weather patterns in ${values.location} (e.g., early monsoon arrival) are favorable, this could mean good overall supply, potentially stabilizing prices soon. However, if there were adverse conditions mentioned, securing a price for a portion now is prudent.
+- Market Simulation: Generally, for ${values.crop}, prices can see a ${mockHistoricalPriceIncrease}% increase after the initial harvest rush settles. Selling ${mockQuantityToSellNow} quintals now at an estimated average of ₹${mockPotentialPrice}/quintal could yield around ₹${(mockQuantityToSellNow * mockPotentialPrice).toLocaleString()}. Holding the rest allows you to capitalize on potential later surges.
+- Diversification Strategy: Selling in tranches reduces risk from sudden market volatility.
+
+Please note: This is a simulated recommendation. Always cross-verify with local market advisors and real-time data.`
+        };
+        setRecommendationResult(mockRecommendation);
         toast({
           title: translate('toastRecGeneratedTitle'),
-          description: "Mock recommendation generated successfully.",
+          description: "Enhanced mock recommendation generated successfully.",
           variant: "default",
         });
 
@@ -231,7 +242,7 @@ export function RecommendationClientForm() {
             />
           </CardContent>
           <CardFooter className="flex flex-col items-stretch gap-4">
-            <Button type="submit" disabled={isPending} className="w-full">
+            <Button type="submit" disabled={isPending || !form.formState.isValid} className="w-full">
               {isPending ? (
                 <>
                   <Loader2 className="mr-2 h-4 w-4 animate-spin" />
