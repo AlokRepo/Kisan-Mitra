@@ -19,9 +19,9 @@ export const governmentSchemes: GovernmentScheme[] = [
     linkUrl: 'https://pmkisan.gov.in/',
     imageUrl: APP_IMAGES.SCHEME_PM_KISAN_CARD.src,
     aiHint: APP_IMAGES.SCHEME_PM_KISAN_CARD.aiHint,
-    tags: ['income support', 'all states', 'small farmers', 'marginal farmers', 'direct benefit transfer', 'agriculture'],
-    targetStates: ["All"], // Assuming it's for all states
-    relevantCrops: ["All"], // Assuming relevant for all crops indirectly
+    tags: ['income support', 'all states', 'small farmers', 'marginal farmers', 'direct benefit transfer', 'agriculture', 'financial aid'],
+    targetStates: ["All"], 
+    relevantCrops: ["All"], 
   },
   {
     id: 'e-nam',
@@ -37,7 +37,7 @@ export const governmentSchemes: GovernmentScheme[] = [
     linkUrl: 'https://www.enam.gov.in/web/',
     imageUrl: APP_IMAGES.SCHEME_E_NAM_CARD.src,
     aiHint: APP_IMAGES.SCHEME_E_NAM_CARD.aiHint,
-    tags: ['market linkage', 'online trading', 'price discovery', 'all states', 'apmc', 'agriculture produce'],
+    tags: ['market linkage', 'online trading', 'price discovery', 'all states', 'apmc', 'agriculture produce', 'digital market'],
     targetStates: ["All"],
     relevantCrops: ["All"],
   },
@@ -56,9 +56,9 @@ export const governmentSchemes: GovernmentScheme[] = [
     linkUrl: 'https://pmfby.gov.in/',
     imageUrl: APP_IMAGES.SCHEME_CROP_INSURANCE_CARD.src,
     aiHint: APP_IMAGES.SCHEME_CROP_INSURANCE_CARD.aiHint,
-    tags: ['crop insurance', 'risk management', 'natural calamities', 'pest attacks', 'yield loss', 'premium subsidy'],
+    tags: ['crop insurance', 'risk management', 'natural calamities', 'pest attacks', 'yield loss', 'premium subsidy', 'farmer protection'],
     targetStates: ["All"],
-    relevantCrops: ["Wheat", "Rice", "Maize", "Cotton", "Sugarcane", "Soybean", "Pulses", "Mustard", "Groundnut"],
+    relevantCrops: ["Wheat", "Rice", "Maize", "Cotton", "Sugarcane", "Soybean", "Pulses", "Mustard", "Groundnut", "Millets", "Oilseeds"], // Expanded list
   },
   {
     id: 'soil-health-card',
@@ -66,14 +66,15 @@ export const governmentSchemes: GovernmentScheme[] = [
     shortDescriptionKey: 'schemeSoilHealthCardShortDesc',
     detailedDescriptionKey: 'schemeSoilHealthCardDetailedDesc',
     eligibilityCriteriaKeys: [
-      'soilHealthCardEligibility1',
+      'soilHealthCardEligibility1', // All farmers are eligible
+      'soilHealthCardEligibility2', // Soil testing done periodically
     ],
     benefitsKeys: ['soilHealthCardBenefit1', 'soilHealthCardBenefit2', 'soilHealthCardBenefit3'],
     howToApplyKey: 'soilHealthCardHowToApply',
     linkUrl: 'https://soilhealth.dac.gov.in/',
     imageUrl: APP_IMAGES.SCHEME_SOIL_HEALTH_CARD.src,
     aiHint: APP_IMAGES.SCHEME_SOIL_HEALTH_CARD.aiHint,
-    tags: ['soil testing', 'nutrient management', 'fertilizer recommendation', 'soil health', 'sustainable agriculture'],
+    tags: ['soil testing', 'nutrient management', 'fertilizer recommendation', 'soil health', 'sustainable agriculture', 'productivity'],
     targetStates: ["All"],
     relevantCrops: ["All"],
   }
@@ -84,3 +85,4 @@ export const getGovernmentSchemes = async (): Promise<GovernmentScheme[]> => {
   await new Promise(resolve => setTimeout(resolve, 300));
   return governmentSchemes;
 };
+
