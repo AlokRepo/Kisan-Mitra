@@ -16,7 +16,7 @@ interface FeatureCardProps {
   description: string;
   link: string;
   linkText: string;
-  animationDelay?: string; // e.g., '200ms'
+  animationDelay?: string; 
 }
 
 const FeatureCard: React.FC<FeatureCardProps> = ({ icon: Icon, title, description, link, linkText, animationDelay }) => {
@@ -49,7 +49,7 @@ interface SchemeCardProps {
   imageUrl: string;
   aiHint: string;
   link: string;
-  animationDelay?: string; // e.g., '300ms'
+  animationDelay?: string; 
 }
 
 const SchemeCard: React.FC<SchemeCardProps> = ({ title, description, imageUrl, aiHint, link, animationDelay }) => {
@@ -113,14 +113,14 @@ export default function HomePage() {
       <section className="relative bg-gradient-to-r from-primary/80 to-primary/60 text-primary-foreground py-12 md:py-20 animate-fade-in">
         <div className="absolute inset-0">
             <Image 
-              src={APP_IMAGES.HOME_HERO_BANNER.src} 
+              src={(APP_IMAGES.HOME_HERO_BANNER as { src: string; aiHint: string; }).src}
               alt={translate('heroAltText')}
               fill 
               sizes="100vw"
               style={{objectFit: 'cover'}} 
               priority 
               className="opacity-30"
-              data-ai-hint={APP_IMAGES.HOME_HERO_BANNER.aiHint}
+              data-ai-hint={(APP_IMAGES.HOME_HERO_BANNER as { src: string; aiHint: string; }).aiHint}
             />
         </div>
         <div className="container mx-auto px-4 relative z-10 text-center">
@@ -130,7 +130,7 @@ export default function HomePage() {
             <Button size="lg" asChild className="bg-accent text-accent-foreground hover:bg-accent/90">
               <Link href="/prices">{translate('explorePricesButton')}</Link>
             </Button>
-            <Button size="lg" variant="outline" asChild className="border-primary-foreground text-primary-foreground hover:bg-primary-foreground/10">
+            <Button size="lg" variant="outline" asChild className="border-primary-foreground/60 text-primary-foreground/80 hover:bg-primary-foreground/15 hover:text-primary-foreground">
               <Link href="/education">{translate('viewSchemesButton')}</Link>
             </Button>
           </div>
@@ -167,8 +167,8 @@ export default function HomePage() {
                 key={scheme.titleKey}
                 title={translate(scheme.titleKey)}
                 description={translate(scheme.descriptionKey)}
-                imageUrl={scheme.imageDetails.src}
-                aiHint={scheme.imageDetails.aiHint}
+                imageUrl={(scheme.imageDetails as { src: string; aiHint: string; }).src}
+                aiHint={(scheme.imageDetails as { src: string; aiHint: string; }).aiHint}
                 link={scheme.link}
                 animationDelay={scheme.animationDelay}
               />

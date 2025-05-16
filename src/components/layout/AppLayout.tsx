@@ -18,7 +18,6 @@ import { useLanguage } from '@/contexts/LanguageContext';
 
 type AppLayoutProps = {
   children: ReactNode;
-  // pageTitle is now handled by AppHeader internally
 };
 
 export function AppLayout({ children }: AppLayoutProps) {
@@ -37,6 +36,7 @@ export function AppLayout({ children }: AppLayoutProps) {
           <SidebarNavigation />
         </SidebarContent>
         <SidebarFooter className="p-4 group-data-[collapsible=icon]:hidden">
+          {/* Ensured text is small and uses a muted sidebar foreground color for a modern look */}
           <p className="text-xs text-sidebar-foreground/70">{translate('copyright')}</p>
         </SidebarFooter>
          <SidebarRail />
