@@ -130,7 +130,7 @@ export default function HomePage() {
             <Button size="lg" asChild className="bg-accent text-accent-foreground hover:bg-accent/90">
               <Link href="/prices">{translate('explorePricesButton')}</Link>
             </Button>
-            <Button size="lg" variant="outline" asChild className="border-primary-foreground/60 text-primary-foreground/80 hover:bg-primary-foreground/15 hover:text-primary-foreground">
+            <Button size="lg" variant="outline" asChild className="border-primary-foreground text-primary-foreground hover:bg-primary-foreground/15 hover:text-primary-foreground">
               <Link href="/education">{translate('viewSchemesButton')}</Link>
             </Button>
           </div>
