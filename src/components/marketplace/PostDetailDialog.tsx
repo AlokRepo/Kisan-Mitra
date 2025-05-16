@@ -7,21 +7,21 @@ import { Button } from '@/components/ui/button';
 import {
   Dialog,
   DialogContent,
-  DialogDescription,
   DialogHeader,
   DialogTitle,
   DialogFooter,
   DialogClose,
-} from '@/components/ui/dialog';
+} from '@/components/ui/dialog'; // Removed DialogDescription as it wasn't used
 import { useLanguage } from '@/contexts/LanguageContext';
 import { getCropImageDetails, APP_IMAGES } from '@/lib/image-config';
-import { CalendarDays, MapPinIcon, Tag, Package, User, Info } from 'lucide-react';
+// Removed unused icons: CalendarDays, MapPinIcon, Tag, Package, User, Info
 import { useToast } from '@/hooks/use-toast';
 
 interface PostDetailDialogProps {
   post: MarketplacePost | null;
   isOpen: boolean;
   onClose: () => void;
+  // Removed onEdit, onDelete, isOwner props
 }
 
 export function PostDetailDialog({ post, isOpen, onClose }: PostDetailDialogProps) {
@@ -86,13 +86,14 @@ export function PostDetailDialog({ post, isOpen, onClose }: PostDetailDialogProp
             <p className="text-sm text-card-foreground/90 whitespace-pre-wrap">{post.description || translate('noDataAvailable')}</p>
           </div>
         </div>
-        <DialogFooter className="sm:justify-start gap-2">
-          <Button type="button" onClick={handleContactSeller}>
+        <DialogFooter className="sm:justify-start gap-2 flex-col sm:flex-row"> {/* Added flex-col for mobile */}
+          <Button type="button" onClick={handleContactSeller} className="w-full sm:w-auto">
             {translate('contactSellerButton')}
           </Button>
+          {/* Removed Edit and Delete Buttons */}
           <DialogClose asChild>
-            <Button type="button" variant="outline">
-              {translate('cancelButton')}
+            <Button type="button" variant="outline" className="w-full sm:w-auto">
+              {translate('closeButton')} {/* Changed from cancelButton for clarity */}
             </Button>
           </DialogClose>
         </DialogFooter>

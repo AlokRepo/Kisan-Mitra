@@ -4,17 +4,16 @@
 import type { ReactNode } from 'react';
 import { createContext, useContext, useState, useMemo, useCallback, useEffect } from 'react';
 
-type Language = 'en' | 'hi'; // For now, only 'en' and 'hi' are fully supported
+type Language = 'en' | 'hi'; 
 const VALID_LANGUAGES: Language[] = ['en', 'hi'];
 
 
 interface Translations {
   [key: string]: {
-    [lang in Language]?: string; // Make specific language entries optional
+    [lang in Language]?: string; 
   };
 }
 
-// Helper for dynamic replacements
 const interpolate = (text: string, params?: Record<string, string | number>): string => {
   if (!params) return text;
   let result = text;
@@ -79,6 +78,7 @@ const translations: Translations = {
   allCrops: { en: "All Crops", hi: "सभी फसलें" },
   filterButton: { en: "Apply Filters", hi: "फ़िल्टर लागू करें" },
   resetFiltersButton: { en: "Reset Filters", hi: "फ़िल्टर रीसेट करें" },
+  closeButton: { en: "Close", hi: "बंद करें"},
   
   // New Home Page
   heroTitle: { en: "Welcome to Kisan Mitra", hi: "किसान मित्र में आपका स्वागत है" },
@@ -239,8 +239,8 @@ const translations: Translations = {
   sampleGuideTitle2: { en: "Maximizing Your Kisan Mitra App", hi: "किसान मित्र ऐप का अधिकतम लाभ उठाना" },
   sampleGuideDesc2: { en: "Tips and tricks to get the most out of the app's features.", hi: "ऐप की सुविधाओं का अधिकतम लाभ उठाने के लिए टिप्स और ट्रिक्स।" },
   viewGuideButton: { en: "View Guide", hi: "गाइड देखें" },
-  schemesTitle: { en: "Government Schemes Spotlight", hi: "सरकारी योजनाएं स्पॉटलाइट" }, // Used on Education Page
-  schemesDesc: { en: "Discover relevant agricultural schemes and their benefits. Explore all schemes for detailed filtering.", hi: "प्रासंगिक कृषि योजनाओं और उनके लाभों की खोज करें। विस्तृत फ़िल्टरिंग के लिए सभी योजनाएँ देखें।" }, // Used on Education Page
+  schemesTitle: { en: "Government Schemes Spotlight", hi: "सरकारी योजनाएं स्पॉटलाइट" }, 
+  schemesDesc: { en: "Discover relevant agricultural schemes and their benefits. Explore all schemes for detailed filtering.", hi: "प्रासंगिक कृषि योजनाओं और उनके लाभों की खोज करें। विस्तृत फ़िल्टरिंग के लिए सभी योजनाएँ देखें।" }, 
   exploreAllSchemesButton: { en: "Explore All Schemes", hi: "सभी योजनाएँ देखें"},
   sampleSchemeTitle1: { en: "PM-KISAN Samman Nidhi", hi: "पीएम-किसान सम्मान निधि" },
   sampleSchemeDesc1: { en: "Direct income support for small and marginal farmers across India.", hi: "पूरे भारत में छोटे और सीमांत किसानों के लिए प्रत्यक्ष आय सहायता।" },
@@ -306,8 +306,6 @@ const translations: Translations = {
   visitSchemeWebsiteButton: { en: "Visit Official Website", hi: "आधिकारिक वेबसाइट पर जाएं" },
   detailedDescriptionKey: { en: "Detailed Description", hi: "विस्तृत विवरण"},
 
-
-  // Enhanced Scheme Data Translations (PM-KISAN)
   schemePMKisanTitleFull: { en: "Pradhan Mantri Kisan Samman Nidhi (PM-KISAN)", hi: "प्रधानमंत्री किसान सम्मान निधि (पीएम-किसान)" },
   schemePMKisanShortDesc: { en: "Provides income support to all landholding farmer families.", hi: "सभी भूमिधारक किसान परिवारों को आय सहायता प्रदान करता है।" },
   schemePMKisanDetailedDesc: { en: "An initiative by the Government of India in which all eligible landholding farmer families get income support of ₹6,000 per year in three equal installments. The scheme aims to supplement the financial needs of the farmers in procuring various inputs related to agriculture and allied activities as well as domestic needs.", hi: "भारत सरकार की एक पहल जिसमें सभी पात्र भूमिधारक किसान परिवारों को तीन समान किस्तों में प्रति वर्ष ₹6,000 की आय सहायता मिलती है। इस योजना का उद्देश्य कृषि और संबद्ध गतिविधियों के साथ-साथ घरेलू जरूरतों से संबंधित विभिन्न आदानों की खरीद में किसानों की वित्तीय जरूरतों को पूरा करना है।" },
@@ -318,7 +316,6 @@ const translations: Translations = {
   pmKisanBenefit2: { en: "Paid in three equal installments of ₹2,000 directly into the bank accounts.", hi: "₹2,000 की तीन समान किस्तों में सीधे बैंक खातों में भुगतान किया जाता है।" },
   pmKisanHowToApply: { en: "Farmers can register through the official PM-KISAN portal (pmkisan.gov.in), through Common Service Centres (CSCs), or through the state-designated local revenue officer/village patwari. Requires Aadhaar card, landholding papers, and bank account details.", hi: "किसान आधिकारिक पीएम-किसान पोर्टल (pmkisan.gov.in) के माध्यम से, कॉमन सर्विस सेंटर (सीएससी) के माध्यम से, या राज्य-नामित स्थानीय राजस्व अधिकारी/ग्राम पटवारी के माध्यम से पंजीकरण कर सकते हैं। आधार कार्ड, भूमि धारण पत्र और बैंक खाते का विवरण आवश्यक है।" },
 
-  // Enhanced Scheme Data Translations (e-NAM)
   schemeENAMTitleFull: { en: "National Agriculture Market (e-NAM)", hi: "राष्ट्रीय कृषि बाजार (ई-नाम)" },
   schemeENAMShortDesc: { en: "Online trading platform for agricultural commodities connecting APMC mandis.", hi: "एपीएमसी मंडियों को जोड़ने वाला कृषि जिंसों के लिए ऑनलाइन ट्रेडिंग प्लेटफॉर्म।" },
   schemeENAMDetailedDesc: { en: "e-NAM is a pan-India electronic trading portal which networks the existing APMC mandis to create a unified national market for agricultural commodities. It aims to provide better price discovery through transparent auction processes and access to a wider market.", hi: "ई-नाम एक अखिल भारतीय इलेक्ट्रॉनिक ट्रेडिंग पोर्टल है जो कृषि जिंसों के लिए एक एकीकृत राष्ट्रीय बाजार बनाने के लिए मौजूदा एपीएमसी मंडियों को नेटवर्क करता है। इसका उद्देश्य पारदर्शी नीलामी प्रक्रियाओं और व्यापक बाजार तक पहुंच के माध्यम से बेहतर मूल्य खोज प्रदान करना है।" },
@@ -329,7 +326,6 @@ const translations: Translations = {
   eNAMBenefit3: { en: "Real-time price information and reduced information asymmetry. Facilitates direct payment.", hi: "वास्तविक समय मूल्य जानकारी और कम सूचना विषमता। प्रत्यक्ष भुगतान की सुविधा देता है।" },
   eNAMHowToApply: { en: "Farmers can register on the e-NAM portal (enam.gov.in) or directly at e-NAM integrated mandis. Registration requires details like bank account, Aadhaar, and mobile number. Traders require an APMC license.", hi: "किसान ई-नाम पोर्टल (enam.gov.in) पर या सीधे ई-नाम एकीकृत मंडियों में पंजीकरण कर सकते हैं। पंजीकरण के लिए बैंक खाता, आधार और मोबाइल नंबर जैसे विवरण आवश्यक हैं। व्यापारियों को एपीएमसी लाइसेंस की आवश्यकता होती है।" },
 
-  // Enhanced Scheme Data Translations (PMFBY)
   schemePMFBYTitleFull: { en: "Pradhan Mantri Fasal Bima Yojana (PMFBY)", hi: "प्रधानमंत्री फसल बीमा योजना (पीएमएफबीवाई)" },
   schemePMFBYShortDesc: { en: "Crop insurance scheme providing financial support against yield losses due to unforeseen events.", hi: "अप्रत्याशित घटनाओं के कारण उपज हानि के खिलाफ वित्तीय सहायता प्रदान करने वाली फसल बीमा योजना।" },
   schemePMFBYDetailedDesc: { en: "PMFBY provides a comprehensive insurance cover against failure of the crop thus helping in stabilising the income of the farmers and encouraging them to adopt innovative and modern agricultural practices. It covers risks like drought, flood, inundation, pests and diseases, hailstorm, landslide, fire, etc.", hi: "पीएमएफबीवाई फसल की विफलता के खिलाफ एक व्यापक बीमा कवर प्रदान करता है जिससे किसानों की आय को स्थिर करने में मदद मिलती है और उन्हें नवीन और आधुनिक कृषि पद्धतियों को अपनाने के लिए प्रोत्साहित किया जाता है। यह सूखा, बाढ़, जलभराव, कीट और रोग, ओलावृष्टि, भूस्खलन, आग आदि जैसे जोखिमों को कवर करता है।" },
@@ -340,7 +336,6 @@ const translations: Translations = {
   pmfbyBenefit2: { en: "Uniform premium rates for farmers: 2% for Kharif crops, 1.5% for Rabi crops, and 5% for annual commercial/horticultural crops.", hi: "किसानों के लिए समान प्रीमियम दरें: खरीफ फसलों के लिए 2%, रबी फसलों के लिए 1.5%, और वार्षिक वाणिज्यिक/बागवानी फसलों के लिए 5%।" },
   pmfbyHowToApply: { en: "Contact nearest bank branch, Primary Agricultural Credit Society (PACS), Common Service Centre (CSC), or an authorized insurance company. Applications can also be submitted online via the National Crop Insurance Portal (NCIP - pmfby.gov.in). Required documents typically include land records, sowing declaration, and bank details.", hi: "निकटतम बैंक शाखा, प्राथमिक कृषि ऋण समिति (PACS), कॉमन सर्विस सेंटर (CSC), या एक अधिकृत बीमा कंपनी से संपर्क करें। राष्ट्रीय फसल बीमा पोर्टल (NCIP - pmfby.gov.in) के माध्यम से भी ऑनलाइन आवेदन जमा किए जा सकते हैं। आवश्यक दस्तावेजों में आमतौर पर भूमि रिकॉर्ड, बुवाई घोषणा और बैंक विवरण शामिल होते हैं।" },
 
-  // Enhanced Scheme Data Translations (Soil Health Card)
   schemeSoilHealthCardTitleFull: { en: "Soil Health Card Scheme", hi: "मृदा स्वास्थ्य कार्ड योजना" },
   schemeSoilHealthCardShortDesc: { en: "Provides farmers with soil nutrient status and recommendations for balanced fertilizer use.", hi: "किसानों को मिट्टी के पोषक तत्वों की स्थिति और संतुलित उर्वरक उपयोग के लिए सिफारिशें प्रदान करता है।" },
   schemeSoilHealthCardDetailedDesc: { en: "This scheme aims to issue Soil Health Cards to farmers every 2 years. These cards provide information on the nutrient status of their soil along with recommendations on the appropriate dosage of nutrients to be applied for improving soil health and fertility, thereby enhancing crop productivity.", hi: "इस योजना का उद्देश्य हर 2 साल में किसानों को मृदा स्वास्थ्य कार्ड जारी करना है। ये कार्ड उनकी मिट्टी की पोषक तत्वों की स्थिति के बारे में जानकारी प्रदान करते हैं और साथ ही मिट्टी के स्वास्थ्य और उर्वरता में सुधार के लिए लागू किए जाने वाले पोषक तत्वों की उचित खुराक पर सिफारिशें भी देते हैं, जिससे फसल उत्पादकता बढ़ती है।" },
@@ -351,7 +346,6 @@ const translations: Translations = {
   soilHealthCardBenefit3: { en: "Aids in improving soil health over time, leading to increased crop yields and better farm income.", hi: "समय के साथ मिट्टी के स्वास्थ्य में सुधार करने में सहायता करता है, जिससे फसल की पैदावार बढ़ती है और खेत की आय बेहतर होती है।" },
   soilHealthCardHowToApply: { en: "Farmers generally do not need to apply directly. State Governments collect soil samples through their agriculture department staff or outsourced agencies. The samples are tested in soil testing labs, and the Soil Health Card is then generated and distributed to the farmers.", hi: "किसानों को आमतौर पर सीधे आवेदन करने की आवश्यकता नहीं होती है। राज्य सरकारें अपने कृषि विभाग के कर्मचारियों या आउटसोर्स एजेंसियों के माध्यम से मिट्टी के नमूने एकत्र करती हैं। नमूनों का मिट्टी परीक्षण प्रयोगशालाओं में परीक्षण किया जाता है, और फिर मृदा स्वास्थ्य कार्ड तैयार कर किसानों को वितरित किया जाता है।" },
 
-  // Placeholder schemes translations
   schemeComingSoonDesc: { en: "Detailed information about this scheme will be available soon. Please check the official government portals for the most up-to-date information.", hi: "इस योजना के बारे में विस्तृत जानकारी जल्द ही उपलब्ध होगी। नवीनतम जानकारी के लिए कृपया आधिकारिक सरकारी पोर्टल देखें।" },
   schemeGenericEligibility: { en: "Refer to official scheme documents for specific eligibility criteria.", hi: "विशिष्ट पात्रता मानदंडों के लिए आधिकारिक योजना दस्तावेजों का संदर्भ लें।" },
   schemeGenericBenefit: { en: "Benefits vary based on the scheme's objectives. Refer to official guidelines.", hi: "योजना के उद्देश्यों के आधार पर लाभ भिन्न होते हैं। आधिकारिक दिशानिर्देशों का संदर्भ लें।" },
@@ -366,7 +360,6 @@ const translations: Translations = {
   schemeNFSMLTitle: { en: "National Food Security Mission (NFSM)", hi: "राष्ट्रीय खाद्य सुरक्षा मिशन (एनएफएसएम)" },
   schemeNFSMLShortDesc: { en: "Aims to increase production of rice, wheat, pulses, and coarse cereals through area expansion and productivity enhancement.", hi: "क्षेत्र विस्तार और उत्पादकता वृद्धि के माध्यम से चावल, गेहूं, दालों और मोटे अनाज का उत्पादन बढ़ाने का लक्ष्य है।" },
 
-  // Filter UI Translations
   filterByAgeLabel: { en: "Age", hi: "आयु" },
   agePlaceholderFilters: { en: "Enter your age", hi: "अपनी आयु दर्ज करें"},
   filterBySocialCategoryLabel: { en: "Filter by Social Category", hi: "सामाजिक श्रेणी द्वारा फ़िल्टर करें" },
@@ -383,7 +376,6 @@ const translations: Translations = {
   femaleOption: { en: "Female", hi: "महिला" },
   transgenderOption: { en: "Transgender", hi: "ट्रांसजेंडर" },
 
-  // New Education Page Sections (inspired by india.gov.in)
   agriMachineryTitle: { en: "Agricultural Machinery & Technology", hi: "कृषि मशीनरी और प्रौद्योगिकी" },
   agriMachineryDesc: { en: "Learn about modern farming equipment, subsidies, maintenance, and emerging technologies like drones and precision farming.", hi: "आधुनिक कृषि उपकरण, सब्सिडी, रखरखाव, और ड्रोन और सटीक खेती जैसी उभरती प्रौद्योगिकियों के बारे में जानें।" },
   agriMachinerySubTopic1: { en: "Choosing the right tractor and implements.", hi: "सही ट्रैक्टर और उपकरणों का चयन।" },
@@ -413,9 +405,8 @@ const translations: Translations = {
   agriFinanceSubTopic4: { en: "Managing farm budgets and financial planning.", hi: "कृषि बजट और वित्तीय योजना का प्रबंधन।" },
   exploreFinancialSchemesButton: { en: "Explore Financial Schemes", hi: "वित्तीय योजनाएँ देखें" },
 
-  // Marketplace
   marketplaceTitle: { en: "Farmer's Marketplace", hi: "किसान बाज़ार" },
-  marketplaceDescription: { en: "Buy and sell agricultural products directly with other farmers.", hi: "अन्य किसानों के साथ सीधे कृषि उत्पादों की खरीद और बिक्री करें।" },
+  marketplaceDescription: { en: "Buy and sell agricultural products directly.", hi: "सीधे कृषि उत्पादों की खरीद और बिक्री करें।" }, // Simplified
   createNewPostButton: { en: "Create New Post", hi: "नई पोस्ट बनाएं" },
   noPostsAvailable: { en: "No products currently listed. Be the first to post!", hi: "वर्तमान में कोई उत्पाद सूचीबद्ध नहीं है। पोस्ट करने वाले पहले व्यक्ति बनें!" },
   createPostDialogTitle: { en: "Create New Marketplace Post", hi: "नई बाज़ार पोस्ट बनाएं" },
@@ -429,8 +420,6 @@ const translations: Translations = {
   descriptionLabel: { en: "Description", hi: "विवरण" },
   descriptionMarketplacePlaceholder: { en: "Provide details like variety, quality, harvest date, etc.", hi: "विविधता, गुणवत्ता, कटाई की तारीख आदि जैसे विवरण प्रदान करें।" },
   uploadImageLabel: { en: "Product Image", hi: "उत्पाद की छवि" },
-  uploadImageButton: { en: "Upload Image", hi: "छवि अपलोड करें" },
-  imageUploadNotImplemented: { en: "Actual image upload is not yet implemented.", hi: "वास्तविक छवि अपलोड अभी तक लागू नहीं किया गया है।" },
   selectImageHint: { en: "Select an image for your product (optional).", hi: "अपने उत्पाद के लिए एक छवि चुनें (वैकल्पिक)।" },
   changeImageHint: { en: "Image selected. Click to change.", hi: "छवि चयनित। बदलने के लिए क्लिक करें।" },
   submitPostButton: { en: "Submit Post", hi: "पोस्ट जमा करें" },
@@ -440,11 +429,28 @@ const translations: Translations = {
   errorFetchingPriceToast: { en: "Could not fetch suggested price.", hi: "सुझाई गई कीमत प्राप्त नहीं हो सकी।" },
   postedOnLabel: { en: "Posted on", hi: "पोस्ट किया गया" },
   sellerLabel: { en: "Seller", hi: "विक्रेता" },
-  locationMarketplaceLabel: { en: "Location", hi: "स्थान" },
+  sellerNameLabel: { en: "Seller Name", hi: "विक्रेता का नाम" },
+  sellerNamePlaceholder: { en: "Enter your name or farm name", hi: "अपना नाम या खेत का नाम दर्ज करें" },
+  locationMarketplaceLabel: { en: "Location (State)", hi: "स्थान (राज्य)" },
+  selectLocationPlaceholder: { en: "Select your state", hi: "अपना राज्य चुनें" },
   productDetailsTitle: { en: "Product Details", hi: "उत्पाद विवरण" },
   contactSellerButton: { en: "Contact Seller", hi: "विक्रेता से संपर्क करें" },
   contactSellerToast: { en: "Contact functionality coming soon! For now, imagine you've connected.", hi: "संपर्क कार्यक्षमता जल्द ही आ रही है! अभी के लिए, कल्पना करें कि आप जुड़ गए हैं।" },
   fetchingPrice: { en: "Fetching price...", hi: "कीमत प्राप्त हो रही है..."},
+
+  // Authentication related (Removed)
+  // loginSuccessTitle: { en: 'Login Successful', hi: 'लॉगिन सफल' },
+  // loginSuccessDesc: { en: 'Welcome back, {userName}!', hi: 'वापसी पर स्वागत है, {userName}!' },
+  // demoUser: { en: "Demo User", hi: "डेमो उपयोगकर्ता"},
+  // logoutSuccessTitle: { en: 'Logout Successful', hi: 'लॉगआउट सफल' },
+  // logoutSuccessDesc: { en: 'You have been logged out.', hi: 'आपको लॉग आउट कर दिया गया है।' },
+  // loginButton: { en: "Login", hi: "लॉगिन करें"},
+  // logoutButton: { en: "Logout", hi: "लॉगआउट करें"},
+  // editButton: { en: "Edit", hi: "संपादित करें"},
+  // deleteButton: { en: "Delete", hi: "मिटाएँ"},
+  // confirmDeleteTitle: {en: "Confirm Deletion", hi: "हटाने की पुष्टि करें"},
+  // confirmDeleteDesc: {en: "Are you sure you want to delete this post? This action cannot be undone.", hi: "क्या आप वाकई इस पोस्ट को हटाना चाहते हैं? यह कार्रवाई पूर्ववत नहीं की जा सकती।"},
+  anonymousUser: { en: "User", hi: "उपयोगकर्ता"}
 };
 
 const LanguageContext = createContext<LanguageContextType | undefined>(undefined);
@@ -489,4 +495,3 @@ export function useLanguage(): LanguageContextType {
   }
   return context;
 }
-

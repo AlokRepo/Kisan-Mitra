@@ -26,7 +26,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { CROPS } from "@/types";
+import { CROPS, STATES } from "@/types"; // Added STATES
 import type { MarketplacePost } from "@/types";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { useToast } from "@/hooks/use-toast";
@@ -40,13 +40,15 @@ const createFormSchema = (translate: (key: string) => string) => z.object({
   quantity: z.coerce.number().positive(translate('quantityNotEnteredError')),
   price: z.coerce.number().positive("Price must be a positive number."),
   description: z.string().min(10, "Description must be at least 10 characters.").max(500, "Description too long."),
+  sellerName: z.string().min(2, "Seller name is required.").max(50, "Seller name too long."),
+  location: z.string().min(1, "Location is required."), // Making location required
   imageUrl: z.string().optional(),
 });
 
 interface CreatePostFormProps {
   isOpen: boolean;
   onClose: () => void;
-  onAddPost: (postData: Omit<MarketplacePost, 'id' | 'sellerName' | 'postDate' | 'location'>) => void;
+  onAddPost: (postData: Omit<MarketplacePost, 'id' | 'postDate'>) => void; // Removed sellerName from Omit
 }
 
 export function CreatePostForm({ isOpen, onClose, onAddPost }: CreatePostFormProps) {
@@ -66,6 +68,8 @@ export function CreatePostForm({ isOpen, onClose, onAddPost }: CreatePostFormPro
       quantity: 10,
       price: undefined,
       description: "",
+      sellerName: "Local Farmer", // Default seller name
+      location: "", // Default location, user should select
       imageUrl: undefined,
     },
   });
@@ -127,12 +131,20 @@ export function CreatePostForm({ isOpen, onClose, onAddPost }: CreatePostFormPro
   };
 
   function onSubmit(values: z.infer<typeof formSchema>) {
-    onAddPost(values);
+    onAddPost(values); // Pass all values including sellerName and location
     toast({
       title: translate('postSubmittedToastTitle'),
       description: translate('postSubmittedToastDesc'),
     });
-    form.reset();
+    form.reset({ // Reset with defaults
+        cropName: "", 
+        quantity: 10, 
+        price: undefined, 
+        description: "", 
+        sellerName: "Local Farmer", 
+        location: "", 
+        imageUrl: undefined
+    });
     setSelectedImagePreview(null);
     if (fileInputRef.current) {
       fileInputRef.current.value = "";
@@ -140,11 +152,18 @@ export function CreatePostForm({ isOpen, onClose, onAddPost }: CreatePostFormPro
     onClose();
   }
 
-  // Reset preview and form field when dialog closes or form resets
   useEffect(() => {
     if (!isOpen) {
+      form.reset({ // Reset with defaults when dialog closes
+        cropName: "", 
+        quantity: 10, 
+        price: undefined, 
+        description: "", 
+        sellerName: "Local Farmer", 
+        location: "", 
+        imageUrl: undefined
+      });
       setSelectedImagePreview(null);
-      form.reset(); // This will reset imageUrl in form state as well
        if (fileInputRef.current) {
         fileInputRef.current.value = "";
       }
@@ -157,7 +176,7 @@ export function CreatePostForm({ isOpen, onClose, onAddPost }: CreatePostFormPro
     <Dialog open={isOpen} onOpenChange={
       (open) => {
         if (!open) {
-          form.reset();
+          form.reset({cropName: "", quantity: 10, price: undefined, description: "", sellerName: "Local Farmer", location: "", imageUrl: undefined });
           setSelectedImagePreview(null);
           if (fileInputRef.current) {
             fileInputRef.current.value = "";
@@ -179,7 +198,7 @@ export function CreatePostForm({ isOpen, onClose, onAddPost }: CreatePostFormPro
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>{translate('productNameLabel')}</FormLabel>
-                  <Select onValueChange={field.onChange} defaultValue={field.value}>
+                  <Select onValueChange={field.onChange} value={field.value}>
                     <FormControl>
                       <SelectTrigger>
                         <SelectValue placeholder={translate('selectProductPlaceholder')} />
@@ -223,6 +242,42 @@ export function CreatePostForm({ isOpen, onClose, onAddPost }: CreatePostFormPro
                       {translate('suggestedPriceLabel', { price: suggestedPrice })}
                     </FormDescription>
                   )}
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+             <FormField
+              control={form.control}
+              name="sellerName"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>{translate('sellerNameLabel')}</FormLabel>
+                  <FormControl>
+                    <Input placeholder={translate('sellerNamePlaceholder')} {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="location"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>{translate('locationMarketplaceLabel')}</FormLabel>
+                  <Select onValueChange={field.onChange} value={field.value}>
+                    <FormControl>
+                      <SelectTrigger>
+                        <SelectValue placeholder={translate('selectLocationPlaceholder')} />
+                      </SelectTrigger>
+                    </FormControl>
+                    <SelectContent>
+                      {/* Assuming STATES is an array of strings. If it's objects, adjust accordingly. */}
+                      {STATES.map(state => (
+                        <SelectItem key={state} value={state}>{state}</SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
                   <FormMessage />
                 </FormItem>
               )}
@@ -280,7 +335,7 @@ export function CreatePostForm({ isOpen, onClose, onAddPost }: CreatePostFormPro
             <DialogFooter className="pt-4">
               <DialogClose asChild>
                 <Button type="button" variant="outline" onClick={() => {
-                  form.reset();
+                  form.reset({cropName: "", quantity: 10, price: undefined, description: "", sellerName: "Local Farmer", location: "", imageUrl: undefined});
                   setSelectedImagePreview(null);
                   if (fileInputRef.current) fileInputRef.current.value = "";
                   onClose();

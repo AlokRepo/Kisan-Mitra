@@ -10,48 +10,69 @@ import { useLanguage } from '@/contexts/LanguageContext';
 import { CreatePostForm } from '@/components/marketplace/CreatePostForm';
 import { PostCard } from '@/components/marketplace/PostCard';
 import { PostDetailDialog } from '@/components/marketplace/PostDetailDialog';
+// Removed AlertDialog for delete confirmation as edit/delete is removed for now
+// Removed useAuth
 
 export default function MarketplacePage() {
   const { translate } = useLanguage();
   const [posts, setPosts] = useState<MarketplacePost[]>([]);
   const [isCreatePostOpen, setIsCreatePostOpen] = useState(false);
   const [selectedPost, setSelectedPost] = useState<MarketplacePost | null>(null);
+  // Removed auth and delete related states
 
-  // Load mock posts on mount - in a real app, this would be an API call
   useEffect(() => {
-    const initialMockPosts: MarketplacePost[] = [
-      {
-        id: 'post1',
-        cropName: 'Wheat',
-        quantity: 50,
-        price: 2200,
-        description: 'High-quality Sharbati wheat, harvested last week. Low moisture content.',
-        sellerName: 'Ramesh Kumar',
-        postDate: '2024-07-28',
-        location: 'Hoshangabad, Madhya Pradesh',
-        // imageUrl will be handled by PostCard using getCropImageDetails if not provided
-      },
-      {
-        id: 'post2',
-        cropName: 'Rice',
-        quantity: 100,
-        price: 3500,
-        description: 'Basmati rice, long grain, aromatic. Ready for immediate pickup.',
-        sellerName: 'Sunita Devi',
-        postDate: '2024-07-27',
-        location: 'Karnal, Haryana',
-      },
-    ];
+    // Try to load posts from localStorage
+    const storedPosts = localStorage.getItem('marketplacePosts');
+    let initialMockPosts: MarketplacePost[] = [];
+    if (storedPosts) {
+      try {
+        initialMockPosts = JSON.parse(storedPosts);
+      } catch (e) {
+        console.error("Error parsing posts from localStorage", e);
+        initialMockPosts = []; // Fallback to empty if parsing fails
+      }
+    }
+    
+    if (initialMockPosts.length === 0) { // Only set default mock if localStorage is empty or invalid
+       initialMockPosts = [
+        {
+          id: 'post1',
+          cropName: 'Wheat',
+          quantity: 50,
+          price: 2200,
+          description: 'High-quality Sharbati wheat, harvested last week. Low moisture content.',
+          sellerName: 'Ramesh Kumar', // Keep sellerName, can be user-provided or default
+          postDate: '2024-07-28',
+          location: 'Hoshangabad, Madhya Pradesh',
+        },
+        {
+          id: 'post2',
+          cropName: 'Rice',
+          quantity: 100,
+          price: 3500,
+          description: 'Basmati rice, long grain, aromatic. Ready for immediate pickup.',
+          sellerName: 'Sunita Devi',
+          postDate: '2024-07-27',
+          location: 'Karnal, Haryana',
+        },
+      ];
+    }
     setPosts(initialMockPosts);
   }, []);
 
-  const handleAddPost = (newPostData: Omit<MarketplacePost, 'id' | 'sellerName' | 'postDate' | 'location'>) => {
+  useEffect(() => {
+    // Save posts to localStorage whenever they change
+    if (posts.length > 0) { // Avoid saving empty array on initial load if localStorage was populated
+        localStorage.setItem('marketplacePosts', JSON.stringify(posts));
+    }
+  }, [posts]);
+
+  const handleAddPost = (newPostData: Omit<MarketplacePost, 'id' | 'postDate' | 'location'>) => {
     const fullPost: MarketplacePost = {
-      ...newPostData, // This includes cropName, quantity, price, description, and optional imageUrl
+      ...newPostData, // This includes cropName, quantity, price, description, sellerName, and optional imageUrl
       id: `post-${Date.now()}`,
-      sellerName: 'Local Farmer', // Mock seller name
       postDate: new Date().toISOString().split('T')[0],
-      location: 'Current Location', // Mock location
+      location: newPostData.location || 'Current Location', // Use provided or mock location
     };
     setPosts(prevPosts => [fullPost, ...prevPosts]);
   };
@@ -60,6 +81,8 @@ export default function MarketplacePage() {
     setSelectedPost(post);
   };
 
+  // Removed handleDeletePost, handleConfirmDelete, etc.
+
   return (
     <div className="container mx-auto py-8 space-y-8">
       <div className="flex flex-col sm:flex-row justify-between items-center gap-4">
@@ -67,6 +90,7 @@ export default function MarketplacePage() {
           <ShoppingBag className="h-8 w-8 text-primary" />
           <h1 className="text-3xl font-bold text-foreground">{translate('marketplaceTitle')}</h1>
         </div>
+        {/* "Create New Post" button always visible now */}
         <Button onClick={() => setIsCreatePostOpen(true)}>
           <PlusCircle className="mr-2 h-5 w-5" />
           {translate('createNewPostButton')}
@@ -83,7 +107,12 @@ export default function MarketplacePage() {
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {posts.map(post => (
-                <PostCard key={post.id} post={post} onViewDetails={() => openPostDetails(post)} />
+                <PostCard 
+                  key={post.id} 
+                  post={post} 
+                  onViewDetails={() => openPostDetails(post)}
+                  // Removed onEdit, onDelete, isOwner props
+                />
               ))}
             </div>
           )}
@@ -101,8 +130,10 @@ export default function MarketplacePage() {
           post={selectedPost}
           isOpen={!!selectedPost}
           onClose={() => setSelectedPost(null)}
+          // Removed onEdit, onDelete, isOwner props
         />
       )}
+      {/* Removed AlertDialog for delete confirmation */}
     </div>
   );
 }

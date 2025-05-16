@@ -63,14 +63,12 @@ export interface GovernmentScheme {
   tags: string[];
   targetStates?: string[];
   relevantCrops?: string[];
-  // New filterable attributes inspired by myscheme.gov.in
   socialCategories?: SocialCategory[];
   genderTargets?: GenderTarget[];
-  applicableToMinority?: boolean; // null or undefined means not specific
-  isForDisabled?: boolean; // null or undefined means not specific
-  minAge?: number; // in years
-  maxAge?: number; // in years
-  // Potentially more: forStudents, forRural, forUrban, familyIncomeLimit, etc.
+  applicableToMinority?: boolean; 
+  isForDisabled?: boolean; 
+  minAge?: number; 
+  maxAge?: number; 
 }
 
 export interface MarketplacePost {
@@ -79,18 +77,20 @@ export interface MarketplacePost {
   quantity: number; // in Quintals
   price: number; // per Quintal
   description: string;
-  sellerName: string; // Mocked for now
+  sellerName: string; 
+  // sellerId?: string; // Removed sellerId
   postDate: string; // YYYY-MM-DD
-  imageUrl?: string; // Placeholder or crop image
-  location: string; // e.g., "District, State" - Mocked for now
+  imageUrl?: string; 
+  location: string; 
 }
 
+// Removed MockUser interface
 
 export const CROPS = ["Wheat", "Rice", "Maize", "Cotton", "Sugarcane", "Soybean", "Pulses", "Mustard", "Groundnut"];
 export const STATES = ["Punjab", "Haryana", "Uttar Pradesh", "Madhya Pradesh", "Maharashtra", "Rajasthan", "Gujarat", "Andhra Pradesh", "Telangana", "Karnataka", "West Bengal", "Bihar", "Odisha", "Tamil Nadu", "Kerala"];
 
 export const VEHICLE_TYPES = [
-  { id: 'tractor', nameKey: 'vehicleTractor', efficiency: 5, capacityQuintals: 30 }, // km/liter, quintals
+  { id: 'tractor', nameKey: 'vehicleTractor', efficiency: 5, capacityQuintals: 30 }, 
   { id: 'small_truck', nameKey: 'vehicleSmallTruck', efficiency: 8, capacityQuintals: 50 },
   { id: 'large_truck', nameKey: 'vehicleLargeTruck', efficiency: 4, capacityQuintals: 150 },
 ] as const;
@@ -99,5 +99,4 @@ export type VehicleTypeId = typeof VEHICLE_TYPES[number]['id'];
 export type UserDemographics = {
   gender?: Exclude<GenderTarget, "Any">;
   age?: number;
-  // Add other fields like state, socialCategory as needed
 };
