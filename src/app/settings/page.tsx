@@ -57,7 +57,7 @@ const FarmerSettingsPage: React.FC = () => {
   const handleProfileSave = () => {
     localStorage.setItem('userProfileLocation', userLocation);
     // TODO: Save selectedPrimaryCrops and selectedPreferredMandis
-    console.log("Profile saved:", { userLocation, selectedPrimaryCrops, selectedPreferredMandis });
+    // console.log("Profile saved:", { userLocation, selectedPrimaryCrops, selectedPreferredMandis }); // Removed log
     toast({
       title: translate('toastSettingsSavedTitle'),
       description: translate('toastProfileSettingsSavedDesc'),
@@ -104,7 +104,7 @@ const FarmerSettingsPage: React.FC = () => {
 
   const handleDataPreferencesSave = () => {
     // TODO: Save weatherDataEnabled and apiRefreshFrequency
-    console.log("Data preferences saved:", { weatherDataEnabled, apiRefreshFrequency });
+    // console.log("Data preferences saved:", { weatherDataEnabled, apiRefreshFrequency }); // Removed log
     toast({
       title: translate('toastSettingsSavedTitle'),
       description: translate('toastDataPreferencesSavedDesc'),
@@ -120,7 +120,7 @@ const FarmerSettingsPage: React.FC = () => {
       });
       return;
     }
-    console.log("Feedback submitted:", feedbackText);
+    // console.log("Feedback submitted:", feedbackText); // Removed log
     setFeedbackText(''); // Clear textarea after submission
     toast({
       title: translate('toastFeedbackSubmittedTitle'),
