@@ -137,7 +137,7 @@ export default function HomePage() {
             <Button 
               size="lg" 
               asChild 
-              className="bg-white/20 text-white border border-white/70 backdrop-blur-sm hover:bg-transparent hover:border-white transition-colors duration-300"
+              className="text-primary-foreground border border-primary-foreground hover:bg-transparent hover:text-accent hover:border-accent transition-colors duration-300"
             >
               <Link href="/education">{translate('viewSchemesButton')}</Link>
             </Button>
