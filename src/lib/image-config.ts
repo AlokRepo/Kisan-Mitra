@@ -57,7 +57,7 @@ export const APP_IMAGES: Record<string, ImageInfo | ImageInfo[]> = {
   DEFAULT_CROP: { src: "https://cdn.pixabay.com/photo/2017/09/10/02/49/drone-2734228_1280.jpg", aiHint: "agriculture product" },
 
   // Mandi/Market (300x200 for cards)
-  DEFAULT_MANDI: { src: "https://source.unsplash.com/random/?Agriculture&1", aiHint: "market agriculture" },
+  DEFAULT_MANDI: { src: "https://placehold.co/300x200.png?text=market+agriculture", aiHint: "market agriculture" },
   
   // Education Page - Guides (600x400 for main display, can be reused for smaller cards if needed)
   GUIDE_PRICE_FLUCTUATIONS: { src: "https://cdn.pixabay.com/photo/2016/11/23/14/37/blur-1853262_1280.jpg", aiHint: "market chart" },
