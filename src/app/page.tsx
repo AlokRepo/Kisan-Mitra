@@ -127,10 +127,18 @@ export default function HomePage() {
           <h1 className="text-4xl md:text-5xl font-bold mb-4 animate-slide-up opacity-0" style={{ animationDelay: '0.2s', animationFillMode: 'forwards'}}>{translate('heroTitle')}</h1>
           <p className="text-lg md:text-xl mb-8 max-w-3xl mx-auto animate-slide-up opacity-0" style={{ animationDelay: '0.4s', animationFillMode: 'forwards'}}>{translate('heroSubtitle')}</p>
           <div className="space-x-0 space-y-3 sm:space-y-0 sm:space-x-4 animate-slide-up opacity-0" style={{ animationDelay: '0.6s', animationFillMode: 'forwards'}}>
-            <Button size="lg" asChild className="bg-accent text-accent-foreground hover:bg-accent/90">
+            <Button 
+              size="lg" 
+              asChild 
+              className="bg-accent text-accent-foreground border border-transparent hover:bg-transparent hover:text-accent hover:border-accent transition-colors duration-300"
+            >
               <Link href="/prices">{translate('explorePricesButton')}</Link>
             </Button>
-            <Button size="lg" variant="outline" asChild className="border-primary-foreground text-primary-foreground hover:bg-primary-foreground/15 hover:text-primary-foreground">
+            <Button 
+              size="lg" 
+              asChild 
+              className="bg-white/20 text-white border border-white/70 backdrop-blur-sm hover:bg-transparent hover:border-white transition-colors duration-300"
+            >
               <Link href="/education">{translate('viewSchemesButton')}</Link>
             </Button>
           </div>
