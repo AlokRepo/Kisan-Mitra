@@ -99,13 +99,6 @@ export default function HomePage() {
     { id: 2, titleKey: 'newsItem2Title', summaryKey: 'newsItem2Summary', date: '2024-07-25', animationDelay: '400ms' },
   ];
   
-  const quickLinks = [
-    { textKey: 'navDashboard', href: '/dashboard', animationDelay: '200ms' },
-    { textKey: 'navTransportEstimator', href: '/transport-estimator', animationDelay: '300ms' },
-    { textKey: 'navEducation', href: '/education', animationDelay: '400ms' },
-    { textKey: 'Settings', href: '/settings', animationDelay: '500ms' },
-  ];
-
 
   return (
     <div className="animate-fade-in">
@@ -213,27 +206,6 @@ export default function HomePage() {
           </div>
         </div>
       </section>
-      
-      {/* Quick Links Section */}
-      <section className="py-12 md:py-16 bg-muted/50">
-        <div className="container mx-auto px-4">
-          <h2 className="text-3xl font-bold text-center text-primary mb-10 animate-slide-up opacity-0" style={{ animationFillMode: 'forwards' }}>{translate('quickLinksTitle')}</h2>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
-            {quickLinks.map((link) => (
-              <div 
-                key={link.href} 
-                className="animate-fade-in opacity-0" 
-                style={{ animationFillMode: 'forwards', animationDelay: link.animationDelay }}
-              >
-                <Button variant="ghost" asChild className="text-lg text-primary hover:bg-accent/20 py-3 px-4 w-full justify-center">
-                  <Link href={link.href}>{translate(link.textKey)}</Link>
-                </Button>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
     </div>
   );
 }
-

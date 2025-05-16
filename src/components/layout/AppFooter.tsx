@@ -2,11 +2,20 @@
 "use client";
 
 import React from 'react';
+import Link from 'next/link';
 import { useLanguage } from '@/contexts/LanguageContext';
-import { Leaf } from 'lucide-react'; // Or any other icon you prefer
+import { Leaf } from 'lucide-react'; 
+import { Button } from '@/components/ui/button';
 
 export function AppFooter() {
   const { translate } = useLanguage();
+
+  const quickLinks = [
+    { textKey: 'navDashboard', href: '/dashboard' },
+    { textKey: 'navTransportEstimator', href: '/transport-estimator' },
+    { textKey: 'navEducation', href: '/education' },
+    { textKey: 'Settings', href: '/settings' },
+  ];
 
   return (
     <footer className="mt-auto border-t border-border/60 bg-background text-foreground py-8">
@@ -21,6 +30,18 @@ export function AppFooter() {
         <p className="text-xs text-muted-foreground/80 mt-2">
           {translate('heroSubtitle')} {/* Or some other tagline */}
         </p>
+        
+        <nav className="mt-6" aria-label={translate('quickLinksTitle')}>
+          <ul className="flex flex-wrap justify-center gap-x-4 gap-y-2">
+            {quickLinks.map((link) => (
+              <li key={link.href}>
+                <Button variant="link" asChild className="text-sm text-muted-foreground hover:text-primary hover:underline px-1 py-0.5">
+                  <Link href={link.href}>{translate(link.textKey)}</Link>
+                </Button>
+              </li>
+            ))}
+          </ul>
+        </nav>
       </div>
     </footer>
   );
