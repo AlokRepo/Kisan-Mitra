@@ -45,6 +45,7 @@ const translations: Translations = {
   navEducation: { en: "Education & Resources", hi: "शिक्षा और संसाधन" },
   navTransportEstimator: { en: "Transport Estimator", hi: "परिवहन अनुमानक" },
   Settings: { en: 'Settings', hi: 'सेटिंग्स'},
+  navMarketplace: { en: "Marketplace", hi: "बाज़ार" },
   // Header
   appHeaderMobileTitle: { en: 'Kisan Mitra', hi: 'किसान मित्र' },
   homeTitle: { en: "Kisan Mitra Home", hi: "किसान मित्र मुख्य पृष्ठ" },
@@ -412,22 +413,36 @@ const translations: Translations = {
   agriFinanceSubTopic4: { en: "Managing farm budgets and financial planning.", hi: "कृषि बजट और वित्तीय योजना का प्रबंधन।" },
   exploreFinancialSchemesButton: { en: "Explore Financial Schemes", hi: "वित्तीय योजनाएँ देखें" },
 
-  // Wizard
-  schemeFinderWizardTitle: { en: "Scheme Finder Wizard", hi: "योजना खोज विज़ार्ड" },
-  schemeFinderWizardDesc: { en: "Answer a few questions to find schemes tailored to your needs.", hi: "अपनी आवश्यकताओं के अनुरूप योजनाएँ खोजने के लिए कुछ प्रश्नों के उत्तर दें।" },
-  wizardStepLabel: { en: "Step {current} of {total}", hi: "चरण {current} का {total}" },
-  wizardStepDemographicsTitle: { en: "Your Details", hi: "आपके विवरण" },
-  wizardGenderLabel: { en: "Select Your Gender", hi: "अपना लिंग चुनें" },
-  wizardAgeLabel: { en: "Enter Your Age", hi: "अपनी आयु दर्ज करें" },
-  wizardAgePlaceholder: { en: "Age in years", hi: "आयु (वर्षों में)" },
-  youSelectedLabel: { en: "You selected", hi: "आपने चुना" },
-  yourAgeLabel: { en: "Your age", hi: "आपकी आयु" },
-  yearsOldLabel: { en: "years", hi: "वर्ष" },
-  nextButton: { en: "Next", hi: "अगला" },
-  findSchemesButton: { en: "Find Schemes", hi: "योजनाएँ खोजें" },
-  resetWizardButton: { en: "Reset", hi: "रीसेट" },
-  wizardProgressLabel: { en: "Wizard progress", hi: "विज़ार्ड प्रगति" },
-
+  // Marketplace
+  marketplaceTitle: { en: "Farmer's Marketplace", hi: "किसान बाज़ार" },
+  marketplaceDescription: { en: "Buy and sell agricultural products directly with other farmers.", hi: "अन्य किसानों के साथ सीधे कृषि उत्पादों की खरीद और बिक्री करें।" },
+  createNewPostButton: { en: "Create New Post", hi: "नई पोस्ट बनाएं" },
+  noPostsAvailable: { en: "No products currently listed. Be the first to post!", hi: "वर्तमान में कोई उत्पाद सूचीबद्ध नहीं है। पोस्ट करने वाले पहले व्यक्ति बनें!" },
+  createPostDialogTitle: { en: "Create New Marketplace Post", hi: "नई बाज़ार पोस्ट बनाएं" },
+  createPostDialogDescription: { en: "Fill in the details of the product you want to sell.", hi: "आप जिस उत्पाद को बेचना चाहते हैं उसका विवरण भरें।" },
+  productNameLabel: { en: "Product Name", hi: "उत्पाद का नाम" },
+  selectProductPlaceholder: { en: "Select product/crop", hi: "उत्पाद/फसल चुनें" },
+  quantityMarketplaceLabel: { en: "Quantity (Quintals)", hi: "मात्रा (क्विंटल)" },
+  pricePerQuintalLabel: { en: "Price per Quintal (₹)", hi: "मूल्य प्रति क्विंटल (₹)" },
+  priceMarketplacePlaceholder: { en: "Enter your price", hi: "अपनी कीमत दर्ज करें" },
+  suggestedPriceLabel: { en: "Suggested Price: ₹{price}/Quintal", hi: "सुझाई गई कीमत: ₹{price}/क्विंटल" },
+  descriptionLabel: { en: "Description", hi: "विवरण" },
+  descriptionMarketplacePlaceholder: { en: "Provide details like variety, quality, harvest date, etc.", hi: "विविधता, गुणवत्ता, कटाई की तारीख आदि जैसे विवरण प्रदान करें।" },
+  uploadImageLabel: { en: "Product Image", hi: "उत्पाद की छवि" },
+  uploadImageButton: { en: "Upload Image (Placeholder)", hi: "छवि अपलोड करें (प्लेसहोल्डर)" },
+  imageUploadNotImplemented: { en: "Actual image upload is not yet implemented.", hi: "वास्तविक छवि अपलोड अभी तक लागू नहीं किया गया है।" },
+  submitPostButton: { en: "Submit Post", hi: "पोस्ट जमा करें" },
+  cancelButton: { en: "Cancel", hi: "रद्द करें" },
+  postSubmittedToastTitle: { en: "Post Submitted!", hi: "पोस्ट जमा हो गई!" },
+  postSubmittedToastDesc: { en: "Your product is now listed in the marketplace.", hi: "आपका उत्पाद अब बाज़ार में सूचीबद्ध है।" },
+  errorFetchingPriceToast: { en: "Could not fetch suggested price.", hi: "सुझाई गई कीमत प्राप्त नहीं हो सकी।" },
+  postedOnLabel: { en: "Posted on", hi: "पोस्ट किया गया" },
+  sellerLabel: { en: "Seller", hi: "विक्रेता" },
+  locationMarketplaceLabel: { en: "Location", hi: "स्थान" },
+  productDetailsTitle: { en: "Product Details", hi: "उत्पाद विवरण" },
+  contactSellerButton: { en: "Contact Seller", hi: "विक्रेता से संपर्क करें" },
+  contactSellerToast: { en: "Contact functionality coming soon! For now, imagine you've connected.", hi: "संपर्क कार्यक्षमता जल्द ही आ रही है! अभी के लिए, कल्पना करें कि आप जुड़ गए हैं।" },
+  fetchingPrice: { en: "Fetching price...", hi: "कीमत प्राप्त हो रही है..."},
 };
 
 const LanguageContext = createContext<LanguageContextType | undefined>(undefined);
@@ -472,3 +487,4 @@ export function useLanguage(): LanguageContextType {
   }
   return context;
 }
+
