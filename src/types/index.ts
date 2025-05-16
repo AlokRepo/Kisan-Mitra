@@ -73,6 +73,18 @@ export interface GovernmentScheme {
   // Potentially more: forStudents, forRural, forUrban, familyIncomeLimit, etc.
 }
 
+export interface MarketplacePost {
+  id: string;
+  cropName: string;
+  quantity: number; // in Quintals
+  price: number; // per Quintal
+  description: string;
+  sellerName: string; // Mocked for now
+  postDate: string; // YYYY-MM-DD
+  imageUrl?: string; // Placeholder or crop image
+  location: string; // e.g., "District, State" - Mocked for now
+}
+
 
 export const CROPS = ["Wheat", "Rice", "Maize", "Cotton", "Sugarcane", "Soybean", "Pulses", "Mustard", "Groundnut"];
 export const STATES = ["Punjab", "Haryana", "Uttar Pradesh", "Madhya Pradesh", "Maharashtra", "Rajasthan", "Gujarat", "Andhra Pradesh", "Telangana", "Karnataka", "West Bengal", "Bihar", "Odisha", "Tamil Nadu", "Kerala"];
@@ -84,3 +96,8 @@ export const VEHICLE_TYPES = [
 ] as const;
 
 export type VehicleTypeId = typeof VEHICLE_TYPES[number]['id'];
+export type UserDemographics = {
+  gender?: Exclude<GenderTarget, "Any">;
+  age?: number;
+  // Add other fields like state, socialCategory as needed
+};

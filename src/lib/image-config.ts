@@ -17,7 +17,7 @@ export const APP_IMAGES: Record<string, ImageInfo | ImageInfo[]> = {
   RICE: [
     { src: "https://cdn.pixabay.com/photo/2017/08/25/05/30/in-rice-field-2679153_1280.jpg?text=Rice+Paddy", aiHint: "rice paddy" },
     { src: "https://cdn.pixabay.com/photo/2021/10/10/11/14/ch-6696389_1280.jpg?text=Harvested+Rice", aiHint: "harvested rice" },
-    { src: "https://pixabay.com/photos/rice-ears-of-rice-golden-color-1594612/?text=Rice+Grains", aiHint: "rice grains" },
+    { src: "https://placehold.co/300x200.png?text=Rice+Grains", aiHint: "rice grains" }, // Corrected Placehold.co URL
   ],
   MAIZE: [
     { src: "https://cdn.pixabay.com/photo/2019/09/25/14/12/maize-4503781_1280.jpg?text=Corn+Field", aiHint: "corn field" },
@@ -81,15 +81,18 @@ export const APP_IMAGES: Record<string, ImageInfo | ImageInfo[]> = {
   HOME_HERO_BANNER: { src: "https://cdn.pixabay.com/photo/2019/05/23/08/46/dji-4223421_1280.jpg", aiHint: "indian agriculture panoramic" },
   HOME_SCHEME_PM_KISAN: { src: "https://img.khetivyapar.com/images/news/1713762716-these-government-schemes-for-farmers-in-madhya-pradesh-madhya-pradesh-scheme-2024.jpg", aiHint: "government scheme farmer" }, // For smaller cards on home page
   HOME_SCHEME_E_NAM: { src: "https://upload.wikimedia.org/wikipedia/en/1/13/National_Agriculture_Market_%28eNAM%29_logo.png", aiHint: "digital market agriculture" }, // For smaller cards on home page
+  
+  // Marketplace
+  MARKETPLACE_ITEM_DEFAULT: { src: "https://placehold.co/300x200.png", aiHint: "product item" }
 };
 
 export type AppImageKey = keyof typeof APP_IMAGES; // This type might not be directly usable for indexing if keys are dynamic strings
 
-// Helper function to get image data by crop name string
-export function getCropImageDetails(cropName: string, indexHint: number = 0): ImageInfo {
-  const upperCropName = cropName.toUpperCase().replace(/\s+/g, '_'); 
+// Helper function to get image data by crop name string or generic key
+export function getCropImageDetails(keyOrCropName: string, indexHint: number = 0): ImageInfo {
+  const upperKey = keyOrCropName.toUpperCase().replace(/\s+/g, '_'); 
   // Check if upperCropName is a valid key in APP_IMAGES to satisfy TypeScript
-  const imageEntry = APP_IMAGES[upperCropName as AppImageKey] || APP_IMAGES.DEFAULT_CROP;
+  const imageEntry = APP_IMAGES[upperKey as AppImageKey] || APP_IMAGES.DEFAULT_CROP;
 
   if (Array.isArray(imageEntry)) {
     return imageEntry[indexHint % imageEntry.length];
@@ -98,3 +101,4 @@ export function getCropImageDetails(cropName: string, indexHint: number = 0): Im
   // The type of APP_IMAGES allows ImageInfo | ImageInfo[], so this cast is safe here.
   return imageEntry as ImageInfo; 
 }
+

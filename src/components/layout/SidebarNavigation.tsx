@@ -3,7 +3,7 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { Home, Lightbulb, BarChart3, MapPin, Settings, GraduationCap, Truck, TrendingUp, ScrollText, type LucideIcon } from 'lucide-react';
+import { Home, Lightbulb, BarChart3, MapPin, Settings, GraduationCap, Truck, TrendingUp, ScrollText, ShoppingCart, type LucideIcon } from 'lucide-react';
 import {
   SidebarMenu,
   SidebarMenuItem,
@@ -26,7 +26,8 @@ const navItemsConfig: NavItem[] = [
   { href: '/dashboard', labelKey: 'navDashboard', icon: BarChart3 },
   { href: '/locator', labelKey: 'navMandis', icon: MapPin },
   { href: '/transport-estimator', labelKey: 'navTransportEstimator', icon: Truck },
-  { href: '/schemes', labelKey: 'navGovtSchemes', icon: ScrollText }, // New Schemes Link
+  { href: '/marketplace', labelKey: 'navMarketplace', icon: ShoppingCart },
+  { href: '/schemes', labelKey: 'navGovtSchemes', icon: ScrollText }, 
   { href: '/education', labelKey: 'navEducation', icon: GraduationCap },
   // Settings will be ordered to be last
 ];
@@ -65,3 +66,4 @@ export function SidebarNavigation() {
     </SidebarMenu>
   );
 }
+
