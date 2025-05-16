@@ -217,7 +217,7 @@ export default function HomePage() {
                 className="animate-fade-in opacity-0" 
                 style={{ animationFillMode: 'forwards', animationDelay: link.animationDelay }}
               >
-                <Button variant="ghost" asChild className="text-lg text-foreground hover:text-primary hover:bg-accent/20 py-3 px-4 w-full justify-center">
+                <Button variant="ghost" asChild className="text-lg text-primary hover:bg-accent/20 py-3 px-4 w-full justify-center">
                   <Link href={link.href}>{translate(link.textKey)}</Link>
                 </Button>
               </div>
@@ -228,3 +228,4 @@ export default function HomePage() {
     </div>
   );
 }
+
