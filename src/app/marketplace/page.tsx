@@ -19,7 +19,6 @@ export default function MarketplacePage() {
 
   // Load mock posts on mount - in a real app, this would be an API call
   useEffect(() => {
-    // Simulate fetching initial posts
     const initialMockPosts: MarketplacePost[] = [
       {
         id: 'post1',
@@ -30,7 +29,7 @@ export default function MarketplacePage() {
         sellerName: 'Ramesh Kumar',
         postDate: '2024-07-28',
         location: 'Hoshangabad, Madhya Pradesh',
-        // imageUrl will be handled by PostCard using getCropImageDetails
+        // imageUrl will be handled by PostCard using getCropImageDetails if not provided
       },
       {
         id: 'post2',
@@ -46,9 +45,9 @@ export default function MarketplacePage() {
     setPosts(initialMockPosts);
   }, []);
 
-  const handleAddPost = (newPost: Omit<MarketplacePost, 'id' | 'sellerName' | 'postDate'>) => {
+  const handleAddPost = (newPostData: Omit<MarketplacePost, 'id' | 'sellerName' | 'postDate' | 'location'>) => {
     const fullPost: MarketplacePost = {
-      ...newPost,
+      ...newPostData, // This includes cropName, quantity, price, description, and optional imageUrl
       id: `post-${Date.now()}`,
       sellerName: 'Local Farmer', // Mock seller name
       postDate: new Date().toISOString().split('T')[0],

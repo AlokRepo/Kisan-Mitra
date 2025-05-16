@@ -30,22 +30,23 @@ import { CROPS } from "@/types";
 import type { MarketplacePost } from "@/types";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { useToast } from "@/hooks/use-toast";
-import { useEffect, useState, useTransition } from "react";
+import { useEffect, useState, useTransition, ChangeEvent, useRef } from "react";
 import { getRealTimePrices } from "@/lib/mockApi";
-import { Loader2 } from "lucide-react";
+import { Loader2, UploadCloud, XCircle } from "lucide-react";
+import Image from "next/image";
 
 const createFormSchema = (translate: (key: string) => string) => z.object({
   cropName: z.string().min(1, translate('cropNotSelectedError')),
   quantity: z.coerce.number().positive(translate('quantityNotEnteredError')),
   price: z.coerce.number().positive("Price must be a positive number."),
   description: z.string().min(10, "Description must be at least 10 characters.").max(500, "Description too long."),
-  // image (file upload) would be here in a real app
+  imageUrl: z.string().optional(),
 });
 
 interface CreatePostFormProps {
   isOpen: boolean;
   onClose: () => void;
-  onAddPost: (postData: Omit<MarketplacePost, 'id' | 'sellerName' | 'postDate' | 'location' | 'imageUrl'>) => void;
+  onAddPost: (postData: Omit<MarketplacePost, 'id' | 'sellerName' | 'postDate' | 'location'>) => void;
 }
 
 export function CreatePostForm({ isOpen, onClose, onAddPost }: CreatePostFormProps) {
@@ -54,15 +55,18 @@ export function CreatePostForm({ isOpen, onClose, onAddPost }: CreatePostFormPro
   const formSchema = createFormSchema(translate);
   const [suggestedPrice, setSuggestedPrice] = useState<number | null>(null);
   const [isFetchingPrice, startPriceFetchTransition] = useTransition();
+  const [selectedImagePreview, setSelectedImagePreview] = useState<string | null>(null);
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
       cropName: "",
-      quantity: 10, // Default quantity
-      price: undefined, // Default to empty
+      quantity: 10,
+      price: undefined,
       description: "",
+      imageUrl: undefined,
     },
   });
 
@@ -76,7 +80,7 @@ export function CreatePostForm({ isOpen, onClose, onAddPost }: CreatePostFormPro
           if (prices.length > 0) {
             const modalPrice = prices[0].modalPrice;
             setSuggestedPrice(modalPrice);
-            if (!form.getValues("price")) { // Only set if user hasn't typed a price
+            if (!form.getValues("price")) {
                  form.setValue("price", modalPrice, { shouldValidate: true });
             }
           } else {
@@ -98,6 +102,30 @@ export function CreatePostForm({ isOpen, onClose, onAddPost }: CreatePostFormPro
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedCrop, form.setValue, toast, translate]);
 
+  const handleImageChange = (event: ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        const dataUri = reader.result as string;
+        setSelectedImagePreview(dataUri);
+        form.setValue("imageUrl", dataUri, { shouldValidate: true });
+      };
+      reader.readAsDataURL(file);
+    } else {
+      setSelectedImagePreview(null);
+      form.setValue("imageUrl", undefined, { shouldValidate: true });
+    }
+  };
+
+  const removeSelectedImage = () => {
+    setSelectedImagePreview(null);
+    form.setValue("imageUrl", undefined, { shouldValidate: true });
+    if (fileInputRef.current) {
+      fileInputRef.current.value = ""; // Reset file input
+    }
+  };
+
   function onSubmit(values: z.infer<typeof formSchema>) {
     onAddPost(values);
     toast({
@@ -105,12 +133,39 @@ export function CreatePostForm({ isOpen, onClose, onAddPost }: CreatePostFormPro
       description: translate('postSubmittedToastDesc'),
     });
     form.reset();
-    setSuggestedPrice(null);
+    setSelectedImagePreview(null);
+    if (fileInputRef.current) {
+      fileInputRef.current.value = "";
+    }
     onClose();
   }
 
+  // Reset preview and form field when dialog closes or form resets
+  useEffect(() => {
+    if (!isOpen) {
+      setSelectedImagePreview(null);
+      form.reset(); // This will reset imageUrl in form state as well
+       if (fileInputRef.current) {
+        fileInputRef.current.value = "";
+      }
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isOpen]);
+
+
   return (
-    <Dialog open={isOpen} onOpenChange={onClose}>
+    <Dialog open={isOpen} onOpenChange={
+      (open) => {
+        if (!open) {
+          form.reset();
+          setSelectedImagePreview(null);
+          if (fileInputRef.current) {
+            fileInputRef.current.value = "";
+          }
+        }
+        onClose();
+      }
+    }>
       <DialogContent className="sm:max-w-[525px] bg-card">
         <DialogHeader>
           <DialogTitle>{translate('createPostDialogTitle')}</DialogTitle>
@@ -179,7 +234,7 @@ export function CreatePostForm({ isOpen, onClose, onAddPost }: CreatePostFormPro
                 <FormItem>
                   <FormLabel>{translate('descriptionLabel')}</FormLabel>
                   <FormControl>
-                    <Textarea placeholder={translate('descriptionMarketplacePlaceholder')} {...field} rows={4}/>
+                    <Textarea placeholder={translate('descriptionMarketplacePlaceholder')} {...field} rows={3}/>
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -187,15 +242,49 @@ export function CreatePostForm({ isOpen, onClose, onAddPost }: CreatePostFormPro
             />
             <FormItem>
                 <FormLabel>{translate('uploadImageLabel')}</FormLabel>
-                <Button type="button" variant="outline" className="w-full" disabled>
-                    {translate('uploadImageButton')}
-                </Button>
-                <FormDescription className="text-xs">{translate('imageUploadNotImplemented')}</FormDescription>
+                <FormControl>
+                   <Input 
+                    id="product-image-upload"
+                    type="file" 
+                    accept="image/*" 
+                    onChange={handleImageChange}
+                    ref={fileInputRef}
+                    className="block w-full text-sm text-slate-500
+                      file:mr-4 file:py-2 file:px-4
+                      file:rounded-full file:border-0
+                      file:text-sm file:font-semibold
+                      file:bg-primary/10 file:text-primary
+                      hover:file:bg-primary/20"
+                  />
+                </FormControl>
+                {selectedImagePreview && (
+                  <div className="mt-2 relative group w-32 h-32 border rounded-md overflow-hidden">
+                    <Image src={selectedImagePreview} alt="Preview" layout="fill" objectFit="cover" />
+                    <Button 
+                      type="button"
+                      variant="destructive" 
+                      size="icon"
+                      className="absolute top-1 right-1 h-6 w-6 opacity-0 group-hover:opacity-100 transition-opacity"
+                      onClick={removeSelectedImage}
+                    >
+                      <XCircle className="h-4 w-4" />
+                    </Button>
+                  </div>
+                )}
+                <FormDescription className="text-xs">
+                    {selectedImagePreview ? translate('changeImageHint') : translate('selectImageHint')}
+                </FormDescription>
+                <FormMessage />
             </FormItem>
 
             <DialogFooter className="pt-4">
               <DialogClose asChild>
-                <Button type="button" variant="outline">{translate('cancelButton')}</Button>
+                <Button type="button" variant="outline" onClick={() => {
+                  form.reset();
+                  setSelectedImagePreview(null);
+                  if (fileInputRef.current) fileInputRef.current.value = "";
+                  onClose();
+                }}>{translate('cancelButton')}</Button>
               </DialogClose>
               <Button type="submit" disabled={form.formState.isSubmitting}>
                 {translate('submitPostButton')}
