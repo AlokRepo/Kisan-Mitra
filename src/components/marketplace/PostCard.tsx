@@ -7,11 +7,12 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { Button } from '@/components/ui/button';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { getCropImageDetails, APP_IMAGES } from '@/lib/image-config';
-import { CalendarDays, MapPinIcon, Tag, Package, User } from 'lucide-react';
+import { CalendarDays, MapPinIcon, Package, User } from 'lucide-react'; // Removed Tag icon
 
 interface PostCardProps {
   post: MarketplacePost;
   onViewDetails: () => void;
+  // Removed onEdit, onDelete, isOwner props
 }
 
 export function PostCard({ post, onViewDetails }: PostCardProps) {
@@ -57,10 +58,11 @@ export function PostCard({ post, onViewDetails }: PostCardProps) {
             <span>{translate('postedOnLabel')}: {new Date(post.postDate).toLocaleDateString()}</span>
         </div>
       </CardContent>
-      <CardFooter>
+      <CardFooter className="flex-col items-stretch gap-2"> {/* Changed to flex-col */}
         <Button onClick={onViewDetails} variant="outline" className="w-full">
           {translate('viewDetailsButton')}
         </Button>
+        {/* Removed Edit and Delete buttons */}
       </CardFooter>
     </Card>
   );

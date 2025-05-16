@@ -6,7 +6,7 @@ import { AppLayout } from '@/components/layout/AppLayout';
 import { Toaster } from "@/components/ui/toaster";
 import { ThemeProvider } from "next-themes";
 import { LanguageProvider } from '@/contexts/LanguageContext';
-import { AuthProvider } from '@/contexts/AuthContext';
+// Removed AuthProvider import
 
 const inter = Inter({
   subsets: ['latin'],
@@ -27,21 +27,20 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={`${inter.variable} font-sans antialiased`}>
-        <AuthProvider>
-          <LanguageProvider>
-            <ThemeProvider
-              attribute="data-theme"
-              defaultTheme="system"
-              enableSystem
-              themes={['light', 'dark', 'oceanic', 'desert']}
-            >
-              <AppLayout>
-                {children}
-              </AppLayout>
-              <Toaster />
-            </ThemeProvider>
-          </LanguageProvider>
-        </AuthProvider>
+        {/* Removed AuthProvider wrapper */}
+        <LanguageProvider>
+          <ThemeProvider
+            attribute="data-theme"
+            defaultTheme="system"
+            enableSystem
+            themes={['light', 'dark', 'oceanic', 'desert']}
+          >
+            <AppLayout>
+              {children}
+            </AppLayout>
+            <Toaster />
+          </ThemeProvider>
+        </LanguageProvider>
       </body>
     </html>
   );
