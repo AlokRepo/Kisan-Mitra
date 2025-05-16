@@ -12,6 +12,7 @@ import {
 } from '@/components/ui/sidebar';
 import { AppHeader } from './AppHeader';
 import { SidebarNavigation } from './SidebarNavigation';
+import { AppFooter } from './AppFooter'; // Import the new footer
 import { Leaf } from 'lucide-react';
 import Link from 'next/link';
 import { useLanguage } from '@/contexts/LanguageContext';
@@ -41,11 +42,12 @@ export function AppLayout({ children }: AppLayoutProps) {
         </SidebarFooter>
          <SidebarRail />
       </Sidebar>
-      <SidebarInset className="flex flex-col">
+      <SidebarInset className="flex flex-col min-h-screen"> {/* Ensure SidebarInset fills the screen height */}
         <AppHeader />
         <main className="flex-1 overflow-y-auto p-4 md:p-6">
           {children}
         </main>
+        <AppFooter /> {/* Add the new AppFooter here */}
       </SidebarInset>
     </SidebarProvider>
   );
