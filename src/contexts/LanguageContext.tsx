@@ -4,13 +4,13 @@
 import type { ReactNode } from 'react';
 import { createContext, useContext, useState, useMemo, useCallback, useEffect } from 'react';
 
-type Language = 'en' | 'hi'; 
+type Language = 'en' | 'hi';
 const VALID_LANGUAGES: Language[] = ['en', 'hi'];
 
 
 interface Translations {
   [key: string]: {
-    [lang in Language]?: string; 
+    [lang in Language]?: string;
   };
 }
 
@@ -45,6 +45,8 @@ const translations: Translations = {
   navTransportEstimator: { en: "Transport Estimator", hi: "परिवहन अनुमानक" },
   Settings: { en: 'Settings', hi: 'सेटिंग्स'},
   navMarketplace: { en: "Marketplace", hi: "बाज़ार" },
+  navDiseaseDetection: { en: "Disease Detection", hi: "रोग पहचान" },
+
   // Header
   appHeaderMobileTitle: { en: 'Kisan Mitra', hi: 'किसान मित्र' },
   homeTitle: { en: "Kisan Mitra Home", hi: "किसान मित्र मुख्य पृष्ठ" },
@@ -79,8 +81,8 @@ const translations: Translations = {
   filterButton: { en: "Apply Filters", hi: "फ़िल्टर लागू करें" },
   resetFiltersButton: { en: "Reset Filters", hi: "फ़िल्टर रीसेट करें" },
   closeButton: { en: "Close", hi: "बंद करें"},
-  
-  // New Home Page
+
+  // Home Page
   heroTitle: { en: "Welcome to Kisan Mitra", hi: "किसान मित्र में आपका स्वागत है" },
   heroSubtitle: { en: "Empowering Indian Farmers with Technology, Information, and Market Access.", hi: "प्रौद्योगिकी, सूचना और बाजार पहुंच के साथ भारतीय किसानों को सशक्त बनाना।" },
   heroAltText: { en: "Indian agriculture landscape", hi: "भारतीय कृषि परिदृश्य" },
@@ -105,7 +107,6 @@ const translations: Translations = {
   newsItem1Summary: { en: "The government has approved an increase in the Minimum Support Prices (MSP) for all mandated Kharif crops for Marketing Season 2024-25.", hi: "सरकार ने विपणन सीजन 2024-25 के लिए सभी अनिवार्य खरीफ फसलों के लिए न्यूनतम समर्थन मूल्य (एमएसपी) में वृद्धि को मंजूरी दे दी है।" },
   newsItem2Title: { en: "Weather Advisory for Northern States", hi: "उत्तरी राज्यों के लिए मौसम सलाह" },
   newsItem2Summary: { en: "Farmers in northern India are advised to take necessary precautions due to expected heavy rainfall in the coming week.", hi: "उत्तरी भारत के किसानों को अगले सप्ताह में अपेक्षित भारी वर्षा के कारण आवश्यक सावधानी बरतने की सलाह दी जाती है।" },
-  quickLinksTitle: { en: "Quick Links", hi: "त्वरित लिंक्स" },
 
   // PricesPage
   selectCropPlaceholder: { en: "Select crop", hi: "फसल चुनें" },
@@ -173,7 +174,7 @@ const translations: Translations = {
   toastRecGeneratedDesc: { en: "AI advisor has provided selling insights.", hi: "एआई सलाहकार ने बिक्री संबंधी अंतर्दृष्टि प्रदान की है।" },
   toastErrorTitle: { en: "Error", hi: "त्रुटि" },
   toastErrorDesc: { en: "Could not generate recommendation: {errorMessage}", hi: "सिफारिश उत्पन्न नहीं की जा सकी: {errorMessage}" },
-  formErrorOccurred: { en: "Failed to generate recommendation: {errorMessage}", hi: "सिफारिश उत्पन्न करने में विफल: {errorMessage}" },
+  formErrorOccurred: { en: "Failed to {action}: {errorMessage}", hi: "{action} में विफल: {errorMessage}" },
   aiRecommendationTitle: { en: "AI Recommendation", hi: "एआई सिफारिश" },
   suggestionLabel: { en: "Suggestion:", hi: "सुझाव:" },
   reasoningLabel: { en: "Reasoning:", hi: "तर्क:" },
@@ -192,10 +193,11 @@ const translations: Translations = {
   preferredMandisPlaceholder: { en: "Select your preferred mandis", hi: "अपनी पसंदीदा मंडियां चुनें" },
   preferredMandisHint: { en: "For quick access to their price data.", hi: "उनके मूल्य डेटा तक त्वरित पहुंच के लिए।" },
   saveProfileButton: { en: "Save Profile", hi: "प्रोफ़ाइल सहेजें" },
+  savingProfileButton: { en: "Saving Profile...", hi: "प्रोफ़ाइल सहेजा जा रहा है..."},
   toastSettingsSavedTitle: { en: "Settings Saved", hi: "सेटिंग्स सहेजी गईं" },
   toastProfileSettingsSavedDesc: { en: "Your profile information has been updated.", hi: "आपकी प्रोफ़ाइल जानकारी अपडेट कर दी गई है।" },
-  toastProfileErrorFetch: { en: "Error fetching profile settings.", hi: "प्रोफ़ाइल सेटिंग्स लाने में त्रुटि।" },
-  toastProfileErrorSave: { en: "Error saving profile settings.", hi: "प्रोफ़ाइल सेटिंग्स सहेजने में त्रुटि।" },
+  toastErrorFetchingProfile: { en: "Error fetching profile.", hi: "प्रोफ़ाइल लाने में त्रुटि।"},
+  toastErrorSavingProfile: { en: "Error saving profile.", hi: "प्रोफ़ाइल सहेजने में त्रुटि।"},
   priceAlertsTitle: { en: "Price Alerts", hi: "मूल्य अलर्ट" },
   priceAlertsDesc: { en: "Get notified when crop prices reach your target.", hi: "फसल की कीमतें आपके लक्ष्य तक पहुंचने पर सूचित करें।" },
   enablePriceAlertsLabel: { en: "Enable Price Alerts", hi: "मूल्य अलर्ट सक्षम करें" },
@@ -222,9 +224,10 @@ const translations: Translations = {
   apiRefreshFrequencyLabel: { en: "Data Refresh Frequency (minutes)", hi: "डेटा रीफ्रेश आवृत्ति (मिनट)" },
   apiRefreshFrequencyHint: {en: "How often to check for new data (e.g., prices).", hi: "कितनी बार नया डेटा (जैसे कीमतें) जांचना है।"},
   savePreferencesButton: { en: "Save Preferences", hi: "प्राथमिकताएं सहेजें" },
+  savingPreferencesButton: { en: "Saving Preferences...", hi: "प्राथमिकताएँ सहेजी जा रही हैं..."},
   toastDataPreferencesSavedDesc: { en: "Your data preferences have been updated.", hi: "आपकी डेटा प्राथमिकताएं अपडेट कर दी गई हैं।" },
-  toastDataPrefErrorFetch: { en: "Error fetching data preferences.", hi: "डेटा प्राथमिकताएँ लाने में त्रुटि।" },
-  toastDataPrefErrorSave: { en: "Error saving data preferences.", hi: "डेटा प्राथमिकताएँ सहेजने में त्रुटि।" },
+  toastErrorFetchingPrefs: { en: "Error fetching preferences.", hi: "प्राथमिकताएँ लाने में त्रुटि।"},
+  toastErrorSavingPrefs: { en: "Error saving preferences.", hi: "प्राथमिकताएँ सहेजने में त्रुटि।"},
   feedbackFormTitle: { en: "Feedback & Suggestions", hi: "प्रतिक्रिया और सुझाव" },
   feedbackFormDesc: { en: "Help us improve Kisan Mitra.", hi: "किसान मित्र को बेहतर बनाने में हमारी मदद करें।" },
   yourFeedbackLabel: { en: "Your Feedback", hi: "आपकी प्रतिक्रिया" },
@@ -233,6 +236,7 @@ const translations: Translations = {
   toastFeedbackSubmittedTitle: { en: "Feedback Submitted", hi: "प्रतिक्रिया जमा की गई" },
   toastFeedbackThanks: { en: "Thank you for your feedback!", hi: "आपकी प्रतिक्रिया के लिए धन्यवाद!" },
   toastEnterFeedback: { en: "Please enter your feedback before submitting.", hi: "कृपया जमा करने से पहले अपनी प्रतिक्रिया दर्ज करें।" },
+  fetchingSettings: { en: "Fetching settings...", hi: "सेटिंग्स लाई जा रही हैं..."},
 
   // Education & Resources Page
   educationTitle: { en: "Education & Resources", hi: "शिक्षा और संसाधन" },
@@ -243,8 +247,8 @@ const translations: Translations = {
   sampleGuideTitle2: { en: "Maximizing Your Kisan Mitra App", hi: "किसान मित्र ऐप का अधिकतम लाभ उठाना" },
   sampleGuideDesc2: { en: "Tips and tricks to get the most out of the app's features.", hi: "ऐप की सुविधाओं का अधिकतम लाभ उठाने के लिए टिप्स और ट्रिक्स।" },
   viewGuideButton: { en: "View Guide", hi: "गाइड देखें" },
-  schemesTitle: { en: "Government Schemes Spotlight", hi: "सरकारी योजनाएं स्पॉटलाइट" }, 
-  schemesDesc: { en: "Discover relevant agricultural schemes and their benefits. Explore all schemes for detailed filtering.", hi: "प्रासंगिक कृषि योजनाओं और उनके लाभों की खोज करें। विस्तृत फ़िल्टरिंग के लिए सभी योजनाएँ देखें।" }, 
+  schemesTitle: { en: "Government Schemes Spotlight", hi: "सरकारी योजनाएं स्पॉटलाइट" },
+  schemesDesc: { en: "Discover relevant agricultural schemes and their benefits. Explore all schemes for detailed filtering.", hi: "प्रासंगिक कृषि योजनाओं और उनके लाभों की खोज करें। विस्तृत फ़िल्टरिंग के लिए सभी योजनाएँ देखें।" },
   exploreAllSchemesButton: { en: "Explore All Schemes", hi: "सभी योजनाएँ देखें"},
   sampleSchemeTitle1: { en: "PM-KISAN Samman Nidhi", hi: "पीएम-किसान सम्मान निधि" },
   sampleSchemeDesc1: { en: "Direct income support for small and marginal farmers across India.", hi: "पूरे भारत में छोटे और सीमांत किसानों के लिए प्रत्यक्ष आय सहायता।" },
@@ -262,6 +266,35 @@ const translations: Translations = {
   forumDesc: { en: "Connect with other farmers, share tips, ask questions, and stay updated with the latest discussions.", hi: "अन्य किसानों से जुड़ें, सुझाव साझा करें, प्रश्न पूछें और नवीनतम चर्चाओं से अपडेट रहें।" },
   forumPlaceholderText: { en: "Engage with the community on our X (formerly Twitter) page or other social channels. (Integration coming soon)", hi: "हमारे एक्स (पूर्व में ट्विटर) पेज या अन्य सोशल चैनलों पर समुदाय के साथ जुड़ें। (एकीकरण जल्द ही आ रहा है)" },
   visitForumButton: { en: "Visit our X Page", hi: "हमारे एक्स पेज पर जाएं" },
+
+  agriMachineryTitle: { en: "Agricultural Machinery & Technology", hi: "कृषि मशीनरी और प्रौद्योगिकी" },
+  agriMachineryDesc: { en: "Learn about modern farming equipment, subsidies, maintenance, and emerging technologies like drones and precision farming.", hi: "आधुनिक कृषि उपकरण, सब्सिडी, रखरखाव, और ड्रोन और सटीक खेती जैसी उभरती प्रौद्योगिकियों के बारे में जानें।" },
+  agriMachinerySubTopic1: { en: "Choosing the right tractor and implements.", hi: "सही ट्रैक्टर और उपकरणों का चयन।" },
+  agriMachinerySubTopic2: { en: "Government subsidies for machinery.", hi: "मशीनरी के लिए सरकारी सब्सिडी।" },
+  agriMachinerySubTopic3: { en: "Basic maintenance of farm equipment.", hi: "कृषि उपकरणों का बुनियादी रखरखाव।" },
+  agriMachinerySubTopic4: { en: "Introduction to precision agriculture.", hi: "सटीक खेती का परिचय।" },
+
+  storageSolutionsTitle: { en: "Storage & Warehousing Solutions", hi: "भंडारण और वेयरहाउसिंग समाधान" },
+  storageSolutionsDesc: { en: "Information on proper storage techniques to minimize post-harvest losses and access to warehousing facilities.", hi: "कटाई के बाद के नुकसान को कम करने और वेयरहाउसिंग सुविधाओं तक पहुंचने के लिए उचित भंडारण तकनीकों पर जानकारी।" },
+  storageSolutionsSubTopic1: { en: "Best practices for grain & perishable storage.", hi: "अनाज और खराब होने वाली वस्तुओं के भंडारण के लिए सर्वोत्तम अभ्यास।" },
+  storageSolutionsSubTopic2: { en: "Understanding warehouse receipt systems.", hi: "वेयरहाउस रसीद प्रणालियों को समझना।" },
+  storageSolutionsSubTopic3: { en: "Schemes for cold storage and rural godowns.", hi: "कोल्ड स्टोरेज और ग्रामीण गोदामों के लिए योजनाएं।" },
+  storageSolutionsSubTopic4: { en: "Preventing pest infestation in stored produce.", hi: "संग्रहीत उपज में कीट संक्रमण की रोकथाम।" },
+
+  soilWaterConservationTitle: { en: "Soil & Water Conservation", hi: "मृदा और जल संरक्षण" },
+  soilWaterConservationDesc: { en: "Discover methods to maintain soil health, improve water use efficiency, and promote sustainable farming practices.", hi: "मिट्टी के स्वास्थ्य को बनाए रखने, जल उपयोग दक्षता में सुधार करने और टिकाऊ कृषि पद्धतियों को बढ़ावा देने के तरीकों की खोज करें।" },
+  soilWaterConservationSubTopic1: { en: "Soil testing and nutrient management.", hi: "मृदा परीक्षण और पोषक तत्व प्रबंधन।" },
+  soilWaterConservationSubTopic2: { en: "Rainwater harvesting & micro-irrigation techniques.", hi: "वर्षा जल संचयन और सूक्ष्म सिंचाई तकनीकें।" },
+  soilWaterConservationSubTopic3: { en: "Basics of organic farming.", hi: "जैविक खेती की मूल बातें।" },
+  soilWaterConservationSubTopic4: { en: "Preventing soil erosion and land degradation.", hi: "मिट्टी के कटाव और भूमि क्षरण की रोकथाम।" },
+
+  agriFinanceTitle: { en: "Agricultural Finance & Credit", hi: "कृषि वित्त और ऋण" },
+  agriFinanceDesc: { en: "Information on accessing farm loans, Kisan Credit Cards (KCC), crop insurance, and managing farm finances.", hi: "कृषि ऋण, किसान क्रेडिट कार्ड (केसीसी), फसल बीमा, और कृषि वित्त के प्रबंधन पर जानकारी।" },
+  agriFinanceSubTopic1: { en: "Understanding Kisan Credit Card (KCC).", hi: "किसान क्रेडिट कार्ड (केसीसी) को समझना।" },
+  agriFinanceSubTopic2: { en: "How to apply for agricultural loans.", hi: "कृषि ऋण के लिए आवेदन कैसे करें।" },
+  agriFinanceSubTopic3: { en: "Importance of crop insurance (PMFBY).", hi: "फसल बीमा का महत्व (पीएमएफबीवाई)।" },
+  agriFinanceSubTopic4: { en: "Managing farm budgets and financial planning.", hi: "कृषि बजट और वित्तीय योजना का प्रबंधन।" },
+  exploreFinancialSchemesButton: { en: "Explore Financial Schemes", hi: "वित्तीय योजनाएँ देखें" },
 
   // Transport Estimator Page
   transportEstimatorTitle: { en: "Transport Cost Estimator", hi: "परिवहन लागत अनुमानक" },
@@ -380,37 +413,9 @@ const translations: Translations = {
   femaleOption: { en: "Female", hi: "महिला" },
   transgenderOption: { en: "Transgender", hi: "ट्रांसजेंडर" },
 
-  agriMachineryTitle: { en: "Agricultural Machinery & Technology", hi: "कृषि मशीनरी और प्रौद्योगिकी" },
-  agriMachineryDesc: { en: "Learn about modern farming equipment, subsidies, maintenance, and emerging technologies like drones and precision farming.", hi: "आधुनिक कृषि उपकरण, सब्सिडी, रखरखाव, और ड्रोन और सटीक खेती जैसी उभरती प्रौद्योगिकियों के बारे में जानें।" },
-  agriMachinerySubTopic1: { en: "Choosing the right tractor and implements.", hi: "सही ट्रैक्टर और उपकरणों का चयन।" },
-  agriMachinerySubTopic2: { en: "Government subsidies for machinery.", hi: "मशीनरी के लिए सरकारी सब्सिडी।" },
-  agriMachinerySubTopic3: { en: "Basic maintenance of farm equipment.", hi: "कृषि उपकरणों का बुनियादी रखरखाव।" },
-  agriMachinerySubTopic4: { en: "Introduction to precision agriculture.", hi: "सटीक खेती का परिचय।" },
-
-  storageSolutionsTitle: { en: "Storage & Warehousing Solutions", hi: "भंडारण और वेयरहाउसिंग समाधान" },
-  storageSolutionsDesc: { en: "Information on proper storage techniques to minimize post-harvest losses and access to warehousing facilities.", hi: "कटाई के बाद के नुकसान को कम करने और वेयरहाउसिंग सुविधाओं तक पहुंचने के लिए उचित भंडारण तकनीकों पर जानकारी।" },
-  storageSolutionsSubTopic1: { en: "Best practices for grain & perishable storage.", hi: "अनाज और खराब होने वाली वस्तुओं के भंडारण के लिए सर्वोत्तम अभ्यास।" },
-  storageSolutionsSubTopic2: { en: "Understanding warehouse receipt systems.", hi: "वेयरहाउस रसीद प्रणालियों को समझना।" },
-  storageSolutionsSubTopic3: { en: "Schemes for cold storage and rural godowns.", hi: "कोल्ड स्टोरेज और ग्रामीण गोदामों के लिए योजनाएं।" },
-  storageSolutionsSubTopic4: { en: "Preventing pest infestation in stored produce.", hi: "संग्रहीत उपज में कीट संक्रमण की रोकथाम।" },
-
-  soilWaterConservationTitle: { en: "Soil & Water Conservation", hi: "मृदा और जल संरक्षण" },
-  soilWaterConservationDesc: { en: "Discover methods to maintain soil health, improve water use efficiency, and promote sustainable farming practices.", hi: "मिट्टी के स्वास्थ्य को बनाए रखने, जल उपयोग दक्षता में सुधार करने और टिकाऊ कृषि पद्धतियों को बढ़ावा देने के तरीकों की खोज करें।" },
-  soilWaterConservationSubTopic1: { en: "Soil testing and nutrient management.", hi: "मृदा परीक्षण और पोषक तत्व प्रबंधन।" },
-  soilWaterConservationSubTopic2: { en: "Rainwater harvesting & micro-irrigation techniques.", hi: "वर्षा जल संचयन और सूक्ष्म सिंचाई तकनीकें।" },
-  soilWaterConservationSubTopic3: { en: "Basics of organic farming.", hi: "जैविक खेती की मूल बातें।" },
-  soilWaterConservationSubTopic4: { en: "Preventing soil erosion and land degradation.", hi: "मिट्टी के कटाव और भूमि क्षरण की रोकथाम।" },
-
-  agriFinanceTitle: { en: "Agricultural Finance & Credit", hi: "कृषि वित्त और ऋण" },
-  agriFinanceDesc: { en: "Information on accessing farm loans, Kisan Credit Cards (KCC), crop insurance, and managing farm finances.", hi: "कृषि ऋण, किसान क्रेडिट कार्ड (केसीसी), फसल बीमा, और कृषि वित्त के प्रबंधन पर जानकारी।" },
-  agriFinanceSubTopic1: { en: "Understanding Kisan Credit Card (KCC).", hi: "किसान क्रेडिट कार्ड (केसीसी) को समझना।" },
-  agriFinanceSubTopic2: { en: "How to apply for agricultural loans.", hi: "कृषि ऋण के लिए आवेदन कैसे करें।" },
-  agriFinanceSubTopic3: { en: "Importance of crop insurance (PMFBY).", hi: "फसल बीमा का महत्व (पीएमएफबीवाई)।" },
-  agriFinanceSubTopic4: { en: "Managing farm budgets and financial planning.", hi: "कृषि बजट और वित्तीय योजना का प्रबंधन।" },
-  exploreFinancialSchemesButton: { en: "Explore Financial Schemes", hi: "वित्तीय योजनाएँ देखें" },
-
+  // Marketplace
   marketplaceTitle: { en: "Farmer's Marketplace", hi: "किसान बाज़ार" },
-  marketplaceDescription: { en: "Buy and sell agricultural products directly.", hi: "सीधे कृषि उत्पादों की खरीद और बिक्री करें।" }, 
+  marketplaceDescription: { en: "Buy and sell agricultural products directly.", hi: "सीधे कृषि उत्पादों की खरीद और बिक्री करें।" },
   createNewPostButton: { en: "Create New Post", hi: "नई पोस्ट बनाएं" },
   noPostsAvailable: { en: "No products currently listed. Be the first to post!", hi: "वर्तमान में कोई उत्पाद सूचीबद्ध नहीं है। पोस्ट करने वाले पहले व्यक्ति बनें!" },
   createPostDialogTitle: { en: "Create New Marketplace Post", hi: "नई बाज़ार पोस्ट बनाएं" },
@@ -444,32 +449,34 @@ const translations: Translations = {
   contactSellerToast: { en: "Contact functionality coming soon! For now, imagine you've connected.", hi: "संपर्क कार्यक्षमता जल्द ही आ रही है! अभी के लिए, कल्पना करें कि आप जुड़ गए हैं।" },
   fetchingPrice: { en: "Fetching price...", hi: "कीमत प्राप्त हो रही है..."},
 
-  wizardStepLabel: { en: "Step {current} of {total}", hi: "चरण {current} का {total}"},
-  wizardProgressLabel: { en: "Scheme finder progress", hi: "योजना खोजक प्रगति"},
-  wizardStepDemographicsTitle: { en: "Tell us about yourself", hi: "हमें अपने बारे में बताएं"},
-  wizardGenderLabel: { en: "Select Your Gender", hi: "अपना लिंग चुनें"},
-  wizardAgeLabel: { en: "Enter Your Age", hi: "अपनी आयु दर्ज करें"},
-  wizardAgePlaceholder: { en: "Your age in years", hi: "आपकी आयु वर्षों में"},
-  youSelectedLabel: { en: "You selected", hi: "आपने चुना"},
-  yourAgeLabel: { en: "Your age", hi: "आपकी आयु"},
-  yearsOldLabel: { en: "years old", hi: "वर्ष के"},
-  resetWizardButton: { en: "Reset", hi: "रीसेट"},
-  nextButton: { en: "Next", hi: "अगला"},
-  findSchemesButton: { en: "Find Schemes", hi: "योजनाएं खोजें"},
+  // Disease Detection
+  diseaseDetectionTitle: { en: "Plant Disease Detection", hi: "पौध रोग पहचान" },
+  uploadPlantImageLabel: { en: "Upload Plant Image", hi: "पौधे की छवि अपलोड करें" },
+  plantImageUploadHint: { en: "Upload an image of the affected plant (max {size}MB).", hi: "प्रभावित पौधे की एक छवि अपलोड करें (अधिकतम {size}MB)।" },
+  plantDescriptionLabel: { en: "Plant/Symptom Description", hi: "पौधा/लक्षण विवरण" },
+  plantDescriptionPlaceholder: { en: "Briefly describe the plant and observed symptoms (e.g., 'Tomato plant, yellow spots on leaves, wilting').", hi: "पौधे और देखे गए लक्षणों का संक्षिप्त विवरण दें (उदाहरण के लिए, 'टमाटर का पौधा, पत्तियों पर पीले धब्बे, मुरझाना')।" },
+  submitForDiagnosisButton: { en: "Get Diagnosis", hi: "निदान प्राप्त करें" },
+  diagnosingButton: { en: "Diagnosing...", hi: "निदान किया जा रहा है..." },
+  diagnosisResultsTitle: { en: "Diagnosis Results", hi: "निदान परिणाम" },
+  plantIdentificationSectionTitle: { en: "Plant Identification", hi: "पौधे की पहचान" },
+  isItAPlantLabel: { en: "Is it a plant?", hi: "क्या यह एक पौधा है?" },
+  commonNameLabel: { en: "Common Name:", hi: "सामान्य नाम:" },
+  latinNameLabel: { en: "Latin Name:", hi: "लैटिन नाम:" },
+  healthStatusSectionTitle: { en: "Health Status", hi: "स्वास्थ्य स्थिति" },
+  isPlantHealthyLabel: { en: "Is the plant healthy?", hi: "क्या पौधा स्वस्थ है?" },
+  diagnosisLabel: { en: "Diagnosis:", hi: "निदान:" },
+  suggestedSolutionsLabel: { en: "Suggested Solution:", hi: "सुझाया गया समाधान:" },
+  noPlantDetected: { en: "No plant detected in the image or identification unclear.", hi: "छवि में कोई पौधा नहीं मिला या पहचान अस्पष्ट है।" },
+  plantHealthy: { en: "Healthy", hi: "स्वस्थ" },
+  plantUnhealthy: { en: "Unhealthy", hi: "अस्वस्थ" },
+  errorDiagnosing: { en: "An error occurred while diagnosing. Please try again.", hi: "निदान करते समय एक त्रुटि हुई। कृपया पुनः प्रयास करें।" },
+  toastDiagnosisCompleteTitle: { en: "Diagnosis Complete", hi: "निदान पूरा हुआ" },
+  toastDiagnosisCompleteDesc: { en: "AI has provided a plant diagnosis.", hi: "एआई ने पौधे का निदान प्रदान किया है।" },
+  yes: { en: "Yes", hi: "हाँ" },
+  no: { en: "No", hi: "नहीं" },
+  notAvailable: { en: "N/A", hi: "लागू नहीं" },
+  imagePreviewAlt: { en: "Plant image preview", hi: "पौधे की छवि का पूर्वावलोकन"},
 
-  // Removed Authentication specific translations
-  // loginSuccessTitle: { en: 'Login Successful', hi: 'लॉगिन सफल' },
-  // loginSuccessDesc: { en: 'Welcome back, {userName}!', hi: 'वापसी पर स्वागत है, {userName}!' },
-  // demoUser: { en: "Demo User", hi: "डेमो उपयोगकर्ता"},
-  // logoutSuccessTitle: { en: 'Logout Successful', hi: 'लॉगआउट सफल' },
-  // logoutSuccessDesc: { en: 'You have been logged out.', hi: 'आपको लॉग आउट कर दिया गया है।' },
-  // loginButton: { en: "Login", hi: "लॉगिन करें"},
-  // logoutButton: { en: "Logout", hi: "लॉगआउट करें"},
-  // editButton: { en: "Edit", hi: "संपादित करें"},
-  // deleteButton: { en: "Delete", hi: "मिटाएँ"},
-  // confirmDeleteTitle: {en: "Confirm Deletion", hi: "हटाने की पुष्टि करें"},
-  // confirmDeleteDesc: {en: "Are you sure you want to delete this post? This action cannot be undone.", hi: "क्या आप वाकई इस पोस्ट को हटाना चाहते हैं? यह कार्रवाई पूर्ववत नहीं की जा सकती।"},
-  anonymousUser: { en: "User", hi: "उपयोगकर्ता"}
 };
 
 const LanguageContext = createContext<LanguageContextType | undefined>(undefined);
@@ -494,7 +501,7 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
   const translate = useCallback((key: string, params?: Record<string, string | number>, fallback?: string): string => {
     const yearPlaceholder = "{year}";
     let text = translations[key]?.[language] || translations[key]?.['en'] || fallback || key;
-    
+
     if (text && text.includes(yearPlaceholder)) {
       text = text.replace(new RegExp(yearPlaceholder, 'g'), new Date().getFullYear().toString());
     }

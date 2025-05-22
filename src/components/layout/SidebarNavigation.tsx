@@ -3,7 +3,7 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { Home, Lightbulb, BarChart3, MapPin, Settings, GraduationCap, Truck, TrendingUp, ScrollText, ShoppingCart, type LucideIcon } from 'lucide-react';
+import { Home, Lightbulb, BarChart3, MapPin, Settings, GraduationCap, Truck, TrendingUp, ScrollText, ShoppingCart, Camera, type LucideIcon } from 'lucide-react';
 import {
   SidebarMenu,
   SidebarMenuItem,
@@ -14,20 +14,20 @@ import { useLanguage } from '@/contexts/LanguageContext';
 
 interface NavItem {
   href: string;
-  labelKey: string; 
+  labelKey: string;
   icon: LucideIcon;
 }
 
-// Ensure 'navHome' uses the Home icon and points to '/'
 const navItemsConfig: NavItem[] = [
-  { href: '/', labelKey: 'navHome', icon: Home }, 
-  { href: '/prices', labelKey: 'navPrices', icon: TrendingUp }, 
+  { href: '/', labelKey: 'navHome', icon: Home },
+  { href: '/prices', labelKey: 'navPrices', icon: TrendingUp },
   { href: '/recommendations', labelKey: 'navAiAdvisor', icon: Lightbulb },
+  { href: '/disease-detection', labelKey: 'navDiseaseDetection', icon: Camera },
   { href: '/dashboard', labelKey: 'navDashboard', icon: BarChart3 },
   { href: '/locator', labelKey: 'navMandis', icon: MapPin },
   { href: '/transport-estimator', labelKey: 'navTransportEstimator', icon: Truck },
   { href: '/marketplace', labelKey: 'navMarketplace', icon: ShoppingCart },
-  { href: '/schemes', labelKey: 'navGovtSchemes', icon: ScrollText }, 
+  { href: '/schemes', labelKey: 'navGovtSchemes', icon: ScrollText },
   { href: '/education', labelKey: 'navEducation', icon: GraduationCap },
   // Settings will be ordered to be last
 ];
@@ -66,4 +66,3 @@ export function SidebarNavigation() {
     </SidebarMenu>
   );
 }
-

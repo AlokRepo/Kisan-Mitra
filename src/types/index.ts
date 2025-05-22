@@ -65,10 +65,10 @@ export interface GovernmentScheme {
   relevantCrops?: string[];
   socialCategories?: SocialCategory[];
   genderTargets?: GenderTarget[];
-  applicableToMinority?: boolean; 
-  isForDisabled?: boolean; 
-  minAge?: number; 
-  maxAge?: number; 
+  applicableToMinority?: boolean;
+  isForDisabled?: boolean;
+  minAge?: number;
+  maxAge?: number;
 }
 
 export interface MarketplacePost {
@@ -77,19 +77,18 @@ export interface MarketplacePost {
   quantity: number; // in Quintals
   price: number; // per Quintal
   description: string;
-  sellerName: string; 
+  sellerName: string;
   postDate: string; // Server will generate this (YYYY-MM-DD)
-  imageUrl?: string; 
-  location: string; 
+  imageUrl?: string;
+  location: string;
 }
 
-// Removed MockUser interface
 
 export const CROPS = ["Wheat", "Rice", "Maize", "Cotton", "Sugarcane", "Soybean", "Pulses", "Mustard", "Groundnut"];
 export const STATES = ["Punjab", "Haryana", "Uttar Pradesh", "Madhya Pradesh", "Maharashtra", "Rajasthan", "Gujarat", "Andhra Pradesh", "Telangana", "Karnataka", "West Bengal", "Bihar", "Odisha", "Tamil Nadu", "Kerala"];
 
 export const VEHICLE_TYPES = [
-  { id: 'tractor', nameKey: 'vehicleTractor', efficiency: 5, capacityQuintals: 30 }, 
+  { id: 'tractor', nameKey: 'vehicleTractor', efficiency: 5, capacityQuintals: 30 },
   { id: 'small_truck', nameKey: 'vehicleSmallTruck', efficiency: 8, capacityQuintals: 50 },
   { id: 'large_truck', nameKey: 'vehicleLargeTruck', efficiency: 4, capacityQuintals: 150 },
 ] as const;
@@ -99,3 +98,20 @@ export type UserDemographics = {
   gender?: Exclude<GenderTarget, "Any">;
   age?: number;
 };
+
+// Specific to User Settings (Profile and Preferences)
+export interface UserProfileSettings {
+  location: string;
+  primaryCrops: string[];
+  preferredMandis: string[];
+}
+
+export interface UserDataPreferences {
+  weatherDataEnabled: boolean;
+  apiRefreshFrequency: number;
+}
+
+export interface UserSettings {
+  profile: UserProfileSettings;
+  preferences: UserDataPreferences;
+}
