@@ -72,14 +72,13 @@ export interface GovernmentScheme {
 }
 
 export interface MarketplacePost {
-  id: string;
+  id: string; // Server will generate this
   cropName: string;
   quantity: number; // in Quintals
   price: number; // per Quintal
   description: string;
   sellerName: string; 
-  // sellerId?: string; // Removed sellerId
-  postDate: string; // YYYY-MM-DD
+  postDate: string; // Server will generate this (YYYY-MM-DD)
   imageUrl?: string; 
   location: string; 
 }

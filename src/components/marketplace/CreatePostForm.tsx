@@ -26,29 +26,33 @@ import {
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { CROPS, STATES } from "@/types"; // Added STATES
+import { CROPS, STATES } from "@/types";
 import type { MarketplacePost } from "@/types";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { useToast } from "@/hooks/use-toast";
 import { useEffect, useState, useTransition, ChangeEvent, useRef } from "react";
 import { getRealTimePrices } from "@/lib/mockApi";
-import { Loader2, UploadCloud, XCircle } from "lucide-react";
+import { Loader2, XCircle } from "lucide-react";
 import Image from "next/image";
+
+const MAX_IMAGE_SIZE_MB = 2;
+const MAX_IMAGE_SIZE_BYTES = MAX_IMAGE_SIZE_MB * 1024 * 1024;
 
 const createFormSchema = (translate: (key: string) => string) => z.object({
   cropName: z.string().min(1, translate('cropNotSelectedError')),
   quantity: z.coerce.number().positive(translate('quantityNotEnteredError')),
   price: z.coerce.number().positive("Price must be a positive number."),
-  description: z.string().min(10, "Description must be at least 10 characters.").max(500, "Description too long."),
   sellerName: z.string().min(2, "Seller name is required.").max(50, "Seller name too long."),
-  location: z.string().min(1, "Location is required."), // Making location required
+  location: z.string().min(1, "Location is required."),
+  description: z.string().min(10, "Description must be at least 10 characters.").max(500, "Description too long."),
   imageUrl: z.string().optional(),
 });
 
+// Update the props to reflect that it's an async operation
 interface CreatePostFormProps {
   isOpen: boolean;
   onClose: () => void;
-  onAddPost: (postData: Omit<MarketplacePost, 'id' | 'postDate'>) => void; // Removed sellerName from Omit
+  onAddPost: (postData: Omit<MarketplacePost, 'id' | 'postDate'>) => Promise<void>; // onAddPost is now async
 }
 
 export function CreatePostForm({ isOpen, onClose, onAddPost }: CreatePostFormProps) {
@@ -59,7 +63,7 @@ export function CreatePostForm({ isOpen, onClose, onAddPost }: CreatePostFormPro
   const [isFetchingPrice, startPriceFetchTransition] = useTransition();
   const [selectedImagePreview, setSelectedImagePreview] = useState<string | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
-
+  const [isSubmitting, startSubmittingTransition] = useTransition(); // For API call loading state
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -68,8 +72,8 @@ export function CreatePostForm({ isOpen, onClose, onAddPost }: CreatePostFormPro
       quantity: 10,
       price: undefined,
       description: "",
-      sellerName: "Local Farmer", // Default seller name
-      location: "", // Default location, user should select
+      sellerName: "", // User will input this
+      location: "",
       imageUrl: undefined,
     },
   });
@@ -109,6 +113,15 @@ export function CreatePostForm({ isOpen, onClose, onAddPost }: CreatePostFormPro
   const handleImageChange = (event: ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     if (file) {
+      if (file.size > MAX_IMAGE_SIZE_BYTES) {
+        toast({
+            title: translate('toastErrorTitle'),
+            description: translate('imageTooLargeError', { size: MAX_IMAGE_SIZE_MB }),
+            variant: "destructive",
+        });
+        if (fileInputRef.current) fileInputRef.current.value = ""; // Reset file input
+        return;
+      }
       const reader = new FileReader();
       reader.onloadend = () => {
         const dataUri = reader.result as string;
@@ -126,22 +139,17 @@ export function CreatePostForm({ isOpen, onClose, onAddPost }: CreatePostFormPro
     setSelectedImagePreview(null);
     form.setValue("imageUrl", undefined, { shouldValidate: true });
     if (fileInputRef.current) {
-      fileInputRef.current.value = ""; // Reset file input
+      fileInputRef.current.value = "";
     }
   };
-
-  function onSubmit(values: z.infer<typeof formSchema>) {
-    onAddPost(values); // Pass all values including sellerName and location
-    toast({
-      title: translate('postSubmittedToastTitle'),
-      description: translate('postSubmittedToastDesc'),
-    });
-    form.reset({ // Reset with defaults
+  
+  const resetForm = () => {
+    form.reset({
         cropName: "", 
         quantity: 10, 
         price: undefined, 
         description: "", 
-        sellerName: "Local Farmer", 
+        sellerName: "", 
         location: "", 
         imageUrl: undefined
     });
@@ -149,24 +157,21 @@ export function CreatePostForm({ isOpen, onClose, onAddPost }: CreatePostFormPro
     if (fileInputRef.current) {
       fileInputRef.current.value = "";
     }
-    onClose();
+  };
+
+  async function onSubmit(values: z.infer<typeof formSchema>) {
+    startSubmittingTransition(async () => {
+        await onAddPost(values); // onAddPost now handles API call and might throw
+        // If onAddPost is successful (no error thrown), then reset and close.
+        // Toast for success is now handled by the parent page.
+        resetForm();
+        // onClose(); // The parent page now controls closing on success
+    });
   }
 
   useEffect(() => {
     if (!isOpen) {
-      form.reset({ // Reset with defaults when dialog closes
-        cropName: "", 
-        quantity: 10, 
-        price: undefined, 
-        description: "", 
-        sellerName: "Local Farmer", 
-        location: "", 
-        imageUrl: undefined
-      });
-      setSelectedImagePreview(null);
-       if (fileInputRef.current) {
-        fileInputRef.current.value = "";
-      }
+      resetForm();
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isOpen]);
@@ -176,11 +181,7 @@ export function CreatePostForm({ isOpen, onClose, onAddPost }: CreatePostFormPro
     <Dialog open={isOpen} onOpenChange={
       (open) => {
         if (!open) {
-          form.reset({cropName: "", quantity: 10, price: undefined, description: "", sellerName: "Local Farmer", location: "", imageUrl: undefined });
-          setSelectedImagePreview(null);
-          if (fileInputRef.current) {
-            fileInputRef.current.value = "";
-          }
+          resetForm();
         }
         onClose();
       }
@@ -198,7 +199,7 @@ export function CreatePostForm({ isOpen, onClose, onAddPost }: CreatePostFormPro
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>{translate('productNameLabel')}</FormLabel>
-                  <Select onValueChange={field.onChange} value={field.value}>
+                  <Select onValueChange={field.onChange} value={field.value} disabled={isSubmitting}>
                     <FormControl>
                       <SelectTrigger>
                         <SelectValue placeholder={translate('selectProductPlaceholder')} />
@@ -221,7 +222,7 @@ export function CreatePostForm({ isOpen, onClose, onAddPost }: CreatePostFormPro
                 <FormItem>
                   <FormLabel>{translate('quantityMarketplaceLabel')}</FormLabel>
                   <FormControl>
-                    <Input type="number" placeholder="e.g. 10" {...field} />
+                    <Input type="number" placeholder="e.g. 10" {...field} disabled={isSubmitting} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -234,7 +235,7 @@ export function CreatePostForm({ isOpen, onClose, onAddPost }: CreatePostFormPro
                 <FormItem>
                   <FormLabel>{translate('pricePerQuintalLabel')}</FormLabel>
                   <FormControl>
-                    <Input type="number" placeholder={translate('priceMarketplacePlaceholder')} {...field} />
+                    <Input type="number" placeholder={translate('priceMarketplacePlaceholder')} {...field} disabled={isSubmitting} />
                   </FormControl>
                   {isFetchingPrice && <FormDescription className="flex items-center text-xs"><Loader2 className="mr-1 h-3 w-3 animate-spin" />{translate('fetchingPrice')}</FormDescription>}
                   {!isFetchingPrice && suggestedPrice !== null && (
@@ -253,7 +254,7 @@ export function CreatePostForm({ isOpen, onClose, onAddPost }: CreatePostFormPro
                 <FormItem>
                   <FormLabel>{translate('sellerNameLabel')}</FormLabel>
                   <FormControl>
-                    <Input placeholder={translate('sellerNamePlaceholder')} {...field} />
+                    <Input placeholder={translate('sellerNamePlaceholder')} {...field} disabled={isSubmitting} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -265,14 +266,13 @@ export function CreatePostForm({ isOpen, onClose, onAddPost }: CreatePostFormPro
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>{translate('locationMarketplaceLabel')}</FormLabel>
-                  <Select onValueChange={field.onChange} value={field.value}>
+                  <Select onValueChange={field.onChange} value={field.value} disabled={isSubmitting}>
                     <FormControl>
                       <SelectTrigger>
                         <SelectValue placeholder={translate('selectLocationPlaceholder')} />
                       </SelectTrigger>
                     </FormControl>
                     <SelectContent>
-                      {/* Assuming STATES is an array of strings. If it's objects, adjust accordingly. */}
                       {STATES.map(state => (
                         <SelectItem key={state} value={state}>{state}</SelectItem>
                       ))}
@@ -289,7 +289,7 @@ export function CreatePostForm({ isOpen, onClose, onAddPost }: CreatePostFormPro
                 <FormItem>
                   <FormLabel>{translate('descriptionLabel')}</FormLabel>
                   <FormControl>
-                    <Textarea placeholder={translate('descriptionMarketplacePlaceholder')} {...field} rows={3}/>
+                    <Textarea placeholder={translate('descriptionMarketplacePlaceholder')} {...field} rows={3} disabled={isSubmitting}/>
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -310,6 +310,7 @@ export function CreatePostForm({ isOpen, onClose, onAddPost }: CreatePostFormPro
                       file:text-sm file:font-semibold
                       file:bg-primary/10 file:text-primary
                       hover:file:bg-primary/20"
+                    disabled={isSubmitting}
                   />
                 </FormControl>
                 {selectedImagePreview && (
@@ -321,6 +322,7 @@ export function CreatePostForm({ isOpen, onClose, onAddPost }: CreatePostFormPro
                       size="icon"
                       className="absolute top-1 right-1 h-6 w-6 opacity-0 group-hover:opacity-100 transition-opacity"
                       onClick={removeSelectedImage}
+                      disabled={isSubmitting}
                     >
                       <XCircle className="h-4 w-4" />
                     </Button>
@@ -335,14 +337,19 @@ export function CreatePostForm({ isOpen, onClose, onAddPost }: CreatePostFormPro
             <DialogFooter className="pt-4">
               <DialogClose asChild>
                 <Button type="button" variant="outline" onClick={() => {
-                  form.reset({cropName: "", quantity: 10, price: undefined, description: "", sellerName: "Local Farmer", location: "", imageUrl: undefined});
-                  setSelectedImagePreview(null);
-                  if (fileInputRef.current) fileInputRef.current.value = "";
+                  resetForm();
                   onClose();
-                }}>{translate('cancelButton')}</Button>
+                }} disabled={isSubmitting}>{translate('cancelButton')}</Button>
               </DialogClose>
-              <Button type="submit" disabled={form.formState.isSubmitting}>
-                {translate('submitPostButton')}
+              <Button type="submit" disabled={isSubmitting || form.formState.isSubmitting}>
+                {isSubmitting ? (
+                    <>
+                        <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                        {translate('submittingPostButton')}
+                    </>
+                ) : (
+                    translate('submitPostButton')
+                )}
               </Button>
             </DialogFooter>
           </form>
