@@ -48,11 +48,10 @@ const createFormSchema = (translate: (key: string) => string) => z.object({
   imageUrl: z.string().optional(),
 });
 
-// Update the props to reflect that it's an async operation
 interface CreatePostFormProps {
   isOpen: boolean;
   onClose: () => void;
-  onAddPost: (postData: Omit<MarketplacePost, 'id' | 'postDate'>) => Promise<void>; // onAddPost is now async
+  onAddPost: (postData: Omit<MarketplacePost, 'id' | 'postDate'>) => Promise<boolean>;
 }
 
 export function CreatePostForm({ isOpen, onClose, onAddPost }: CreatePostFormProps) {
@@ -63,7 +62,7 @@ export function CreatePostForm({ isOpen, onClose, onAddPost }: CreatePostFormPro
   const [isFetchingPrice, startPriceFetchTransition] = useTransition();
   const [selectedImagePreview, setSelectedImagePreview] = useState<string | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
-  const [isSubmitting, startSubmittingTransition] = useTransition(); // For API call loading state
+  const [isSubmitting, startSubmittingTransition] = useTransition();
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -72,7 +71,7 @@ export function CreatePostForm({ isOpen, onClose, onAddPost }: CreatePostFormPro
       quantity: 10,
       price: undefined,
       description: "",
-      sellerName: "", // User will input this
+      sellerName: "",
       location: "",
       imageUrl: undefined,
     },
@@ -119,7 +118,9 @@ export function CreatePostForm({ isOpen, onClose, onAddPost }: CreatePostFormPro
             description: translate('imageTooLargeError', { size: MAX_IMAGE_SIZE_MB }),
             variant: "destructive",
         });
-        if (fileInputRef.current) fileInputRef.current.value = ""; // Reset file input
+        if (fileInputRef.current) fileInputRef.current.value = "";
+        form.setValue("imageUrl", undefined, { shouldValidate: true });
+        setSelectedImagePreview(null);
         return;
       }
       const reader = new FileReader();
@@ -161,15 +162,17 @@ export function CreatePostForm({ isOpen, onClose, onAddPost }: CreatePostFormPro
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
     startSubmittingTransition(async () => {
-        await onAddPost(values); // onAddPost now handles API call and might throw
-        // If onAddPost is successful (no error thrown), then reset and close.
-        // Toast for success is now handled by the parent page.
-        resetForm();
-        // onClose(); // The parent page now controls closing on success
+        const success = await onAddPost(values);
+        if (success) {
+          resetForm();
+          // The parent (MarketplacePage) handles closing the dialog on success.
+        }
+        // If not successful, the form remains open with data, and parent shows toast/error.
     });
   }
 
   useEffect(() => {
+    // Reset form when dialog is closed externally or initially not open
     if (!isOpen) {
       resetForm();
     }
@@ -179,11 +182,11 @@ export function CreatePostForm({ isOpen, onClose, onAddPost }: CreatePostFormPro
 
   return (
     <Dialog open={isOpen} onOpenChange={
-      (open) => {
-        if (!open) {
-          resetForm();
+      (openState) => {
+        if (!openState) { // If dialog is being closed
+          resetForm(); // Ensure form is reset
         }
-        onClose();
+        onClose(); // Call parent's onClose to update state
       }
     }>
       <DialogContent className="sm:max-w-[525px] bg-card">
@@ -337,7 +340,7 @@ export function CreatePostForm({ isOpen, onClose, onAddPost }: CreatePostFormPro
             <DialogFooter className="pt-4">
               <DialogClose asChild>
                 <Button type="button" variant="outline" onClick={() => {
-                  resetForm();
+                  // onClose will trigger reset via onOpenChange
                   onClose();
                 }} disabled={isSubmitting}>{translate('cancelButton')}</Button>
               </DialogClose>

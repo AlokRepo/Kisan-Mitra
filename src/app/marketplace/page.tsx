@@ -34,10 +34,10 @@ export default function MarketplacePage() {
       } catch (e) {
         const errorMessage = e instanceof Error ? e.message : "An unknown error occurred";
         console.error("Error fetching posts:", e);
-        setError(translate('formErrorOccurred', { errorMessage }));
+        setError(translate('formErrorOccurred', { action: "fetch posts", errorMessage }));
         toast({
           title: translate('toastErrorTitle'),
-          description: translate('formErrorOccurred', { errorMessage }),
+          description: translate('formErrorOccurred', { action: "fetch posts", errorMessage }),
           variant: "destructive",
         });
       }
@@ -49,7 +49,7 @@ export default function MarketplacePage() {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const handleAddPost = async (newPostData: Omit<MarketplacePost, 'id' | 'postDate'>) => {
+  const handleAddPost = async (newPostData: Omit<MarketplacePost, 'id' | 'postDate'>): Promise<boolean> => {
     setError(null);
     try {
       const response = await fetch('/api/marketplace/posts', {
@@ -70,15 +70,17 @@ export default function MarketplacePage() {
         description: translate('postSubmittedToastDesc'),
       });
       setIsCreatePostOpen(false); // Close form on success
+      return true;
     } catch (e) {
       const errorMessage = e instanceof Error ? e.message : "An unknown error occurred";
       console.error("Error creating post:", e);
-      setError(translate('formErrorOccurred', { errorMessage })); // Show error in the main page as well
+      setError(translate('formErrorOccurred', { action: "create post", errorMessage })); // Show error in the main page as well
       toast({
         title: translate('toastErrorTitle'),
-        description: translate('formErrorOccurred', { errorMessage }),
+        description: translate('formErrorOccurred', { action: "create post", errorMessage }),
         variant: "destructive",
       });
+      return false;
     }
   };
 
