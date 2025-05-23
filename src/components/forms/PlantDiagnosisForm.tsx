@@ -8,14 +8,12 @@ import { Button } from "@/components/ui/button";
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { useState, useTransition, ChangeEvent, useRef }
 from "react";
@@ -30,8 +28,8 @@ const MAX_IMAGE_SIZE_MB = 4; // Max 4MB for plant images
 const MAX_IMAGE_SIZE_BYTES = MAX_IMAGE_SIZE_MB * 1024 * 1024;
 
 const createFormSchema = (translate: (key: string, params?: Record<string, string | number>) => string) => z.object({
-  photoDataUri: z.string().min(1, translate('imageNotSelectedError')), // Assuming we'll store data URI
-  description: z.string().min(10, translate('descriptionTooShortError')).max(500, translate('descriptionTooLongError')),
+  photoDataUri: z.string().min(1, translate('imageNotSelectedError')),
+  // Description field removed
 });
 
 export function PlantDiagnosisForm() {
@@ -49,7 +47,7 @@ export function PlantDiagnosisForm() {
     resolver: zodResolver(formSchema),
     defaultValues: {
       photoDataUri: "",
-      description: "",
+      // Description default value removed
     },
   });
 
@@ -93,6 +91,7 @@ export function PlantDiagnosisForm() {
     setError(null);
     startDiagnosisTransition(async () => {
       try {
+        // Cast to DiagnosePlantInput, which now only expects photoDataUri
         const result = await diagnosePlant(values as DiagnosePlantInput);
         setDiagnosisResult(result);
         toast({
@@ -117,8 +116,8 @@ export function PlantDiagnosisForm() {
     <>
       <Card className="w-full max-w-2xl mx-auto shadow-xl bg-card">
         <CardHeader>
-          <CardTitle className="text-2xl text-primary">{translate('diseaseDetectionTitle')}</CardTitle>
-          <CardDescription>{translate('uploadPlantImageLabel')}</CardDescription>
+          <CardTitle className="text-2xl text-primary">{translate('identifyPlantDiseasesTitle', 'Identify Plant Diseases')}</CardTitle>
+          <CardDescription>{translate('identifyPlantDiseasesDesc', 'Upload an image of an affected plant to get an AI-powered diagnosis and treatment suggestions.')}</CardDescription>
         </CardHeader>
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)}>
@@ -126,7 +125,7 @@ export function PlantDiagnosisForm() {
               <FormField
                 control={form.control}
                 name="photoDataUri"
-                render={({ field }) => ( // field is not directly used for input type file, but needed for react-hook-form
+                render={({ field }) => ( 
                   <FormItem>
                     <FormLabel>{translate('uploadPlantImageLabel')}</FormLabel>
                     <FormControl>
@@ -155,38 +154,19 @@ export function PlantDiagnosisForm() {
                           className="absolute top-1 right-1 h-6 w-6 opacity-0 group-hover:opacity-100 transition-opacity"
                           onClick={removeSelectedImage}
                           disabled={isDiagnosing}
-                          aria-label="Remove image"
+                          aria-label={translate('removeImageAriaLabel', 'Remove image')}
                         >
-                          <ImageIcon className="h-4 w-4" /> {/* Using Lucide Image for remove button */}
+                          <ImageIcon className="h-4 w-4" /> 
                         </Button>
                       </div>
                     )}
-                    {/* FormDescription removed from here */}
                     <FormMessage />
                   </FormItem>
                 )}
               />
-              <FormField
-                control={form.control}
-                name="description"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>{translate('plantDescriptionLabel')}</FormLabel>
-                    <FormControl>
-                      <Textarea
-                        // placeholder removed from here
-                        className="resize-none"
-                        rows={5}
-                        {...field}
-                        disabled={isDiagnosing}
-                      />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
+              {/* Description Field Removed */}
             </CardContent>
-            <CardFooter className="flex flex-col items-stretch gap-4">
+            <CardFooter className="flex flex-col items-stretch gap-4 pt-6"> {/* Added pt-6 for spacing */}
               <Button type="submit" disabled={isDiagnosing || !form.formState.isValid} className="w-full">
                 {isDiagnosing ? (
                   <>
@@ -194,7 +174,10 @@ export function PlantDiagnosisForm() {
                     {translate('diagnosingButton')}
                   </>
                 ) : (
-                  translate('submitForDiagnosisButton')
+                  <>
+                    <ShieldCheck className="mr-2 h-4 w-4" /> {/* Changed Icon */}
+                    {translate('detectDiseaseButton', 'Detect Disease')}
+                  </>
                 )}
               </Button>
             </CardFooter>
@@ -289,3 +272,5 @@ export function PlantDiagnosisForm() {
     </>
   );
 }
+
+    

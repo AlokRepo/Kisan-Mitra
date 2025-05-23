@@ -17,7 +17,7 @@ const DiagnosePlantInputSchema = z.object({
     .describe(
       "A photo of a plant, as a data URI that must include a MIME type and use Base64 encoding. Expected format: 'data:<mimetype>;base64,<encoded_data>'."
     ),
-  description: z.string().describe('The description of the plant and its symptoms.'),
+  // Description field removed
 });
 export type DiagnosePlantInput = z.infer<typeof DiagnosePlantInputSchema>;
 
@@ -39,14 +39,13 @@ const prompt = ai.definePrompt({
   name: 'diagnosePlantPrompt',
   input: {schema: DiagnosePlantInputSchema},
   output: {schema: DiagnosePlantOutputSchema},
-  prompt: `You are an expert botanist and plant pathologist specializing in diagnosing plant illnesses from images and descriptions.
+  prompt: `You are an expert botanist and plant pathologist specializing in diagnosing plant illnesses from images.
 
   Farmer's Input:
-  - Plant Description & Symptoms: {{{description}}}
   - Plant Photo: {{media url=photoDataUri}}
 
   Instructions:
-  1.  Analyze the provided image and description.
+  1.  Analyze the provided image.
   2.  Determine if the image primarily features a plant. Set 'isPlant' to true or false.
   3.  If it is a plant:
       a.  Identify its common name and Latin name. If unsure, state "Unknown".
@@ -59,8 +58,8 @@ const prompt = ai.definePrompt({
   5.  If the image is not clearly a plant or is unidentifiable:
       a.  Set 'commonName' and 'latinName' to "N/A".
       b.  Set 'isHealthy' to false (as its health cannot be determined).
-      c.  Set 'diagnosis' to "Unable to identify a plant or assess health from the provided image/description."
-      d.  Set 'suggestedSolution' to "Please provide a clearer image of the plant and more details about its symptoms."
+      c.  Set 'diagnosis' to "Unable to identify a plant or assess health from the provided image."
+      d.  Set 'suggestedSolution' to "Please provide a clearer image of the plant."
   6.  Ensure your output strictly adheres to the JSON schema provided for 'DiagnosePlantOutput'. Keep solutions practical for a typical farmer.
   `,
 });
@@ -76,3 +75,5 @@ const diagnosePlantFlow = ai.defineFlow(
     return output!;
   }
 );
+
+    

@@ -237,6 +237,10 @@ const translations: Translations = {
   toastFeedbackThanks: { en: "Thank you for your feedback!", hi: "आपकी प्रतिक्रिया के लिए धन्यवाद!" },
   toastEnterFeedback: { en: "Please enter your feedback before submitting.", hi: "कृपया जमा करने से पहले अपनी प्रतिक्रिया दर्ज करें।" },
   fetchingSettings: { en: "Fetching settings...", hi: "सेटिंग्स लाई जा रही हैं..."},
+  errorFetchingProfileSettings: { en: "Error fetching profile settings. Using default values.", hi: "प्रोफ़ाइल सेटिंग्स लाने में त्रुटि। डिफ़ॉल्ट मानों का उपयोग किया जा रहा है।" },
+  errorSavingProfileSettings: { en: "Error saving profile settings. Please try again.", hi: "प्रोफ़ाइल सेटिंग्स सहेजने में त्रुटि। कृपया पुनः प्रयास करें।" },
+  errorFetchingDataPreferences: { en: "Error fetching data preferences. Using default values.", hi: "डेटा प्राथमिकताएँ लाने में त्रुटि। डिफ़ॉल्ट मानों का उपयोग किया जा रहा है।" },
+  errorSavingDataPreferences: { en: "Error saving data preferences. Please try again.", hi: "डेटा प्राथमिकताएँ सहेजने में त्रुटि। कृपया पुनः प्रयास करें।" },
 
   // Education & Resources Page
   educationTitle: { en: "Education & Resources", hi: "शिक्षा और संसाधन" },
@@ -451,10 +455,14 @@ const translations: Translations = {
 
   // Disease Detection
   diseaseDetectionTitle: { en: "Plant Disease Detection", hi: "पौध रोग पहचान" },
+  identifyPlantDiseasesTitle: { en: "Identify Plant Diseases", hi: "पौधों के रोगों की पहचान करें" },
+  identifyPlantDiseasesDesc: { en: "Upload an image of an affected plant to get an AI-powered diagnosis and treatment suggestions.", hi: "एआई-संचालित निदान और उपचार सुझाव प्राप्त करने के लिए प्रभावित पौधे की एक छवि अपलोड करें।" },
+  detectDiseaseButton: { en: "Detect Disease", hi: "रोग का पता लगाएं" },
+  removeImageAriaLabel: { en: "Remove image", hi: "छवि हटाएं" },
+
   uploadPlantImageLabel: { en: "Upload Plant Image", hi: "पौधे की छवि अपलोड करें" },
-  plantImageUploadHint: { en: "Upload an image of the affected plant (max {size}MB).", hi: "प्रभावित पौधे की एक छवि अपलोड करें (अधिकतम {size}MB)।" },
-  plantDescriptionLabel: { en: "Plant/Symptom Description", hi: "पौधा/लक्षण विवरण" },
-  plantDescriptionPlaceholder: { en: "Briefly describe the plant and observed symptoms (e.g., 'Tomato plant, yellow spots on leaves, wilting').", hi: "पौधे और देखे गए लक्षणों का संक्षिप्त विवरण दें (उदाहरण के लिए, 'टमाटर का पौधा, पत्तियों पर पीले धब्बे, मुरझाना')।" },
+  // plantDescriptionLabel: { en: "Plant/Symptom Description", hi: "पौधा/लक्षण विवरण" }, // Removed
+  // plantDescriptionPlaceholder: { en: "Briefly describe the plant and observed symptoms (e.g., 'Tomato plant, yellow spots on leaves, wilting').", hi: "पौधे और देखे गए लक्षणों का संक्षिप्त विवरण दें (उदाहरण के लिए, 'टमाटर का पौधा, पत्तियों पर पीले धब्बे, मुरझाना')।" }, // Removed
   submitForDiagnosisButton: { en: "Get Diagnosis", hi: "निदान प्राप्त करें" },
   diagnosingButton: { en: "Diagnosing...", hi: "निदान किया जा रहा है..." },
   diagnosisResultsTitle: { en: "Diagnosis Results", hi: "निदान परिणाम" },
@@ -476,7 +484,9 @@ const translations: Translations = {
   no: { en: "No", hi: "नहीं" },
   notAvailable: { en: "N/A", hi: "लागू नहीं" },
   imagePreviewAlt: { en: "Plant image preview", hi: "पौधे की छवि का पूर्वावलोकन"},
-
+  imageNotSelectedError: { en: "Please select an image to upload.", hi: "कृपया अपलोड करने के लिए एक छवि चुनें।" },
+  descriptionTooShortError: { en: "Description must be at least 10 characters.", hi: "विवरण कम से कम 10 वर्णों का होना चाहिए।" },
+  descriptionTooLongError: { en: "Description cannot exceed 500 characters.", hi: "विवरण 500 वर्णों से अधिक नहीं हो सकता।" },
 };
 
 const LanguageContext = createContext<LanguageContextType | undefined>(undefined);
@@ -521,3 +531,5 @@ export function useLanguage(): LanguageContextType {
   }
   return context;
 }
+
+    
