@@ -161,9 +161,7 @@ export function PlantDiagnosisForm() {
                         </Button>
                       </div>
                     )}
-                    <FormDescription>
-                      {translate('plantImageUploadHint', { size: MAX_IMAGE_SIZE_MB })}
-                    </FormDescription>
+                    {/* FormDescription removed from here */}
                     <FormMessage />
                   </FormItem>
                 )}
@@ -176,7 +174,7 @@ export function PlantDiagnosisForm() {
                     <FormLabel>{translate('plantDescriptionLabel')}</FormLabel>
                     <FormControl>
                       <Textarea
-                        placeholder={translate('plantDescriptionPlaceholder')}
+                        // placeholder removed from here
                         className="resize-none"
                         rows={5}
                         {...field}
