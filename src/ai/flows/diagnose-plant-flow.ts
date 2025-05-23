@@ -37,7 +37,7 @@ export async function diagnosePlant(input: DiagnosePlantInput): Promise<Diagnose
 
 const prompt = ai.definePrompt({
   name: 'diagnosePlantPrompt',
-  model: 'googleai/gemini-pro-vision', // Specify the model here
+  model: 'googleai/gemini-1.5-flash-latest', // Updated model
   input: {schema: DiagnosePlantInputSchema},
   output: {schema: DiagnosePlantOutputSchema},
   prompt: `You are an expert botanist and plant pathologist specializing in diagnosing plant illnesses from images.
