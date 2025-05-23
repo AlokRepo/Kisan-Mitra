@@ -38,7 +38,7 @@ import Image from "next/image";
 const MAX_IMAGE_SIZE_MB = 2;
 const MAX_IMAGE_SIZE_BYTES = MAX_IMAGE_SIZE_MB * 1024 * 1024;
 
-const createFormSchema = (translate: (key: string) => string) => z.object({
+const createFormSchema = (translate: (key: string, params?: Record<string, string | number>) => string) => z.object({
   cropName: z.string().min(1, translate('cropNotSelectedError')),
   quantity: z.coerce.number().positive(translate('quantityNotEnteredError')),
   price: z.coerce.number().positive("Price must be a positive number."),
@@ -69,7 +69,7 @@ export function CreatePostForm({ isOpen, onClose, onAddPost }: CreatePostFormPro
     defaultValues: {
       cropName: "",
       quantity: 10,
-      price: undefined,
+      price: '', // Changed from undefined
       description: "",
       sellerName: "",
       location: "",
@@ -87,7 +87,8 @@ export function CreatePostForm({ isOpen, onClose, onAddPost }: CreatePostFormPro
           if (prices.length > 0) {
             const modalPrice = prices[0].modalPrice;
             setSuggestedPrice(modalPrice);
-            if (!form.getValues("price")) {
+            // Only set if price field is currently empty (or was defaulted to empty string)
+            if (form.getValues("price") === '' || form.getValues("price") === undefined || form.getValues("price") === null) {
                  form.setValue("price", modalPrice, { shouldValidate: true });
             }
           } else {
@@ -107,7 +108,7 @@ export function CreatePostForm({ isOpen, onClose, onAddPost }: CreatePostFormPro
       setSuggestedPrice(null);
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [selectedCrop, form.setValue, toast, translate]);
+  }, [selectedCrop, form.setValue, toast, translate]); // form.getValues should not be in dep array
 
   const handleImageChange = (event: ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
@@ -148,7 +149,7 @@ export function CreatePostForm({ isOpen, onClose, onAddPost }: CreatePostFormPro
     form.reset({
         cropName: "", 
         quantity: 10, 
-        price: undefined, 
+        price: '', // Changed from undefined
         description: "", 
         sellerName: "", 
         location: "", 
@@ -158,6 +159,7 @@ export function CreatePostForm({ isOpen, onClose, onAddPost }: CreatePostFormPro
     if (fileInputRef.current) {
       fileInputRef.current.value = "";
     }
+    setSuggestedPrice(null); // Also reset suggested price display
   };
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
@@ -165,7 +167,7 @@ export function CreatePostForm({ isOpen, onClose, onAddPost }: CreatePostFormPro
         const success = await onAddPost(values);
         if (success) {
           resetForm();
-          // The parent (MarketplacePage) handles closing the dialog on success.
+          onClose(); // Ensure dialog closes on success as handled by parent potentially
         }
         // If not successful, the form remains open with data, and parent shows toast/error.
     });
@@ -183,10 +185,10 @@ export function CreatePostForm({ isOpen, onClose, onAddPost }: CreatePostFormPro
   return (
     <Dialog open={isOpen} onOpenChange={
       (openState) => {
-        if (!openState) { // If dialog is being closed
-          resetForm(); // Ensure form is reset
+        if (!openState) { 
+          resetForm(); 
         }
-        onClose(); // Call parent's onClose to update state
+        onClose(); 
       }
     }>
       <DialogContent className="sm:max-w-[525px] bg-card">
@@ -202,7 +204,16 @@ export function CreatePostForm({ isOpen, onClose, onAddPost }: CreatePostFormPro
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>{translate('productNameLabel')}</FormLabel>
-                  <Select onValueChange={field.onChange} value={field.value} disabled={isSubmitting}>
+                  <Select 
+                    onValueChange={(value) => {
+                      field.onChange(value);
+                      // If user changes crop, we might want to clear or re-evaluate price
+                      form.setValue("price", '', { shouldValidate: true }); 
+                      setSuggestedPrice(null);
+                    }} 
+                    value={field.value} 
+                    disabled={isSubmitting}
+                  >
                     <FormControl>
                       <SelectTrigger>
                         <SelectValue placeholder={translate('selectProductPlaceholder')} />
@@ -241,7 +252,7 @@ export function CreatePostForm({ isOpen, onClose, onAddPost }: CreatePostFormPro
                     <Input type="number" placeholder={translate('priceMarketplacePlaceholder')} {...field} disabled={isSubmitting} />
                   </FormControl>
                   {isFetchingPrice && <FormDescription className="flex items-center text-xs"><Loader2 className="mr-1 h-3 w-3 animate-spin" />{translate('fetchingPrice')}</FormDescription>}
-                  {!isFetchingPrice && suggestedPrice !== null && (
+                  {!isFetchingPrice && suggestedPrice !== null && field.value !== suggestedPrice && (
                     <FormDescription className="text-xs">
                       {translate('suggestedPriceLabel', { price: suggestedPrice })}
                     </FormDescription>
@@ -332,7 +343,7 @@ export function CreatePostForm({ isOpen, onClose, onAddPost }: CreatePostFormPro
                   </div>
                 )}
                 <FormDescription className="text-xs">
-                    {selectedImagePreview ? translate('changeImageHint') : translate('selectImageHint')}
+                    {selectedImagePreview ? translate('changeImageHint', {size: MAX_IMAGE_SIZE_MB}) : translate('selectImageHint', {size: MAX_IMAGE_SIZE_MB})}
                 </FormDescription>
                 <FormMessage />
             </FormItem>
@@ -340,11 +351,10 @@ export function CreatePostForm({ isOpen, onClose, onAddPost }: CreatePostFormPro
             <DialogFooter className="pt-4">
               <DialogClose asChild>
                 <Button type="button" variant="outline" onClick={() => {
-                  // onClose will trigger reset via onOpenChange
-                  onClose();
+                  onClose(); // resetForm will be called by onOpenChange or useEffect
                 }} disabled={isSubmitting}>{translate('cancelButton')}</Button>
               </DialogClose>
-              <Button type="submit" disabled={isSubmitting || form.formState.isSubmitting}>
+              <Button type="submit" disabled={isSubmitting || form.formState.isSubmitting || !form.formState.isValid}>
                 {isSubmitting ? (
                     <>
                         <Loader2 className="mr-2 h-4 w-4 animate-spin" />
@@ -361,3 +371,4 @@ export function CreatePostForm({ isOpen, onClose, onAddPost }: CreatePostFormPro
     </Dialog>
   );
 }
+
