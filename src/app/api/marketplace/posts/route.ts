@@ -5,6 +5,7 @@ import path from 'path';
 import type {MarketplacePost} from '@/types';
 
 const DATA_FILE_PATH = path.join(process.cwd(), 'data', 'marketplace-posts.json');
+const DATA_DIR = path.join(process.cwd(), 'data');
 
 async function readPostsFromFile(): Promise<MarketplacePost[]> {
   try {
@@ -25,6 +26,8 @@ async function readPostsFromFile(): Promise<MarketplacePost[]> {
 
 async function writePostsToFile(posts: MarketplacePost[]): Promise<void> {
   try {
+    // Ensure the data directory exists
+    await fs.mkdir(DATA_DIR, { recursive: true });
     await fs.writeFile(DATA_FILE_PATH, JSON.stringify(posts, null, 2), 'utf-8');
   } catch (error) {
     console.error('Error writing marketplace data file:', error);
