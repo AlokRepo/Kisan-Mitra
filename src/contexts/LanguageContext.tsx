@@ -18,7 +18,11 @@ const interpolate = (text: string, params?: Record<string, string | number>): st
   if (!params) return text;
   let result = text;
   for (const key in params) {
-    result = result.replace(new RegExp(`{${key}}`, 'g'), String(params[key]));
+    // Escape the key itself in case it contains special regex characters (good practice)
+    const escapedKey = String(key).replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    // Construct regex to match literal {key}, escaping the curly braces
+    const regex = new RegExp(`\\{${escapedKey}\\}`, 'g');
+    result = result.replace(regex, String(params[key]));
   }
   return result;
 };
@@ -241,6 +245,13 @@ const translations: Translations = {
   errorSavingProfileSettings: { en: "Error saving profile settings. Please try again.", hi: "प्रोफ़ाइल सेटिंग्स सहेजने में त्रुटि। कृपया पुनः प्रयास करें।" },
   errorFetchingDataPreferences: { en: "Error fetching data preferences. Using default values.", hi: "डेटा प्राथमिकताएँ लाने में त्रुटि। डिफ़ॉल्ट मानों का उपयोग किया जा रहा है।" },
   errorSavingDataPreferences: { en: "Error saving data preferences. Please try again.", hi: "डेटा प्राथमिकताएँ सहेजने में त्रुटि। कृपया पुनः प्रयास करें।" },
+  fetchingProfile: { en: "Fetching profile...", hi: "प्रोफ़ाइल लाई जा रही है..." },
+  errorFetchingProfileMessage: { en: "Could not fetch profile settings. Please try again later.", hi: "प्रोफ़ाइल सेटिंग्स नहीं लाई जा सकीं। कृपया बाद में पुनः प्रयास करें।" },
+  errorSavingProfileMessage: { en: "Could not save profile settings. Please try again.", hi: "प्रोफ़ाइल सेटिंग्स सहेजी नहीं जा सकीं। कृपया पुनः प्रयास करें।" },
+  fetchingPreferences: { en: "Fetching preferences...", hi: "प्राथमिकताएँ लाई जा रही हैं..." },
+  errorFetchingPreferencesMessage: { en: "Could not fetch data preferences. Please try again later.", hi: "डेटा प्राथमिकताएँ नहीं लाई जा सकीं। कृपया बाद में पुनः प्रयास करें।" },
+  errorSavingPreferencesMessage: { en: "Could not save data preferences. Please try again.", hi: "डेटा प्राथमिकताएँ सहेजी नहीं जा सकीं। कृपया पुनः प्रयास करें।" },
+
 
   // Education & Resources Page
   educationTitle: { en: "Education & Resources", hi: "शिक्षा और संसाधन" },
@@ -461,8 +472,6 @@ const translations: Translations = {
   removeImageAriaLabel: { en: "Remove image", hi: "छवि हटाएं" },
 
   uploadPlantImageLabel: { en: "Upload Plant Image", hi: "पौधे की छवि अपलोड करें" },
-  // plantDescriptionLabel: { en: "Plant/Symptom Description", hi: "पौधा/लक्षण विवरण" }, // Removed
-  // plantDescriptionPlaceholder: { en: "Briefly describe the plant and observed symptoms (e.g., 'Tomato plant, yellow spots on leaves, wilting').", hi: "पौधे और देखे गए लक्षणों का संक्षिप्त विवरण दें (उदाहरण के लिए, 'टमाटर का पौधा, पत्तियों पर पीले धब्बे, मुरझाना')।" }, // Removed
   submitForDiagnosisButton: { en: "Get Diagnosis", hi: "निदान प्राप्त करें" },
   diagnosingButton: { en: "Diagnosing...", hi: "निदान किया जा रहा है..." },
   diagnosisResultsTitle: { en: "Diagnosis Results", hi: "निदान परिणाम" },
@@ -508,14 +517,16 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
     }
   }, []);
 
-  const translate = useCallback((key: string, params?: Record<string, string | number>, fallback?: string): string => {
+  const translate = useCallback((keyToTranslate: string, params?: Record<string, string | number>, fallback?: string): string => {
     const yearPlaceholder = "{year}";
-    let text = translations[key]?.[language] || translations[key]?.['en'] || fallback || key;
+    let text = translations[keyToTranslate]?.[language] || translations[keyToTranslate]?.['en'] || fallback || keyToTranslate;
 
     if (text && text.includes(yearPlaceholder)) {
-      text = text.replace(new RegExp(yearPlaceholder, 'g'), new Date().getFullYear().toString());
+      // Ensure yearPlaceholder regex is specific to avoid issues if other placeholders contain "year"
+      const yearRegex = new RegExp(`\\{year\\}`, 'g');
+      text = text.replace(yearRegex, new Date().getFullYear().toString());
     }
-    text = interpolate(text, params);
+    text = interpolate(text, params); // interpolate handles other params
     return text;
   }, [language]);
 
