@@ -27,17 +27,36 @@ export default function MarketplacePage() {
       try {
         const response = await fetch('/api/marketplace/posts');
         if (!response.ok) {
-          throw new Error(`Failed to fetch posts: ${response.statusText}`);
+          let errorDetails = `Status: ${response.status}, StatusText: ${response.statusText || "N/A"}`;
+          try {
+            // Attempt to get JSON error message first
+            const errorData = await response.json();
+            if (errorData && errorData.message) {
+              errorDetails += `, API Message: ${errorData.message}`;
+            } else if (errorData) { // If it's JSON but no 'message' field
+              errorDetails += `, API Response: ${JSON.stringify(errorData).substring(0,100)}...`;
+            }
+          } catch (jsonError) {
+            // If not JSON, try to get text
+            try {
+                const textError = await response.text();
+                // Log a portion of the text error to avoid excessively long messages in UI/toast
+                errorDetails += `, Response Body: ${textError.substring(0, 200)}...`;
+            } catch (textParseError) {
+                errorDetails += ", Could not parse response body as JSON or text.";
+            }
+          }
+          throw new Error(`Failed to fetch posts. ${errorDetails}`);
         }
         const data = await response.json();
         setPosts(data);
       } catch (e) {
         const errorMessage = e instanceof Error ? e.message : "An unknown error occurred";
-        console.error("Error fetching posts:", e);
-        setError(translate('formErrorOccurred', { action: "fetch posts", errorMessage }));
+        console.error("Error fetching posts:", e); // Keep console.error for full details
+        setError(translate('formErrorOccurred', { action: "fetch posts", errorMessage: e instanceof Error ? e.message : "details unavailable"  }));
         toast({
           title: translate('toastErrorTitle'),
-          description: translate('formErrorOccurred', { action: "fetch posts", errorMessage }),
+          description: translate('formErrorOccurred', { action: "fetch posts", errorMessage: e instanceof Error ? e.message : "details unavailable" }),
           variant: "destructive",
         });
       }
@@ -60,27 +79,40 @@ export default function MarketplacePage() {
         body: JSON.stringify(newPostData),
       });
       if (!response.ok) {
-        const errorData = await response.json().catch(() => ({ message: response.statusText }));
-        throw new Error(errorData.message || 'Failed to create post');
+        let apiErrorMessage = `Status: ${response.status}, StatusText: ${response.statusText || "N/A"}`;
+        try {
+          const errorData = await response.json();
+          if (errorData && errorData.message) {
+            apiErrorMessage = errorData.message;
+          }
+        } catch (jsonError) {
+            try {
+                const textError = await response.text();
+                apiErrorMessage += `, Response Body: ${textError.substring(0,200)}...`;
+            } catch (textParseError) {
+                apiErrorMessage += ", Could not parse error response body.";
+            }
+        }
+        throw new Error(apiErrorMessage);
       }
       const createdPost = await response.json();
-      setPosts(prevPosts => [createdPost, ...prevPosts]);
+      setPosts(prevPosts => [createdPost, ...prevPosts]); // Add to the beginning
       toast({
         title: translate('postSubmittedToastTitle'),
         description: translate('postSubmittedToastDesc'),
       });
-      setIsCreatePostOpen(false); // Close form on success
-      return true;
+      // setIsCreatePostOpen(false); // Form will be reset by CreatePostForm if successful
+      return true; // Indicate success
     } catch (e) {
       const errorMessage = e instanceof Error ? e.message : "An unknown error occurred";
       console.error("Error creating post:", e);
-      setError(translate('formErrorOccurred', { action: "create post", errorMessage })); // Show error in the main page as well
+      setError(translate('formErrorOccurred', { action: "create post", errorMessage }));
       toast({
         title: translate('toastErrorTitle'),
         description: translate('formErrorOccurred', { action: "create post", errorMessage }),
         variant: "destructive",
       });
-      return false;
+      return false; // Indicate failure
     }
   };
 
