@@ -1,3 +1,4 @@
+
 # Firebase Studio - Kisan Mitra App
 
 This is a Next.js starter app for Kisan Mitra, developed in Firebase Studio.
@@ -33,6 +34,11 @@ This is a Next.js starter app for Kisan Mitra, developed in Firebase Studio.
     # Get your API key from Google Cloud Console: https://console.cloud.google.com/google/maps-apis/credentials
     # Ensure you have the "Maps JavaScript API" enabled for this key.
     NEXT_PUBLIC_GOOGLE_MAPS_API_KEY="YOUR_GOOGLE_MAPS_API_KEY_HERE"
+
+    # Data.gov.in API Key (for real-time Mandi prices)
+    # The default key is a public test key from data.gov.in documentation.
+    # You can register for your own key at https://data.gov.in/
+    DATA_GOV_IN_API_KEY="579b464db66ec23bdd0000010817fc9615cd4de94eeddad13faa4fa7"
     ```
     **Important**: The `NEXT_PUBLIC_` prefix is required for the Google Maps API key to be accessible on the client-side.
 
@@ -41,7 +47,7 @@ This is a Next.js starter app for Kisan Mitra, developed in Firebase Studio.
     ```bash
     npm run dev
     ```
-    This will typically start the app on `http://localhost:56567`.
+    This will typically start the app on the port specified by your environment (e.g., `http://localhost:56567` or a cloud environment port).
 
 4.  **Run the Genkit Development Server (Optional, for AI flow development)**:
     If you are actively developing or testing AI flows with Genkit tools (like the Genkit Inspector), you can run the Genkit development server in a separate terminal:
@@ -58,18 +64,25 @@ This is a Next.js starter app for Kisan Mitra, developed in Firebase Studio.
 -   **`src/components`**: Reusable UI components.
 -   **`src/ai`**: Genkit related code, including flows and configuration.
 -   **`src/contexts`**: React context providers (e.g., for language).
--   **`src/lib`**: Utility functions and mock API implementations.
+-   **`src/lib`**: Utility functions and API service implementations.
 -   **`src/types`**: TypeScript type definitions.
 -   **`public`**: Static assets.
+-   **`data`**: Stores local JSON data files (e.g., for marketplace posts if not using a database).
+
 
 ## Key Features
 
--   Real-Time Price Display
+-   Real-Time Price Display (from data.gov.in)
 -   AI-Powered Recommendations
 -   Price Fluctuation Dashboard
 -   Mandi Locator with Google Maps
--   Multi-language Support (English, Hindi)
+-   Multi-language Support (English, Hindi, and more via AI translation)
 -   Multiple Theme Options (Light, Dark, Oceanic, Desert Mirage)
+-   Farmer's Marketplace (local JSON persistence)
+-   Plant Disease Detection (AI-powered)
+-   Government Schemes Information
+-   Transport Cost Estimator
+-   User Settings (local JSON persistence for profile & preferences)
 
 ## Troubleshooting
 
@@ -80,8 +93,10 @@ This is a Next.js starter app for Kisan Mitra, developed in Firebase Studio.
     *   Ensure `NEXT_PUBLIC_GOOGLE_MAPS_API_KEY` is correctly set in your `.env` file.
     *   Verify that the "Maps JavaScript API" is enabled in your Google Cloud Console for the provided API key.
     *   Check your browser's developer console for any specific error messages from the Google Maps API.
+-   **Data.gov.in Prices Not Loading**:
+    *   Ensure `DATA_GOV_IN_API_KEY` is set in your `.env` file.
+    *   Check the console for network errors when fetching from `api.data.gov.in`.
 -   **Module Not Found Errors**:
     *   Run `npm install` (or your package manager's install command) to ensure all dependencies are installed.
 
 To get started, take a look at `src/app/page.tsx`.
-
