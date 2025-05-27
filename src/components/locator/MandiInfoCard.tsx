@@ -12,6 +12,18 @@ interface MandiInfoCardProps {
 
 export function MandiInfoCard({ mandi }: MandiInfoCardProps) {
   const { translate } = useLanguage();
+
+  const handleViewOnMap = () => {
+    let googleMapsUrl = 'https://www.google.com/maps/search/?api=1&query=';
+    if (typeof mandi.latitude === 'number' && typeof mandi.longitude === 'number') {
+      googleMapsUrl += `${mandi.latitude},${mandi.longitude}`;
+    } else {
+      const query = encodeURIComponent(`${mandi.name}, ${mandi.district}, ${mandi.state}`);
+      googleMapsUrl += query;
+    }
+    window.open(googleMapsUrl, '_blank', 'noopener,noreferrer');
+  };
+
   return (
     <Card className="overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300 bg-card">
       {mandi.imageUrl && (
@@ -49,7 +61,12 @@ export function MandiInfoCard({ mandi }: MandiInfoCardProps) {
         )}
       </CardContent>
       <CardFooter>
-        <Button variant="outline" size="sm" className="w-full bg-background hover:bg-accent hover:text-accent-foreground">
+        <Button 
+          variant="outline" 
+          size="sm" 
+          className="w-full bg-background hover:bg-accent hover:text-accent-foreground"
+          onClick={handleViewOnMap}
+        >
           {translate('viewDetailsButton')}
           <ExternalLink className="ml-2 h-4 w-4" />
         </Button>
@@ -57,3 +74,4 @@ export function MandiInfoCard({ mandi }: MandiInfoCardProps) {
     </Card>
   );
 }
+
