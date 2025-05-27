@@ -7,6 +7,16 @@ interface ImageInfo {
   aiHint: string;
 }
 
+/**
+ * APP_IMAGES
+ * This object serves as the central configuration for all representative
+ * and placeholder images used throughout the Kisan Mitra application.
+ * By defining images here, we ensure consistency and make it easier to
+ * update or manage image assets from a single location.
+ * 
+ * Image dimensions are often indicative (e.g., 300x200 for cards, 600x400 for larger displays).
+ * The `aiHint` property provides keywords for potential AI-powered image search/replacement tools.
+ */
 export const APP_IMAGES: Record<string, ImageInfo | ImageInfo[]> = {
   // Crops (300x200)
   WHEAT: [
@@ -17,7 +27,7 @@ export const APP_IMAGES: Record<string, ImageInfo | ImageInfo[]> = {
   RICE: [
     { src: "https://cdn.pixabay.com/photo/2017/08/25/05/30/in-rice-field-2679153_1280.jpg?text=Rice+Paddy", aiHint: "rice paddy" },
     { src: "https://cdn.pixabay.com/photo/2021/10/10/11/14/ch-6696389_1280.jpg?text=Harvested+Rice", aiHint: "harvested rice" },
-    { src: "https://placehold.co/300x200.png?text=Rice+Grains", aiHint: "rice grains" }, // Corrected Placehold.co URL
+    { src: "https://placehold.co/300x200.png?text=Rice+Grains", aiHint: "rice grains" },
   ],
   MAIZE: [
     { src: "https://cdn.pixabay.com/photo/2019/09/25/14/12/maize-4503781_1280.jpg?text=Corn+Field", aiHint: "corn field" },
@@ -54,18 +64,85 @@ export const APP_IMAGES: Record<string, ImageInfo | ImageInfo[]> = {
     { src: "https://placehold.co/300x200.png?text=Peanut+Plant", aiHint: "peanut plant" },
     { src: "https://placehold.co/300x200.png?text=Harvested+Groundnuts", aiHint: "harvested groundnuts" },
   ],
+  APPLE: [
+    { src: "https://placehold.co/300x200.png?text=Apple+Orchard", aiHint: "apple orchard" },
+    { src: "https://placehold.co/300x200.png?text=Red+Apples", aiHint: "red apples" },
+    { src: "https://placehold.co/300x200.png?text=Apple+Blossoms", aiHint: "apple blossoms" },
+  ],
+  BANANA: [
+    { src: "https://placehold.co/300x200.png?text=Banana+Plantation", aiHint: "banana plantation" },
+    { src: "https://placehold.co/300x200.png?text=Bunch+Bananas", aiHint: "bunch bananas" },
+    { src: "https://placehold.co/300x200.png?text=Banana+Flower", aiHint: "banana flower" },
+  ],
+  MANGO: [
+    { src: "https://placehold.co/300x200.png?text=Mango+Orchard", aiHint: "mango orchard" },
+    { src: "https://placehold.co/300x200.png?text=Ripe+Mangoes", aiHint: "ripe mangoes" },
+    { src: "https://placehold.co/300x200.png?text=Mango+Tree", aiHint: "mango tree" },
+  ],
+  POTATO: [
+    { src: "https://placehold.co/300x200.png?text=Potato+Field", aiHint: "potato field" },
+    { src: "https://placehold.co/300x200.png?text=Harvested+Potatoes", aiHint: "harvested potatoes" },
+    { src: "https://placehold.co/300x200.png?text=Potato+Plants", aiHint: "potato plants" },
+  ],
+  ONION: [
+    { src: "https://placehold.co/300x200.png?text=Onion+Field", aiHint: "onion field" },
+    { src: "https://placehold.co/300x200.png?text=Red+Onions", aiHint: "red onions" },
+    { src: "https://placehold.co/300x200.png?text=Onion+Harvest", aiHint: "onion harvest" },
+  ],
+  TOMATO: [
+    { src: "https://placehold.co/300x200.png?text=Tomato+Farm", aiHint: "tomato farm" },
+    { src: "https://placehold.co/300x200.png?text=Ripe+Tomatoes", aiHint: "ripe tomatoes" },
+    { src: "https://placehold.co/300x200.png?text=Tomato+Vines", aiHint: "tomato vines" },
+  ],
+  BRINJAL: [
+    { src: "https://placehold.co/300x200.png?text=Brinjal+Plant", aiHint: "brinjal plant" },
+    { src: "https://placehold.co/300x200.png?text=Eggplants", aiHint: "eggplants" },
+    { src: "https://placehold.co/300x200.png?text=Brinjal+Farm", aiHint: "brinjal farm" },
+  ],
+  CAULIFLOWER: [
+    { src: "https://placehold.co/300x200.png?text=Cauliflower+Field", aiHint: "cauliflower field" },
+    { src: "https://placehold.co/300x200.png?text=Cauliflower+Head", aiHint: "cauliflower head" },
+    { src: "https://placehold.co/300x200.png?text=Cauliflower+Harvest", aiHint: "cauliflower harvest" },
+  ],
+  CABBAGE: [
+    { src: "https://placehold.co/300x200.png?text=Cabbage+Patch", aiHint: "cabbage patch" },
+    { src: "https://placehold.co/300x200.png?text=Green+Cabbage", aiHint: "green cabbage" },
+    { src: "https://placehold.co/300x200.png?text=Cabbage+Farm", aiHint: "cabbage farm" },
+  ],
+  LENTIL: [
+    { src: "https://placehold.co/300x200.png?text=Lentil+Crop", aiHint: "lentil crop" },
+    { src: "https://placehold.co/300x200.png?text=Red+Lentils", aiHint: "red lentils" },
+    { src: "https://placehold.co/300x200.png?text=Lentil+Field", aiHint: "lentil field" },
+  ],
+  GRAM: [ // (Chickpea)
+    { src: "https://placehold.co/300x200.png?text=Gram+Field", aiHint: "gram field" },
+    { src: "https://placehold.co/300x200.png?text=Chickpeas", aiHint: "chickpeas" },
+    { src: "https://placehold.co/300x200.png?text=Gram+Plant", aiHint: "gram plant" },
+  ],
+  MILLETS: [ // Generic for other millets if not specified
+    { src: "https://placehold.co/300x200.png?text=Millet+Field", aiHint: "millet field" },
+    { src: "https://placehold.co/300x200.png?text=Harvested+Millets", aiHint: "harvested millets" },
+    { src: "https://placehold.co/300x200.png?text=Millet+Grains", aiHint: "millet grains" },
+  ],
+  OILSEEDS: [ // Generic for other oilseeds
+    { src: "https://placehold.co/300x200.png?text=Oilseed+Crop", aiHint: "oilseed crop" },
+    { src: "https://placehold.co/300x200.png?text=Sunflower+Field", aiHint: "sunflower field" },
+    { src: "https://placehold.co/300x200.png?text=Various+Oilseeds", aiHint: "various oilseeds" },
+  ],
+
   DEFAULT_CROP: { src: "https://cdn.pixabay.com/photo/2017/09/10/02/49/drone-2734228_1280.jpg", aiHint: "agriculture product" },
+  DEFAULT_PLACEHOLDER: { src: "https://placehold.co/600x400.png", aiHint: "placeholder image" },
 
   // Mandi/Market (300x200 for cards)
-  DEFAULT_MANDI: { src: "https://placehold.co/300x200.png?text=market+agriculture", aiHint: "market agriculture" },
+  DEFAULT_MANDI: { src: "https://source.unsplash.com/random/300x200/?market,agriculture,india", aiHint: "market agriculture" },
   
   // Education Page - Guides (600x400 for main display, can be reused for smaller cards if needed)
   GUIDE_PRICE_FLUCTUATIONS: { src: "https://cdn.pixabay.com/photo/2016/11/23/14/37/blur-1853262_1280.jpg", aiHint: "market chart" },
   GUIDE_APP_USAGE: { src: "https://placehold.co/600x400.png", aiHint: "app interface" },
 
   // Education Page & Schemes Page - Schemes (600x400 for main display, 400x250 for cards)
-  SCHEME_PM_KISAN: { src: "https://placehold.co/600x400.png", aiHint: "government building" }, // Used on education
-  SCHEME_E_NAM: { src: "https://placehold.co/600x400.png", aiHint: "digital india" }, // Used on education
+  SCHEME_PM_KISAN: { src: "https://placehold.co/600x400.png", aiHint: "government building" }, 
+  SCHEME_E_NAM: { src: "https://placehold.co/600x400.png", aiHint: "digital india" }, 
   
   SCHEME_PM_KISAN_CARD: { src: "https://www.jagranimages.com/images/newimg/26122023/26_12_2023-kisan_credit_card_23614380_204254319.webp", aiHint: "farmer finance" },
   SCHEME_E_NAM_CARD: { src: "https://www.indiafilings.com/learn/wp-content/uploads/2019/07/eNAM.jpg", aiHint: "market online" },
@@ -76,29 +153,30 @@ export const APP_IMAGES: Record<string, ImageInfo | ImageInfo[]> = {
   SCHEME_GENERIC_3: { src: "https://images.indianexpress.com/2017/04/farmer11.jpg?w=650", aiHint: "rural development" },
   SCHEME_GENERIC_4: { src: "https://cdn.pixabay.com/photo/2021/09/27/11/01/man-6660387_1280.jpg", aiHint: "farmer support" },
 
-
   // New Home Page Images
   HOME_HERO_BANNER: { src: "https://cdn.pixabay.com/photo/2019/05/23/08/46/dji-4223421_1280.jpg", aiHint: "indian agriculture panoramic" },
-  HOME_SCHEME_PM_KISAN: { src: "https://img.khetivyapar.com/images/news/1713762716-these-government-schemes-for-farmers-in-madhya-pradesh-madhya-pradesh-scheme-2024.jpg", aiHint: "government scheme farmer" }, // For smaller cards on home page
-  HOME_SCHEME_E_NAM: { src: "https://upload.wikimedia.org/wikipedia/en/1/13/National_Agriculture_Market_%28eNAM%29_logo.png", aiHint: "digital market agriculture" }, // For smaller cards on home page
+  HOME_SCHEME_PM_KISAN: { src: "https://img.khetivyapar.com/images/news/1713762716-these-government-schemes-for-farmers-in-madhya-pradesh-madhya-pradesh-scheme-2024.jpg", aiHint: "government scheme farmer" }, 
+  HOME_SCHEME_E_NAM: { src: "https://upload.wikimedia.org/wikipedia/en/1/13/National_Agriculture_Market_%28eNAM%29_logo.png", aiHint: "digital market agriculture" }, 
   
   // Marketplace
   MARKETPLACE_ITEM_DEFAULT: { src: "https://placehold.co/300x200.png", aiHint: "product item" }
 };
 
-export type AppImageKey = keyof typeof APP_IMAGES; // This type might not be directly usable for indexing if keys are dynamic strings
+export type AppImageKey = keyof typeof APP_IMAGES; 
 
-// Helper function to get image data by crop name string or generic key
 export function getCropImageDetails(keyOrCropName: string, indexHint: number = 0): ImageInfo {
   const upperKey = keyOrCropName.toUpperCase().replace(/\s+/g, '_'); 
-  // Check if upperCropName is a valid key in APP_IMAGES to satisfy TypeScript
-  const imageEntry = APP_IMAGES[upperKey as AppImageKey] || APP_IMAGES.DEFAULT_CROP;
+  
+  const imageEntry = APP_IMAGES[upperKey as AppImageKey];
 
-  if (Array.isArray(imageEntry)) {
-    return imageEntry[indexHint % imageEntry.length];
+  if (imageEntry) {
+    if (Array.isArray(imageEntry)) {
+      return imageEntry[indexHint % imageEntry.length];
+    }
+    return imageEntry as ImageInfo; 
   }
-  // If it's not an array, it should be a single ImageInfo object.
-  // The type of APP_IMAGES allows ImageInfo | ImageInfo[], so this cast is safe here.
-  return imageEntry as ImageInfo; 
+  
+  // If specific key not found, return the default crop image or a general placeholder
+  return APP_IMAGES.DEFAULT_CROP || APP_IMAGES.DEFAULT_PLACEHOLDER; 
 }
 
