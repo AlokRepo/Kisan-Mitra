@@ -89,6 +89,12 @@ const nextConfig: NextConfig = {
         port: '',
         pathname: '/**',
       },
+      {
+        protocol: 'https',
+        hostname: 'www.shutterstock.com',
+        port: '',
+        pathname: '/**',
+      },
     ],
   },
   async headers() {
@@ -119,6 +125,7 @@ const nextConfig: NextConfig = {
     allowedDevOrigins: [
       'https://56567-firebase-studio-1747214151338.cluster-nzwlpk54dvagsxetkvxzbvslyi.cloudworkstations.dev',
       'https://9000-firebase-studio-1747214151338.cluster-nzwlpk54dvagsxetkvxzbvslyi.cloudworkstations.dev',
+      'https://6000-firebase-studio-1747214151338.cluster-nzwlpk54dvagsxetkvxzbvslyi.cloudworkstations.dev',
     ],
   },
   devIndicators: { // Ensuring this existing configuration is maintained
