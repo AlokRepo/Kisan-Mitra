@@ -1,7 +1,7 @@
 
-# Firebase Studio - Kisan Mitra App
+# Kisan Mitra App
 
-This is a Next.js starter app for Kisan Mitra, developed in Firebase Studio.
+This is a Next.js starter app for Kisan Mitra.
 
 ## Getting Started
 
