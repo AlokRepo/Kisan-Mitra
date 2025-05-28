@@ -38,7 +38,7 @@ This is a Next.js starter app for Kisan Mitra.
     # Data.gov.in API Key (for real-time Mandi prices)
     # The default key is a public test key from data.gov.in documentation.
     # You can register for your own key at https://data.gov.in/
-    DATA_GOV_IN_API_KEY="579b464db66ec23bdd0000010817fc9615cd4de94eeddad13faa4fa7"
+    DATA_GOV_IN_API_KEY="YOUR_DATA_GOV_IN_API_KEY"
     ```
     **Important**: The `NEXT_PUBLIC_` prefix is required for the Google Maps API key to be accessible on the client-side.
 
